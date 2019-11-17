@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.studymanager.home.HomeFragment"
+        android:label="homeFragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_studieSessieCreatieFragment"
+            app:destination="@id/studieSessieCreatieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.studymanager.account.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/registreerFragment"
+        android:name="com.example.studymanager.account.RegistreerFragment"
+        android:label="RegistreerFragment"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registreerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.studymanager.stats.StatsFragment"
+        android:label="statsFragment"
+        tools:layout="@layout/fragment_stats" />
+    <fragment
+        android:id="@+id/studieSessieFragment"
+        android:name="com.example.studymanager.studiesessie.StudieSessieFragment"
+        android:label="studdieSessieFragment"
+        tools:layout="@layout/fragment_studiesessie" >
+        <argument
+            android:name="time"
+            app:argType="long" />
+        <argument
+            android:name="taskName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/vakkenFragment"
+        android:name="com.example.studymanager.vakken.VakkenFragment"
+        android:label="vakkenFragment"
+        tools:layout="@layout/fragment_vakken" />
+    <fragment
+        android:id="@+id/profielFragment"
+        android:name="com.example.studymanager.account.ProfielFragment"
+        android:label="profielFragment" />
+    <fragment
+        android:id="@+id/studieSessieCreatieFragment"
+        android:name="com.example.studymanager.studiesessie.StudieSessieCreatieFragment"
+        android:label="studieSessieCreatieFragment"
+        tools:layout="@layout/fragment_studiesessie_creatie"
+        >
+        <action
+            android:id="@+id/action_studieSessieCreatieFragment_to_studieSessieFragment"
+            app:destination="@id/studieSessieFragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Study Manager</string>
+    <string name="vak_prompt">Selecteer een vak</string>
+    <string name="start">Start</string>
+    <string name="pauze">Pauze</string>
+
+    <string-array name="vakken_array">
+        <item>Android</item>
+        <item>Artificiële Intelligentie</item>
+        <item>Databanken 3</item>
+        <item>IOS</item>
+    </string-array>
+</resources>

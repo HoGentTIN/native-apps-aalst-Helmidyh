@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/txt_task_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="80sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_task_timer_start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_task_titel"
+            tools:text="3:00" />
+
+        <TextView
+            android:id="@+id/txt_task_titel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android: navigatie toevoegen"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_task_timer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_task_timer_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="162dp"
+            android:layout_marginEnd="162dp"
+            android:text="Start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_task_timer"></com.google.android.material.button.MaterialButton>
+
+        <TextView
+            android:id="@+id/txt_plus_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+5"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_plus_10"
+            app:layout_constraintEnd_toStartOf="@+id/txt_plus_10"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_plus_10" />
+
+        <TextView
+            android:id="@+id/txt_plus_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="+10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_plus_15"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txt_plus_5"
+            app:layout_constraintTop_toBottomOf="@+id/btn_task_timer_start" />
+
+        <TextView
+            android:id="@+id/txt_plus_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+15"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_plus_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txt_plus_10"
+            app:layout_constraintTop_toTopOf="@+id/txt_plus_10" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

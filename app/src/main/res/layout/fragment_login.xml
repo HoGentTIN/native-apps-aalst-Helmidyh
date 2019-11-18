@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="128dp"
         android:hint="Password"
-        app:layout_constraintBottom_toTopOf="@+id/materialButtonLogin"
+        app:layout_constraintBottom_toTopOf="@+id/btn_login_send"
         app:layout_constraintEnd_toEndOf="@+id/btn_login_username"
         app:layout_constraintStart_toStartOf="@+id/btn_login_username"
         app:layout_constraintTop_toBottomOf="@+id/btn_login_username">
@@ -37,7 +37,7 @@
     </com.google.android.material.textfield.TextInputEditText>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButtonLogin"
+        android:id="@+id/btn_login_send"
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:text="Login"
@@ -54,8 +54,8 @@
         android:layout_height="wrap_content"
         android:text="Nog geen account ?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/materialButtonLogin"
-        app:layout_constraintStart_toStartOf="@+id/materialButtonLogin"
-        app:layout_constraintTop_toBottomOf="@+id/materialButtonLogin" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_login_send"
+        app:layout_constraintStart_toStartOf="@+id/btn_login_send"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login_send" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

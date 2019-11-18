@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.NumberPicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -45,9 +46,10 @@ class StudieSessieCreatieFragment : Fragment() {
         }
 
 
-
         binding.btnTaskCreateSucces.setOnClickListener(
         ) {
+
+
             val longUur = binding.nmbrPickerHour.value.toLong() * 10000000
             val longMinuut = binding.nmbrPickerMinute.value.toLong() * 1000000
             val totaal = longUur + longMinuut

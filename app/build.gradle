@@ -1,3 +1,5 @@
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -7,7 +9,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    dataBinding{ enabled = true}
+    dataBinding { enabled = true }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -28,7 +30,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation 'com.google.android.material:material:1.1.0-alpha09'
@@ -36,6 +38,26 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0-rc02'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0-rc02'
 
+    // Room and Lifecycle dependencies
+    implementation "androidx.room:room-runtime:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
+    implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc01"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedataVersion"
+
+    // Moshi for converting JSON
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit: $version_retrofit"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

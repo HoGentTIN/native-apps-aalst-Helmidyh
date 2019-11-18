@@ -1,4 +1,4 @@
-package com.example.studymanager.ui.studiesessie
+package com.example.studymanager.ui.studiesessie.viewmodels
 
 import androidx.lifecycle.ViewModel
 

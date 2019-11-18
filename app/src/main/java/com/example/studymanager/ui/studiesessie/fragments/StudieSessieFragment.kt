@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.studymanager.R
 import com.example.studymanager.databinding.FragmentStudiesessieBinding
-import com.example.studymanager.ui.studiesessie.StudieSessieViewModelFactory
+import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieViewModelFactory
 
 class StudieSessieFragment : Fragment() {
 
@@ -28,13 +28,15 @@ class StudieSessieFragment : Fragment() {
         val x =
             StudieSessieFragmentArgs.fromBundle(arguments!!)
         viewModelFactory =
-            StudieSessieViewModelFactory(x.time, x.taskName)
+            StudieSessieViewModelFactory(
+                x.time,
+                x.taskName
+            )
         viewModel = ViewModelProvider(this, viewModelFactory)[StudieSessieViewModel::class.java]
 
         binding.btnTaskTimerStart.setOnClickListener {
 
             when (binding.btnTaskTimerStart.text) {
-
                 "Start" -> {
                     viewModel.onResume()
                     binding.btnTaskTimerStart.text = "Pauze"

@@ -30,7 +30,6 @@ class StudieSessieViewModel(private var time: Long, private var taskName: String
         timer = object : CountDownTimer(time, ONE_SECOND) {
             override fun onTick(millisUntilFinished: Long) {
                 _currentTime.value = (millisUntilFinished / ONE_SECOND)
-
             }
 
             override fun onFinish() {
@@ -66,7 +65,6 @@ class StudieSessieViewModel(private var time: Long, private var taskName: String
     }
 
     override fun onCleared() {
-        //garbage collection
         super.onCleared()
         timer.cancel()
     }

@@ -1,4 +1,4 @@
-package com.example.studymanager.database
+package com.example.studymanager.domain
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

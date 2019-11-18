@@ -19,7 +19,7 @@ class VakkenFragment : Fragment() {
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_vakken, container, false)
-
+        //TODO implement
         return binding.root
 
     }

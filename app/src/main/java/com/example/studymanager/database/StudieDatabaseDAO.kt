@@ -21,4 +21,8 @@ interface StudieDatabaseDAO {
 
     @Query("SELECT * from study_task_table ORDER BY studyTaskId DESC")
     fun getAllTasks():LiveData<List<StudieTask>>
+
+    @Query("SELECT * from study_task_table ORDER BY studyTaskId DESC LIMIT 1")
+    fun getMostRecentTask():StudieTask?
+
 }

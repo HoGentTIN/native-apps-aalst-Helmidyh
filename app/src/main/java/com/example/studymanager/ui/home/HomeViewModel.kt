@@ -1,9 +1,11 @@
 package com.example.studymanager.home
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.example.studymanager.database.StudieDatabaseDAO
 
-class HomeViewModel :ViewModel(){
-
+class HomeViewModel(val database: StudieDatabaseDAO, application: Application) :
+    AndroidViewModel(application) {
 
 
 }

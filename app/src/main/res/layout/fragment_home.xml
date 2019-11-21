@@ -3,8 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
 
+        <variable
+            name="homeViewModel"
+            type="com.example.studymanager.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -13,12 +19,11 @@
             android:id="@+id/recyclerview_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_add_task"
@@ -28,6 +33,7 @@
             android:layout_marginBottom="32dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{() -> homeViewModel.addDummy()}"
             android:src="@drawable/ic_add"
             app:iconTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"

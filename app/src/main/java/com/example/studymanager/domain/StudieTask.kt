@@ -13,5 +13,8 @@ data class StudieTask(
     @ColumnInfo(name = "total_task_duration")
     val totalTaskDuration: Long,
     @ColumnInfo(name = "remaining_task_time")
-    var remainingTaskTime: Long
+    var remainingTaskTime: Long,
+    @ColumnInfo(name = "studie_vak")
+    var vak: String
+
 )

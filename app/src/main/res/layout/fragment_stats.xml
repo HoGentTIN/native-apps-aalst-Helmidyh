@@ -4,8 +4,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.studymanager.stats.StatsFragment"
-    >
+    tools:context="com.example.studymanager.stats.StatsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,12 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-
             android:text="Meest gestudeerde vak"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_meest_gestudeerde_vak_string"
             app:layout_constraintEnd_toEndOf="@+id/txt_meest_gestudeerde_vak_string"
             app:layout_constraintStart_toStartOf="@+id/txt_meest_gestudeerde_vak_string"
+
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -30,12 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-
             android:text="Minst gestudeerde vak"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_minst_gestudeerde_vak_string"
             app:layout_constraintEnd_toEndOf="@+id/txt_minst_gestudeerde_vak_string"
             app:layout_constraintStart_toStartOf="@+id/txt_minst_gestudeerde_vak_string"
+
             app:layout_constraintTop_toBottomOf="@+id/txt_meest_gestudeerde_vak_string" />
 
         <TextView
@@ -44,11 +43,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Talen"
-
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_totaal_gestudeerde_uren"
             app:layout_constraintEnd_toEndOf="@+id/txt_totaal_gestudeerde_uren"
+
             app:layout_constraintStart_toStartOf="@+id/txt_totaal_gestudeerde_uren"
             app:layout_constraintTop_toBottomOf="@+id/txt_minst_gestudeerde_vak" />
 
@@ -58,11 +57,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Totaal aantal gestudeerde uren"
-
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_totaal_gestudeerde_uren_number"
             app:layout_constraintEnd_toEndOf="@+id/txt_totaal_gestudeerde_uren_number"
             app:layout_constraintStart_toStartOf="@+id/txt_totaal_gestudeerde_uren_number"
+
             app:layout_constraintTop_toBottomOf="@+id/txt_minst_gestudeerde_vak_string" />
 
         <TextView
@@ -70,9 +69,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-
             android:text="20 u 23 min"
             android:textColor="@color/colorPrimaryDark"
+
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_totaal_gestudeerde_uren"
@@ -83,12 +82,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-
             android:text="Android"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_minst_gestudeerde_vak"
             app:layout_constraintEnd_toEndOf="@+id/txt_minst_gestudeerde_vak"
+
             app:layout_constraintStart_toStartOf="@+id/txt_minst_gestudeerde_vak"
             app:layout_constraintTop_toBottomOf="@+id/txt_meest_gestudeerde_vak" />
 

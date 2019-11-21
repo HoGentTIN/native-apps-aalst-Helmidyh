@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#009A9D</color>
     <color name="colorPrimaryLight">#66ffff</color>
     <color name="colorAccent">#FFFFFF</color>
+    <color name="colorTaskTime">#7B1FA2</color>
+    <color name="colorTaskVak">#E65100</color>
 
 </resources>

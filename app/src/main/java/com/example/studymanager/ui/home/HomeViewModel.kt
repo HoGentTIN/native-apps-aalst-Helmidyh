@@ -10,7 +10,7 @@ import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
 import kotlinx.coroutines.*
 
-class HomeViewModel(val database: StudieDatabaseDAO, application: Application) :
+class HomeViewModel(private val database: StudieDatabaseDAO, application: Application) :
     AndroidViewModel(application) {
 
     private var studieTask = MutableLiveData<StudieTask?>()
@@ -31,25 +31,24 @@ class HomeViewModel(val database: StudieDatabaseDAO, application: Application) :
 
     private fun initializeStudieTask() {
         viewModelScope.launch {
-            studieTask.value = getStudieTaskFromDatabase(1)
+            studieTask.value = getStudieTaskFromDatabase()
         }
     }
 
-    private suspend fun getStudieTaskFromDatabase(id: Int): StudieTask? {
+    private suspend fun getStudieTaskFromDatabase(): StudieTask? {
         return withContext(Dispatchers.IO) {
-            var studie = database.getMostRecentTask()
+            val studie = database.getMostRecentTask()
             studie
         }
     }
 
     private suspend fun getStudieTasksFromDatabase(): List<StudieTask> {
         return withContext(Dispatchers.IO) {
-            var tasks = database.getAllTasks()
+            val tasks = database.getAllTasks()
             tasks
         }
 
     }
-
 
     private suspend fun insert(task: StudieTask) {
         withContext(Dispatchers.IO) {
@@ -59,7 +58,7 @@ class HomeViewModel(val database: StudieDatabaseDAO, application: Application) :
 
     fun addDummy() {
         viewModelScope.launch {
-            insert(StudieTask(0, "studeren voor x", 200000, 20000, "Android"))
+            insert(StudieTask(0, "studeren voor Y", 200000, 20000, "Android"))
         }
     }
 // logica voor het toevoegen moet in studiesessiecreatie zodat we nog kunnen cancellen als we in het creatiescherm zitten,

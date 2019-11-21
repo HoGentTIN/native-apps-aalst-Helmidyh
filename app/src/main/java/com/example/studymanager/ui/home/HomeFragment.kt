@@ -19,26 +19,22 @@ import com.example.studymanager.ui.home.adapters.HomeTaskAdapter
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var adapter: HomeTaskAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = FragmentHomeBinding.inflate(inflater)
         val application = requireNotNull(this.activity).application
         val dataSource = StudieDatabase.getInstance(application).studieDatabaseDAO
         val viewModelFactory = HomeViewModelFactory(dataSource, application)
-        val homeViewModel = ViewModelProviders.of(this, viewModelFactory)
+        homeViewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(HomeViewModel::class.java)
-        val adapter = HomeTaskAdapter()
-
+        adapter = HomeTaskAdapter()
         binding.homeViewModel = homeViewModel
         binding.recyclerviewHome.adapter = adapter
         //binding van adapter data list aan viewmodel data list
 
-        //startListeners()
-        homeViewModel.tasks.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.data = it
-            }
-        })
+        startListeners()
 
         //binding observes live data updates
         binding.setLifecycleOwner(this)
@@ -49,12 +45,14 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    //    private fun startListeners(){
-    //        binding.homeViewModel.tasks.observe(this, Observer {tasks ->
-    //            binding.recyclerviewHome.adapter.submitList(tasks)
-    //
-    //        })
 
+    private fun startListeners() {
+        homeViewModel?.tasks.observe(this, Observer { tasks ->
+            // a new version of the list is available !
+            // detects changes and updates the list
+            adapter.submitList(tasks)
+        })
+    }
 }
 
 

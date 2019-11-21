@@ -1,49 +1,67 @@
 package com.example.studymanager.ui.home.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studymanager.R
-import com.example.studymanager.R.id.*
+import com.example.studymanager.databinding.ListItemStudieTaskBinding
 import com.example.studymanager.domain.StudieTask
-import com.google.android.material.button.MaterialButton
 
-class HomeTaskAdapter : RecyclerView.Adapter<HomeTaskAdapter.ViewHolder>() {
-    var data = listOf<StudieTask>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun getItemCount() = data.size
+class HomeTaskAdapter : ListAdapter<StudieTask, HomeTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
+        val item = getItem(position)
         holder.bind(item)
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.list_item_studie_task, parent, false)
-        return ViewHolder(view)
+        return ViewHolder.from(parent)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val taskTitle: TextView = itemView.findViewById(txt_list_item_task_title)
-        val taskVakBtn: MaterialButton = itemView.findViewById(btn_vak_Afk)
-        val taskRemTimeBtn: MaterialButton = itemView.findViewById(btn_task_time_rem)
-
+    class ViewHolder private constructor(val binding: ListItemStudieTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: StudieTask) {
-            taskTitle.text = item.studyTaskTitle
-            taskVakBtn.text = item.vak.substring(0, 2)
-            taskRemTimeBtn.text = item.remainingTaskTime.toString()
-            //TODO vak kleur linken met colors (case when 0->R.color.red else{random kleur})
+            binding.txtListItemTaskTitle.text = item.studyTaskTitle
+            binding.btnVakAfk.text = item.vak.substring(0, 2)
+            binding.btnTaskTimeRem.text = item.remainingTaskTime.toString()
+
+            when (binding.btnVakAfk.text) {
+                "Android" -> setButtonColor(R.color.Android)
+                "AI" -> setButtonColor(R.color.AI)
+                "Databanken" -> setButtonColor(R.color.Databanken)
+                else -> setButtonColor(R.color.colorPrimary)
+            }
+        }
+
+        private fun setButtonColor(color: Int) {
+            binding.btnVakAfk.setBackgroundColor(
+                ContextCompat.getColor(
+                    binding.btnVakAfk.context, color
+                )
+            )
+        }
+
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ListItemStudieTaskBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
         }
 
 
     }
 
+}
+
+class StudieTaskDiffCallback : DiffUtil.ItemCallback<StudieTask>() {
+    override fun areItemsTheSame(oldItem: StudieTask, newItem: StudieTask): Boolean {
+        return oldItem.studyTaskId == newItem.studyTaskId
+    }
+
+    override fun areContentsTheSame(oldItem: StudieTask, newItem: StudieTask): Boolean {
+        return oldItem == newItem
+    }
 }

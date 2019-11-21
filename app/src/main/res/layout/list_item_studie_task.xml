@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="studie"
             type="com.example.studymanager.domain.StudieTask" />
@@ -28,7 +29,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/btn_task_time_rem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_vak_Afk"
-            app:layout_constraintTop_toTopOf="@+id/btn_vak_Afk" />
+            app:layout_constraintTop_toTopOf="@+id/btn_vak_Afk"
+            app:taskTitleString="@{studie}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_vak_Afk"
@@ -44,7 +46,8 @@
             app:layout_constraintBottom_toTopOf="@+id/btn_task_time_rem"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            app:taskVakFormatted="@{studie}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_task_time_rem"
@@ -59,6 +62,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btn_vak_Afk"
             app:layout_constraintStart_toStartOf="@+id/btn_vak_Afk"
-            app:layout_constraintTop_toBottomOf="@+id/btn_vak_Afk" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_vak_Afk"
+            app:taskTimeRemFormatted="@{studie}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

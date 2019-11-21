@@ -23,25 +23,10 @@ class HomeTaskAdapter : ListAdapter<StudieTask, HomeTaskAdapter.ViewHolder>(Stud
 
     class ViewHolder private constructor(val binding: ListItemStudieTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: StudieTask) {
-            binding.txtListItemTaskTitle.text = item.studyTaskTitle
-            binding.btnVakAfk.text = item.vak.substring(0, 2)
-            binding.btnTaskTimeRem.text = item.remainingTaskTime.toString()
-
-            when (binding.btnVakAfk.text) {
-                "Android" -> setButtonColor(R.color.Android)
-                "AI" -> setButtonColor(R.color.AI)
-                "Databanken" -> setButtonColor(R.color.Databanken)
-                else -> setButtonColor(R.color.colorPrimary)
-            }
+            binding.studie = item
+            binding.executePendingBindings()
         }
 
-        private fun setButtonColor(color: Int) {
-            binding.btnVakAfk.setBackgroundColor(
-                ContextCompat.getColor(
-                    binding.btnVakAfk.context, color
-                )
-            )
-        }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {

@@ -13,32 +13,21 @@ import kotlinx.coroutines.*
 class HomeViewModel(private val database: StudieDatabaseDAO, application: Application) :
     AndroidViewModel(application) {
 
-    private var studieTask = MutableLiveData<StudieTask?>()
     private var _studieTasks = MutableLiveData<List<StudieTask>>()
     val tasks: LiveData<List<StudieTask>>
         get() = _studieTasks
 
+    private val _navigateToStudieSessie = MutableLiveData<Int>()
+    val navigateToStudiesessie
+        get() = _navigateToStudieSessie
+
     init {
         initializeStudieTasks()
-        initializeStudieTask()
     }
 
     private fun initializeStudieTasks() {
         viewModelScope.launch {
             _studieTasks.value = getStudieTasksFromDatabase()
-        }
-    }
-
-    private fun initializeStudieTask() {
-        viewModelScope.launch {
-            studieTask.value = getStudieTaskFromDatabase()
-        }
-    }
-
-    private suspend fun getStudieTaskFromDatabase(): StudieTask? {
-        return withContext(Dispatchers.IO) {
-            val studie = database.getMostRecentTask()
-            studie
         }
     }
 
@@ -60,6 +49,14 @@ class HomeViewModel(private val database: StudieDatabaseDAO, application: Applic
         viewModelScope.launch {
             insert(StudieTask(0, "studeren voor Y", 200000, 20000, "Android"))
         }
+    }
+
+    fun onStudieTaskClicked(id: Int) {
+        _navigateToStudieSessie.value = id
+    }
+
+    fun onStudieTaskNavigated() {
+        _navigateToStudieSessie.value = null
     }
 // logica voor het toevoegen moet in studiesessiecreatie zodat we nog kunnen cancellen als we in het creatiescherm zitten,
 

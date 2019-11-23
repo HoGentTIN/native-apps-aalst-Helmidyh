@@ -4,18 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.NumberPicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.example.studymanager.R
 import com.example.studymanager.databinding.FragmentStudiesessieCreatieBinding
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.fragment_studiesessie.*
-import kotlinx.android.synthetic.main.fragment_studiesessie_creatie.*
 
 class StudieSessieCreatieFragment : Fragment() {
 
@@ -39,17 +32,15 @@ class StudieSessieCreatieFragment : Fragment() {
             binding.nmbrPickerHour.maxValue = 20
             binding.nmbrPickerHour.wrapSelectorWheel = true
         }
+
         if (binding.nmbrPickerMinute != null) {
             binding.nmbrPickerMinute.minValue = 0
             binding.nmbrPickerMinute.maxValue = 20
             binding.nmbrPickerMinute.wrapSelectorWheel = true
         }
 
-
         binding.btnTaskCreateSucces.setOnClickListener(
         ) {
-
-
             val longUur = binding.nmbrPickerHour.value.toLong() * 10000000
             val longMinuut = binding.nmbrPickerMinute.value.toLong() * 1000000
             val totaal = longUur + longMinuut

@@ -29,8 +29,7 @@ class StudieSessieFragment : Fragment() {
             StudieSessieFragmentArgs.fromBundle(arguments!!)
         viewModelFactory =
             StudieSessieViewModelFactory(
-                x.time,
-                x.taskName
+                x.taskId
             )
         viewModel = ViewModelProvider(this, viewModelFactory)[StudieSessieViewModel::class.java]
 

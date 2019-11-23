@@ -5,16 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="studie"
             type="com.example.studymanager.domain.StudieTask" />
+        <variable
+            name="clickListener"
+            type="com.example.studymanager.ui.home.adapters.StudieTaskListener" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> clickListener.onClick(studie)}"
+        >
 
         <TextView
             android:id="@+id/txt_list_item_task_title"

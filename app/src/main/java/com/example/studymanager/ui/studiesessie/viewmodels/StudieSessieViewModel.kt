@@ -4,8 +4,20 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.studymanager.database.StudieDatabaseDAO
+import com.example.studymanager.domain.StudieTask
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class StudieSessieViewModel(private var time: Long, private var taskName: String) : ViewModel() {
+class StudieSessieViewModel(private var taskId: Int,private var database: StudieDatabaseDAO) : ViewModel() {
+
+
+    // STUDIESESSIE OBJECT WORDT GEMAAKT IN CREATIEFRAGMENT, HIER HALEN WE HET ENKEL OP VOOR DE DISPLAY VAN HET OBJECT
+
+    // ALLES REFACTOREN EN OBJECT OPHALEN UIT DB ADHV: taskId
+
+
+
 
     // hier moet nog een binding komen
     private val timer: CountDownTimer
@@ -38,6 +50,14 @@ class StudieSessieViewModel(private var time: Long, private var taskName: String
             }
         }
     }
+
+    private suspend fun getStudieTaskFromDatabase(taskId:Int): StudieTask? {
+        return withContext(Dispatchers.IO) {
+            val studie = database.get(taskId)
+            studie
+        }
+    }
+
 
     fun onPauze() {
         time = _currentTime.value!!

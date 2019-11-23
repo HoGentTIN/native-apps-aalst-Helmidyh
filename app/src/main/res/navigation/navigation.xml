@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_homeFragment_to_studieSessieCreatieFragment"
             app:destination="@id/studieSessieCreatieFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_studieSessieFragment"
+            app:destination="@id/studieSessieFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -38,11 +41,8 @@
         android:label="studdieSessieFragment"
         tools:layout="@layout/fragment_studiesessie" >
         <argument
-            android:name="time"
-            app:argType="long" />
-        <argument
-            android:name="taskName"
-            app:argType="string" />
+            android:name="taskId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/vakkenFragment"

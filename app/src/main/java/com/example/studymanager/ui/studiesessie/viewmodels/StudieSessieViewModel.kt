@@ -1,28 +1,32 @@
 package com.example.studymanager.studiesessie
 
+import android.app.Application
 import android.os.CountDownTimer
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.studymanager.database.StudieDatabaseDAO
 import com.example.studymanager.domain.StudieTask
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class StudieSessieViewModel(private var taskId: Int,private var database: StudieDatabaseDAO) : ViewModel() {
-
+class StudieSessieViewModel(private var taskId: Int, private var database: StudieDatabaseDAO, application: Application) :
+    AndroidViewModel(application) {
 
     // STUDIESESSIE OBJECT WORDT GEMAAKT IN CREATIEFRAGMENT, HIER HALEN WE HET ENKEL OP VOOR DE DISPLAY VAN HET OBJECT
 
     // ALLES REFACTOREN EN OBJECT OPHALEN UIT DB ADHV: taskId
 
 
-
-
     // hier moet nog een binding komen
-    private val timer: CountDownTimer
+
+    private var _studieTask = MutableLiveData<StudieTask?>()
+    private val _timer: CountDownTimer
     private val _timerFinished = MutableLiveData<Boolean>()
     private val _currentTime = MutableLiveData<Long>()
+    private var _totalTime = MutableLiveData<Long>()
+
+    val timer: CountDownTimer
+        get() = _timer
 
     val timerFinished: LiveData<Boolean>
         get() = _timerFinished
@@ -30,8 +34,10 @@ class StudieSessieViewModel(private var taskId: Int,private var database: Studie
     val currentTime: LiveData<Long>
         get() = _currentTime
 
-    val taskTitle: String
-        get() = taskName
+    val totalTime: LiveData<Long>
+        get() = _totalTime
+
+    val taskTitle: String =""
 
     companion object {
         private const val END = 0L
@@ -39,7 +45,12 @@ class StudieSessieViewModel(private var taskId: Int,private var database: Studie
     }
 
     init {
-        timer = object : CountDownTimer(time, ONE_SECOND) {
+        viewModelScope.launch {
+            getStudieTaskFromDatabase(taskId)
+        }
+        _studieTask.value!!.studyTaskTitle
+
+        _timer = object : CountDownTimer(totalTime.value!!, ONE_SECOND) {
             override fun onTick(millisUntilFinished: Long) {
                 _currentTime.value = (millisUntilFinished / ONE_SECOND)
             }
@@ -51,7 +62,7 @@ class StudieSessieViewModel(private var taskId: Int,private var database: Studie
         }
     }
 
-    private suspend fun getStudieTaskFromDatabase(taskId:Int): StudieTask? {
+    private suspend fun getStudieTaskFromDatabase(taskId: Int): StudieTask? {
         return withContext(Dispatchers.IO) {
             val studie = database.get(taskId)
             studie
@@ -60,13 +71,14 @@ class StudieSessieViewModel(private var taskId: Int,private var database: Studie
 
 
     fun onPauze() {
-        time = _currentTime.value!!
+        _totalTime = _currentTime
         timer.cancel()
     }
 
     fun onResume() {
         when {
-            _currentTime.value!! != time -> time = _currentTime.value!!
+            //might never be the same if we are looking at object value and not time value ? idk
+            _currentTime != totalTime -> _totalTime = _currentTime
         }
         timer.start()
     }
@@ -78,9 +90,9 @@ class StudieSessieViewModel(private var taskId: Int,private var database: Studie
 
     fun addTime(amount: String) {
         when (amount) {
-            "5" -> time += 5000000L
-            "10" -> time += 10000000L
-            "15" -> time += 15000000L
+            "5" -> _currentTime.value = _currentTime.value?.plus(5000000L)
+            "10" -> _currentTime.value = _currentTime.value?.plus(10000000L)
+            "15" -> _currentTime.value = _currentTime.value?.plus(15000000L)
         }
     }
 

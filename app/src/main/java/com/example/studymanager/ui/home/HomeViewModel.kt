@@ -14,10 +14,11 @@ class HomeViewModel(private val database: StudieDatabaseDAO, application: Applic
     AndroidViewModel(application) {
 
     private var _studieTasks = MutableLiveData<List<StudieTask>>()
+    private val _navigateToStudieSessie = MutableLiveData<Int>()
+
     val tasks: LiveData<List<StudieTask>>
         get() = _studieTasks
 
-    private val _navigateToStudieSessie = MutableLiveData<Int>()
     val navigateToStudiesessie
         get() = _navigateToStudieSessie
 
@@ -39,17 +40,6 @@ class HomeViewModel(private val database: StudieDatabaseDAO, application: Applic
 
     }
 
-    private suspend fun insert(task: StudieTask) {
-        withContext(Dispatchers.IO) {
-            database.insert(task)
-        }
-    }
-
-    fun addDummy() {
-        viewModelScope.launch {
-            insert(StudieTask(0, "studeren voor Y", 200000, 20000, "Android"))
-        }
-    }
 
     fun onStudieTaskClicked(id: Int) {
         _navigateToStudieSessie.value = id

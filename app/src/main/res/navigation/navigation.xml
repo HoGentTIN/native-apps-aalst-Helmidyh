@@ -37,7 +37,7 @@
         tools:layout="@layout/fragment_stats" />
     <fragment
         android:id="@+id/studieSessieFragment"
-        android:name="com.example.studymanager.studiesessie.StudieSessieFragment"
+        android:name="com.example.studymanager.ui.studiesessie.fragments.StudieSessieFragment"
         android:label="studdieSessieFragment"
         tools:layout="@layout/fragment_studiesessie" >
         <argument
@@ -55,7 +55,7 @@
         android:label="profielFragment" />
     <fragment
         android:id="@+id/studieSessieCreatieFragment"
-        android:name="com.example.studymanager.studiesessie.StudieSessieCreatieFragment"
+        android:name="com.example.studymanager.studiesessie.StudieSessieCrFragment"
         android:label="studieSessieCreatieFragment"
         tools:layout="@layout/fragment_studiesessie_creatie"
         >

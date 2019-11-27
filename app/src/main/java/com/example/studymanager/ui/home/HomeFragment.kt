@@ -44,7 +44,8 @@ class HomeFragment : Fragment() {
 
         homeViewModel.navigateToStudiesessie.observe(this, Observer { studieTask ->
             studieTask?.let {
-      //      this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToStudieSessieFragment(studieTask))
+                this.findNavController()
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToStudieSessieFragment(studieTask))
             }
         })
 

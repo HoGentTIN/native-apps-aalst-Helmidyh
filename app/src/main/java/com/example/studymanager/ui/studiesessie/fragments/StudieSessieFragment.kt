@@ -1,4 +1,4 @@
-package com.example.studymanager.studiesessie
+package com.example.studymanager.ui.studiesessie.fragments
 
 import android.os.Bundle
 import android.text.format.DateUtils
@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.studymanager.R
+import com.example.studymanager.database.StudieDatabase
 import com.example.studymanager.databinding.FragmentStudiesessieBinding
+// import com.example.studymanager.studiesessie.StudieSessieFragmentArgs
+import com.example.studymanager.studiesessie.StudieSessieViewModel
 import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieViewModelFactory
 
 class StudieSessieFragment : Fragment() {
@@ -18,19 +21,15 @@ class StudieSessieFragment : Fragment() {
     private lateinit var binding: FragmentStudiesessieBinding
     private lateinit var viewModel: StudieSessieViewModel
     private lateinit var viewModelFactory: StudieSessieViewModelFactory
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_studiesessie, container, false)
-        val x =
-            StudieSessieFragmentArgs.fromBundle(arguments!!)
-        viewModelFactory =
-            StudieSessieViewModelFactory(
-                x.taskId
-            )
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_studiesessie, container, false)
+
+        val arguments = StudieSessieFragmentArgs.fromBundle(arguments!!)
+        val application = requireNotNull(this.activity).application
+        val dataSource = StudieDatabase.getInstance(application).studieDatabaseDAO
+        viewModelFactory = StudieSessieViewModelFactory(arguments.taskId, dataSource, application)
         viewModel = ViewModelProvider(this, viewModelFactory)[StudieSessieViewModel::class.java]
 
         binding.btnTaskTimerStart.setOnClickListener {
@@ -62,7 +61,7 @@ class StudieSessieFragment : Fragment() {
             Observer { newTime ->
                 binding.txtTaskTimer.text = DateUtils.formatElapsedTime(newTime)
             })
-        viewModel.timerFinished.observe(this,Observer{ finished ->
+        viewModel.timerFinished.observe(this, Observer { finished ->
 
             // task deleten of tijd toevoegen ?
 

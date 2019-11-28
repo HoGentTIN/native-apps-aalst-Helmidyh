@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_homeFragment_to_studieSessieCreatieFragment"
             app:destination="@id/studieSessieCreatieFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_studieSessieFragment"
+            app:destination="@id/studieSessieFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -34,15 +37,12 @@
         tools:layout="@layout/fragment_stats" />
     <fragment
         android:id="@+id/studieSessieFragment"
-        android:name="com.example.studymanager.studiesessie.StudieSessieFragment"
+        android:name="com.example.studymanager.ui.studiesessie.fragments.StudieSessieFragment"
         android:label="studdieSessieFragment"
         tools:layout="@layout/fragment_studiesessie" >
         <argument
-            android:name="time"
-            app:argType="long" />
-        <argument
-            android:name="taskName"
-            app:argType="string" />
+            android:name="taskId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/vakkenFragment"
@@ -55,12 +55,12 @@
         android:label="profielFragment" />
     <fragment
         android:id="@+id/studieSessieCreatieFragment"
-        android:name="com.example.studymanager.studiesessie.StudieSessieCreatieFragment"
+        android:name="com.example.studymanager.studiesessie.StudieSessieCrFragment"
         android:label="studieSessieCreatieFragment"
         tools:layout="@layout/fragment_studiesessie_creatie"
         >
         <action
-            android:id="@+id/action_studieSessieCreatieFragment_to_studieSessieFragment"
-            app:destination="@id/studieSessieFragment" />
+            android:id="@+id/action_studieSessieCreatieFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

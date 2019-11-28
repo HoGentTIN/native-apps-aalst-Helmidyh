@@ -5,60 +5,104 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="studie"
             type="com.example.studymanager.domain.StudieTask" />
+
+        <variable
+            name="clickListener"
+            type="com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{()-> clickListener.onClick(studie)}">
 
-        <TextView
-            android:id="@+id/txt_list_item_task_title"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:lines="3"
-            android:text="Viewmodels integreren + factory's"
-            android:textSize="24sp"
-            app:autoSizeTextType="none"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_task_time_rem"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/btn_vak_Afk"
-            app:layout_constraintTop_toTopOf="@+id/btn_vak_Afk" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_vak_Afk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:text="And"
-            android:textSize="24sp"
-            app:backgroundTint="@color/colorTaskVak"
-            app:iconPadding="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_task_time_rem"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_task_time_rem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:text="00:23"
-            android:textSize="24sp"
-            app:backgroundTint="@color/colorTaskTime"
-            app:iconPadding="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardBackgroundColor="@color/design_default_color_on_primary"
+            app:cardElevation="3dp"
+            app:cardMaxElevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/btn_vak_Afk"
-            app:layout_constraintStart_toStartOf="@+id/btn_vak_Afk"
-            app:layout_constraintTop_toBottomOf="@+id/btn_vak_Afk" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4sp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_vak_Afk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="And"
+                        android:textSize="24sp"
+                        app:backgroundTint="@color/colorTaskVak"
+                        app:iconPadding="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/btn_task_time_rem"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:taskVakFormatted="@{studie}" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_task_time_rem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:text="00:23"
+                        android:textSize="24sp"
+                        app:backgroundTint="@color/colorTaskTime"
+                        app:iconPadding="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/btn_vak_Afk"
+                        app:layout_constraintStart_toStartOf="@+id/btn_vak_Afk"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_vak_Afk"
+                        app:taskTimeRemFormatted="@{studie}" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_list_item_task_title"
+                    android:layout_width="307dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:lines="3"
+                    android:text="Viewmodels integreren + factory's"
+                    android:textSize="24sp"
+                    app:autoSizeTextType="none"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_task_time_rem"
+                    app:layout_constraintTop_toTopOf="@+id/btn_vak_Afk"
+                    app:taskTitleString="@{studie}" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

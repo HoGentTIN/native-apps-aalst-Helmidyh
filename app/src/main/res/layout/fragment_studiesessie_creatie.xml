@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieCrViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -81,16 +85,23 @@
 
             </com.google.android.material.textfield.TextInputEditText>
 
-            <Spinner
-                android:id="@+id/task_create_spinner_vak"
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/task_create_menu_vak"
+                android:layout_gravity="start"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:entries="@array/vakken_array"
-                android:gravity="left"
-                android:prompt="@string/vak_prompt"
-                android:scrollbarSize="4dp"></Spinner>
+                android:hint="Selecteer een vak">
 
+                <AutoCompleteTextView
+
+                    android:id="@+id/filled_exposed_dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

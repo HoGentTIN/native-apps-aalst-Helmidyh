@@ -1,4 +1,4 @@
-package com.example.studymanager.ui.home.adapters
+package com.example.studymanager.viewmodels.adapters.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

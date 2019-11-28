@@ -1,7 +1,6 @@
 package com.example.studymanager.ui.studiesessie.fragments
 
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.studymanager.R
 import com.example.studymanager.database.StudieDatabase
 import com.example.studymanager.databinding.FragmentStudiesessieBinding
+import com.example.studymanager.domain.StudieTaskRepository
 // import com.example.studymanager.studiesessie.StudieSessieFragmentArgs
 import com.example.studymanager.studiesessie.StudieSessieViewModel
-import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieViewModelFactory
+import com.example.studymanager.viewmodels.factories.StudieSessieViewModelFactory
+import java.util.concurrent.TimeUnit
 
 class StudieSessieFragment : Fragment() {
-
     private lateinit var binding: FragmentStudiesessieBinding
-    private lateinit var viewModel: StudieSessieViewModel
-    private lateinit var viewModelFactory: StudieSessieViewModelFactory
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
@@ -29,8 +27,11 @@ class StudieSessieFragment : Fragment() {
         val arguments = StudieSessieFragmentArgs.fromBundle(arguments!!)
         val application = requireNotNull(this.activity).application
         val dataSource = StudieDatabase.getInstance(application).studieDatabaseDAO
-        viewModelFactory = StudieSessieViewModelFactory(arguments.taskId, dataSource, application)
-        viewModel = ViewModelProvider(this, viewModelFactory)[StudieSessieViewModel::class.java]
+        var repository = StudieTaskRepository(dataSource)
+        var viewModelFactory = StudieSessieViewModelFactory(arguments.taskId, repository, application)
+        var viewModel = ViewModelProvider(this, viewModelFactory)[StudieSessieViewModel::class.java]
+
+        binding.studiesessieViewModel = viewModel
 
         binding.btnTaskTimerStart.setOnClickListener {
 
@@ -45,29 +46,40 @@ class StudieSessieFragment : Fragment() {
                 }
             }
         }
-        binding.txtTaskTitel.text = viewModel.taskTitle
 
         binding.txtPlus5.setOnClickListener {
             viewModel.addTime("5")
         }
+
         binding.txtPlus10.setOnClickListener {
             viewModel.addTime("10")
         }
+
         binding.txtPlus15.setOnClickListener {
             viewModel.addTime("15")
         }
-        viewModel.currentTime.observe(
+
+        //TODO Viewmodel binding met res file
+        viewModel.taskCurrentTime.observe(
             this,
             Observer { newTime ->
-                binding.txtTaskTimer.text = DateUtils.formatElapsedTime(newTime)
+                binding.txtTaskTimer.text = timeFormatter(newTime)
             })
-        viewModel.timerFinished.observe(this, Observer { finished ->
 
+        viewModel.taskTimerFinished.observe(this, Observer { finished ->
             // task deleten of tijd toevoegen ?
-
         })
-
         return binding.root
     }
 
+    private fun timeFormatter(time: Long?): String {
+        return String.format(
+            "%02d:%02d:%02d",
+            TimeUnit.MILLISECONDS.toHours(time!!),
+            TimeUnit.MILLISECONDS.toMinutes(time) -
+                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(time)),
+            TimeUnit.MILLISECONDS.toSeconds(time) -
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
+        );
+    }
 }

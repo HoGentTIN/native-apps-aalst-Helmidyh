@@ -13,10 +13,10 @@ import android.content.Context
 import android.widget.AutoCompleteTextView
 import android.widget.ArrayAdapter
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.example.studymanager.domain.StudieTaskRepository
 
 
-
-class StudieSessieCrViewModel(private val database: StudieDatabaseDAO, application: Application) : AndroidViewModel(application)  {
+class StudieSessieCrViewModel(private val repository: StudieTaskRepository, application: Application) : AndroidViewModel(application) {
 
     init {
 
@@ -24,12 +24,14 @@ class StudieSessieCrViewModel(private val database: StudieDatabaseDAO, applicati
 
     private suspend fun insert(task: StudieTask) {
         withContext(Dispatchers.IO) {
-            database.insert(task)
+            repository.insert(task)
         }
     }
 
-        suspend fun createNewStudieTask(task:StudieTask){
-                this.insert(task)
+    fun createNewStudieTask(task: StudieTask) {
+        viewModelScope.launch {
+            insert(task)
+        }
     }
 
     fun addDummy() {

@@ -13,11 +13,9 @@ import com.example.studymanager.R
 import com.example.studymanager.database.StudieDatabase
 import com.example.studymanager.databinding.FragmentStudiesessieCreatieBinding
 import com.example.studymanager.domain.StudieTask
-import com.example.studymanager.home.HomeViewModel
-import com.example.studymanager.ui.home.HomeViewModelFactory
-import com.example.studymanager.ui.home.adapters.HomeTaskAdapter
+import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieCrViewModel
-import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieCrViewModelFactory
+import com.example.studymanager.viewmodels.factories.StudieSessieCrViewModelFactory
 import kotlinx.android.synthetic.main.fragment_studiesessie_creatie.*
 
 class StudieSessieCrFragment : Fragment() {
@@ -29,7 +27,8 @@ class StudieSessieCrFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = StudieDatabase.getInstance(application).studieDatabaseDAO
-        val viewModelFactory = StudieSessieCrViewModelFactory(dataSource, application)
+        var repository = StudieTaskRepository(dataSource)
+        val viewModelFactory = StudieSessieCrViewModelFactory(repository, application)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(StudieSessieCrViewModel::class.java)
@@ -42,16 +41,15 @@ class StudieSessieCrFragment : Fragment() {
         )
         binding.viewModel = viewModel
 
-        val VAKKEN = arrayOf("Android, Databanken 3, AI, Analyse 3")
+        val VAKKEN = arrayOf("Android", "Databanken 3", "AI", "Analyse 3")
 
         val adapter = ArrayAdapter(
             application.applicationContext,
-            R.layout.dropdown_menu_popup_item,
+            R.layout.dropdown_menu_item,
             VAKKEN
         )
 
-        val editTextFilledExposedDropdown = filled_exposed_dropdown
-        editTextFilledExposedDropdown.setAdapter(adapter)
+        binding.filledExposedDropdown.setAdapter(adapter)
 
         if (binding.nmbrPickerHour != null) {
             binding.nmbrPickerHour.minValue = 0
@@ -65,18 +63,27 @@ class StudieSessieCrFragment : Fragment() {
             binding.nmbrPickerMinute.wrapSelectorWheel = true
         }
 
+        var gekozenVak = -1
+        binding.filledExposedDropdown.setOnItemClickListener{parent, view, position, id ->
+            gekozenVak = id.toInt()
+        }
+
         binding.btnTaskCreateSucces.setOnClickListener(
         ) {
             val longUur = binding.nmbrPickerHour.value.toLong() * 10000000
             val longMinuut = binding.nmbrPickerMinute.value.toLong() * 1000000
             val totaal = longUur + longMinuut
 
-            // iemand moet hier een nieuw studiesessie object aanmaken en persisteren
-            // daarna gaan we terug naar de homepage waar de nieuwe studiesessietask is toegevoegd aan de recyclerview
-            //    viewModel.createNewStudieTask(StudieTask(0,binding.txtTaskCreateName.text.toString(),totaal, totaal,))
+            viewModel.createNewStudieTask(
+                StudieTask(
+                    0, binding.txtTaskCreateName.text.toString(),
+                    totaal, totaal, filled_exposed_dropdown.adapter.getItem(gekozenVak).toString()
+                )
+            )
 
-            //   findNavController().navigate(StudieSessieCreatieFragmentDirections.actionStudieSessieCreatieFragmentToStudieSessieFragment())
+            findNavController().navigate(R.id.action_studieSessieCreatieFragment_to_homeFragment)
         }
+
 
         return binding.root
 

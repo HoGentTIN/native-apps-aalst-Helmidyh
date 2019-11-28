@@ -60,7 +60,7 @@
         tools:layout="@layout/fragment_studiesessie_creatie"
         >
         <action
-            android:id="@+id/action_studieSessieCreatieFragment_to_studieSessieFragment"
-            app:destination="@id/studieSessieFragment" />
+            android:id="@+id/action_studieSessieCreatieFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

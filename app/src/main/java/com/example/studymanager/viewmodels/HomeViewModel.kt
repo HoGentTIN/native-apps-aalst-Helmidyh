@@ -10,7 +10,7 @@ import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
 import kotlinx.coroutines.*
 
-class HomeViewModel(private val database: StudieDatabaseDAO, application: Application) :
+class HomeViewModel(private val repository: StudieTaskRepository, application: Application) :
     AndroidViewModel(application) {
 
     private var _studieTasks = MutableLiveData<List<StudieTask>>()
@@ -28,18 +28,16 @@ class HomeViewModel(private val database: StudieDatabaseDAO, application: Applic
 
     private fun initializeStudieTasks() {
         viewModelScope.launch {
-            _studieTasks.value = getStudieTasksFromDatabase()
+            _studieTasks.value = getStudieTasksFromRepo()
         }
     }
 
-    private suspend fun getStudieTasksFromDatabase(): List<StudieTask> {
+    private suspend fun getStudieTasksFromRepo(): List<StudieTask> {
         return withContext(Dispatchers.IO) {
-            val tasks = database.getAllTasks()
+            val tasks = repository.getAllStudieTasks()
             tasks
         }
-
     }
-
 
     fun onStudieTaskClicked(id: Int) {
         _navigateToStudieSessie.value = id
@@ -48,7 +46,4 @@ class HomeViewModel(private val database: StudieDatabaseDAO, application: Applic
     fun onStudieTaskNavigated() {
         _navigateToStudieSessie.value = null
     }
-// logica voor het toevoegen moet in studiesessiecreatie zodat we nog kunnen cancellen als we in het creatiescherm zitten,
-
-
 }

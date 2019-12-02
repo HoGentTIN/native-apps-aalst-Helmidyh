@@ -2,26 +2,27 @@ package com.example.studymanager.studiesessie
 
 import android.app.Application
 import android.os.CountDownTimer
+import android.text.format.DateUtils
 import androidx.lifecycle.*
-import com.example.studymanager.database.StudieDatabaseDAO
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class StudieSessieViewModel(private var taskId: Int, private var repository: StudieTaskRepository, application: Application) :
     AndroidViewModel(application) {
 
     private var _studieTask = MutableLiveData<StudieTask?>()
-    private lateinit var _taskTimer: CountDownTimer
+    private var _taskTimer: CountDownTimer? = null
     private var _taskTimerFinished = MutableLiveData<Boolean>()
-    private var _taskCurrentTime = MutableLiveData<Long>()
+    private val _taskCurrentTime = MutableLiveData<Long>()
     private var _taskTotalTime = MutableLiveData<Long>()
     private var _taskTitle = MutableLiveData<String>()
 
-    val taskTimer: CountDownTimer
+    val taskTimer: CountDownTimer?
         get() = _taskTimer
 
     val taskTimerFinished: LiveData<Boolean>
@@ -30,11 +31,16 @@ class StudieSessieViewModel(private var taskId: Int, private var repository: Stu
     val taskCurrentTime: LiveData<Long>
         get() = _taskCurrentTime
 
+
     val taskTotalTime: LiveData<Long>
         get() = _taskTotalTime
 
     val taskTitle: LiveData<String>
         get() = _taskTitle
+
+    val currentTimeString = Transformations.map(taskCurrentTime) { time ->
+        DateUtils.formatElapsedTime(time)
+    }
 
     companion object {
         private const val END = 0L
@@ -43,72 +49,70 @@ class StudieSessieViewModel(private var taskId: Int, private var repository: Stu
 
     init {
         viewModelScope.launch {
-            _studieTask.value = getStudieTaskFromDatabase(taskId)
-            _taskTotalTime.value = _studieTask?.value?.totalTaskDuration
+            _studieTask.value = getStudieTaskFromDatabase(taskId).await()
+            _taskTotalTime.value = _studieTask.value?.totalTaskDuration
             _taskCurrentTime.value = _taskTotalTime.value
             _taskTimerFinished.value = _taskCurrentTime.value == END
-            _taskTitle.value = _studieTask?.value?.studyTaskTitle
-
-            _taskTimer = object : CountDownTimer(taskTotalTime.value!!, ONE_SECOND) {
-                override fun onTick(millisUntilFinished: Long) {
-                    _taskCurrentTime.value = (millisUntilFinished / ONE_SECOND)
-                }
-
-                override fun onFinish() {
-                    _taskTimerFinished.value = true
-                    // hier komt dan een melding en een buzzer
-                }
-            }
+            _taskTitle.value = _studieTask.value?.studyTaskTitle
+            createCountDownTimer(_taskTotalTime.value!!)
+            _taskCurrentTime.value = (_taskCurrentTime.value!! / ONE_SECOND)
 
         }
     }
 
-    private suspend fun getStudieTaskFromDatabase(taskId: Int): StudieTask? {
-        return withContext(Dispatchers.IO) {
+    private fun getStudieTaskFromDatabase(taskId: Int): Deferred<StudieTask?> {
+        return viewModelScope.async(Dispatchers.IO) {
             val studie = repository.getStudieTask(taskId)
             studie
         }
     }
 
     fun onPauze() {
-        _taskTotalTime.value = _taskCurrentTime.value
-        taskTimer.cancel()
+        _taskTimer?.cancel()
     }
 
     fun onResume() {
-        if (taskCurrentTime.value != taskTotalTime.value) {
+        if (_taskCurrentTime.value!! < _taskTotalTime.value!!) {
             _taskTotalTime.value = _taskCurrentTime.value
+            createCountDownTimer(_taskTotalTime.value!! * 1000L)
+            //1000L zodat we de werkelijke waarde terug omzetten naar ms ipv s
         }
-        taskTimer.start()
+        _taskTimer?.start()
     }
 
     fun onTimerFinished() {
         _taskTimerFinished.value = false
-        //reset van timer
+        // delete task or add more time ?
     }
 
     fun addTime(amount: String) {
+        _taskTotalTime.value = _taskCurrentTime.value
+        _taskTimer?.cancel()
         when (amount) {
-            "5" -> _taskCurrentTime.value = _taskCurrentTime.value?.plus(300000L)
-            "10" -> _taskCurrentTime.value = _taskCurrentTime.value?.plus(600000L)
-            "15" -> _taskCurrentTime.value = _taskCurrentTime.value?.plus(900000L)
+            "5" -> createCountDownTimer(_taskTotalTime.value!! * 1000L + 300000L)
+            "10" -> createCountDownTimer(_taskTotalTime.value!! * 1000L + 600000L)
+            "15" -> createCountDownTimer(_taskTotalTime.value!! * 1000L + 900000L)
+        }
+        _taskTimer?.start()
+    }
+
+    fun createCountDownTimer(time: Long) {
+        _taskTimer = object : CountDownTimer(time, ONE_SECOND) {
+            override fun onTick(millisUntilFinished: Long) {
+                _taskCurrentTime.value = (millisUntilFinished / ONE_SECOND)
+            }
+
+            override fun onFinish() {
+                _taskTimerFinished.value = true
+                // hier komt dan een melding en een buzzer
+            }
         }
     }
 
     override fun onCleared() {
         super.onCleared()
-        taskTimer.cancel()
+        taskTimer?.cancel()
     }
 
-    private fun timeFormatter(time: Long?): String {
-        return String.format(
-            "%02d:%02d:%02d",
-            TimeUnit.MILLISECONDS.toHours(time!!),
-            TimeUnit.MILLISECONDS.toMinutes(time) -
-                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(time)),
-            TimeUnit.MILLISECONDS.toSeconds(time) -
-                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
-        );
-    }
 }
 

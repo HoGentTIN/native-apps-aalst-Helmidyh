@@ -32,6 +32,7 @@ class StudieSessieFragment : Fragment() {
         var viewModel = ViewModelProvider(this, viewModelFactory)[StudieSessieViewModel::class.java]
 
         binding.studiesessieViewModel = viewModel
+        binding.lifecycleOwner = this
 
         binding.btnTaskTimerStart.setOnClickListener {
 
@@ -60,11 +61,6 @@ class StudieSessieFragment : Fragment() {
         }
 
         //TODO Viewmodel binding met res file
-        viewModel.taskCurrentTime.observe(
-            this,
-            Observer { newTime ->
-                binding.txtTaskTimer.text = timeFormatter(newTime)
-            })
 
         viewModel.taskTimerFinished.observe(this, Observer { finished ->
             // task deleten of tijd toevoegen ?
@@ -72,14 +68,4 @@ class StudieSessieFragment : Fragment() {
         return binding.root
     }
 
-    private fun timeFormatter(time: Long?): String {
-        return String.format(
-            "%02d:%02d:%02d",
-            TimeUnit.MILLISECONDS.toHours(time!!),
-            TimeUnit.MILLISECONDS.toMinutes(time) -
-                    TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(time)),
-            TimeUnit.MILLISECONDS.toSeconds(time) -
-                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
-        );
-    }
 }

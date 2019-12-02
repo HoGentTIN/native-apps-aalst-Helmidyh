@@ -8,7 +8,7 @@ import com.example.studymanager.domain.StudieTask
 import com.google.android.material.button.MaterialButton
 import java.util.concurrent.TimeUnit
 
-//databinding logica van adapter naar xml verplaats dmv deze classe
+//databinding logica van adapter naar xml verplaats dmv deze klasse
 @BindingAdapter("taskTitleString")
 fun TextView.setTaskTitleString(item: StudieTask) {
     item.let {
@@ -51,7 +51,7 @@ fun MaterialButton.setVakAfkorting(item: StudieTask) {
         if (item.vak.length > 2) {
             text = item.vak.substring(0, 3)
         } else {
-            text = item.vak.substring(0, 2)
+            text = item.vak
         }
 
 

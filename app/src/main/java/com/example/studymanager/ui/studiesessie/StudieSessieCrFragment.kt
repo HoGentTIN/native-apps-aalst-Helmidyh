@@ -53,13 +53,13 @@ class StudieSessieCrFragment : Fragment() {
 
         if (binding.nmbrPickerHour != null) {
             binding.nmbrPickerHour.minValue = 0
-            binding.nmbrPickerHour.maxValue = 20
+            binding.nmbrPickerHour.maxValue = 8
             binding.nmbrPickerHour.wrapSelectorWheel = true
         }
 
         if (binding.nmbrPickerMinute != null) {
             binding.nmbrPickerMinute.minValue = 0
-            binding.nmbrPickerMinute.maxValue = 20
+            binding.nmbrPickerMinute.maxValue = 59
             binding.nmbrPickerMinute.wrapSelectorWheel = true
         }
 
@@ -70,8 +70,9 @@ class StudieSessieCrFragment : Fragment() {
 
         binding.btnTaskCreateSucces.setOnClickListener(
         ) {
-            val longUur = binding.nmbrPickerHour.value.toLong() * 10000000
-            val longMinuut = binding.nmbrPickerMinute.value.toLong() * 1000000
+            //1000 ms = 1 sec
+            val longUur = binding.nmbrPickerHour.value.toLong() * 3600000
+            val longMinuut = binding.nmbrPickerMinute.value.toLong() * 60000
             val totaal = longUur + longMinuut
 
             viewModel.createNewStudieTask(

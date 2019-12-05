@@ -1,13 +1,16 @@
 package com.example.studymanager.domain
 
-import androidx.lifecycle.LiveData
-import com.example.studymanager.database.StudieDatabaseDAO
+import com.example.studymanager.database.StudieTaskDAO
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class StudieTaskRepository(private val studieDAO: StudieDatabaseDAO) {
+class StudieTaskRepository(private val studieDAO: StudieTaskDAO) {
 
 
-    fun getAllStudieTasks(): List<StudieTask> {
-        return studieDAO.getAllTasks()
+    suspend fun getAllStudieTasks(): List<StudieTask> {
+        return withContext(Dispatchers.IO){
+            studieDAO.getAllTasks()
+        }
     }
 
     fun getStudieTask(id: Int): StudieTask {
@@ -16,4 +19,9 @@ class StudieTaskRepository(private val studieDAO: StudieDatabaseDAO) {
 
     fun insert(studieTask: StudieTask) = studieDAO.insert(studieTask)
 
+    suspend fun update(studieTask: StudieTask) {
+        withContext(Dispatchers.IO) {
+            studieDAO.update(studieTask)
+        }
+    }
 }

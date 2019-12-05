@@ -4,32 +4,30 @@ import android.app.Application
 import android.os.CountDownTimer
 import android.text.format.DateUtils
 import androidx.lifecycle.*
+import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.*
 
-class StudieSessieViewModel(private var taskId: Int, private var repository: StudieTaskRepository, application: Application) :
+class StudieSessieViewModel(private var taskId: Int, application: Application) :
     AndroidViewModel(application) {
 
-    private var _studieTask = MutableLiveData<StudieTask?>()
+    private val database = getDatabase(application)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+
+    private var _studieTask = MutableLiveData<StudieTask>()
     private var _taskTimer: CountDownTimer? = null
     private var _taskTimerFinished = MutableLiveData<Boolean>()
-    private val _taskCurrentTime = MutableLiveData<Long>()
+
     private var _taskTotalTime = MutableLiveData<Long>()
-    private var _taskTitle = MutableLiveData<String>()
+    private val _taskTitle: LiveData<String>
+        get() = Transformations.map(_studieTask) { x -> x.studyTaskTitle }
 
     val taskTimer: CountDownTimer?
         get() = _taskTimer
 
     val taskTimerFinished: LiveData<Boolean>
         get() = _taskTimerFinished
-
-    val taskCurrentTime: LiveData<Long>
-        get() = _taskCurrentTime
 
 
     val taskTotalTime: LiveData<Long>
@@ -38,8 +36,8 @@ class StudieSessieViewModel(private var taskId: Int, private var repository: Stu
     val taskTitle: LiveData<String>
         get() = _taskTitle
 
-    val currentTimeString = Transformations.map(taskCurrentTime) { time ->
-        DateUtils.formatElapsedTime(time)
+    val currentTimeString = Transformations.map(_studieTask) { task ->
+        DateUtils.formatElapsedTime(task.remainingTaskTime / ONE_SECOND)
     }
 
     companion object {
@@ -50,19 +48,18 @@ class StudieSessieViewModel(private var taskId: Int, private var repository: Stu
     init {
         viewModelScope.launch {
             _studieTask.value = getStudieTaskFromDatabase(taskId).await()
+            val timeRemaining = _studieTask.value!!.remainingTaskTime
+
             _taskTotalTime.value = _studieTask.value?.totalTaskDuration
-            _taskCurrentTime.value = _taskTotalTime.value
-            _taskTimerFinished.value = _taskCurrentTime.value == END
-            _taskTitle.value = _studieTask.value?.studyTaskTitle
-            createCountDownTimer(_taskTotalTime.value!!)
-            _taskCurrentTime.value = (_taskCurrentTime.value!! / ONE_SECOND)
+            _taskTimerFinished.value = timeRemaining == END
+            createCountDownTimer(timeRemaining)
 
         }
     }
 
     private fun getStudieTaskFromDatabase(taskId: Int): Deferred<StudieTask?> {
         return viewModelScope.async(Dispatchers.IO) {
-            val studie = repository.getStudieTask(taskId)
+            val studie = studieTaskRepository.getStudieTask(taskId)
             studie
         }
     }
@@ -72,11 +69,6 @@ class StudieSessieViewModel(private var taskId: Int, private var repository: Stu
     }
 
     fun onResume() {
-        if (_taskCurrentTime.value!! < _taskTotalTime.value!!) {
-            _taskTotalTime.value = _taskCurrentTime.value
-            createCountDownTimer(_taskTotalTime.value!! * 1000L)
-            //1000L zodat we de werkelijke waarde terug omzetten naar ms ipv s
-        }
         _taskTimer?.start()
     }
 
@@ -86,33 +78,53 @@ class StudieSessieViewModel(private var taskId: Int, private var repository: Stu
     }
 
     fun addTime(amount: String) {
-        _taskTotalTime.value = _taskCurrentTime.value
         _taskTimer?.cancel()
+
+        val timeRemaining = _studieTask.value!!.remainingTaskTime
+
         when (amount) {
-            "5" -> createCountDownTimer(_taskTotalTime.value!! * 1000L + 300000L)
-            "10" -> createCountDownTimer(_taskTotalTime.value!! * 1000L + 600000L)
-            "15" -> createCountDownTimer(_taskTotalTime.value!! * 1000L + 900000L)
+            "5" -> createCountDownTimer(timeRemaining + 300000L)
+            "10" -> createCountDownTimer(timeRemaining + 600000L)
+            "15" -> createCountDownTimer(timeRemaining + 900000L)
         }
+
         _taskTimer?.start()
     }
 
-    fun createCountDownTimer(time: Long) {
+    private fun createCountDownTimer(time: Long) {
         _taskTimer = object : CountDownTimer(time, ONE_SECOND) {
             override fun onTick(millisUntilFinished: Long) {
-                _taskCurrentTime.value = (millisUntilFinished / ONE_SECOND)
+                _studieTask.value!!.remainingTaskTime = millisUntilFinished
+
+                // Manueel: Send update naar LiveData!
+                // Een property update, update de LiveData zelf niet, dus geen observer call
+                _studieTask.value = _studieTask.value
+                updateChanges()
             }
 
             override fun onFinish() {
                 _taskTimerFinished.value = true
                 // hier komt dan een melding en een buzzer
             }
+
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        taskTimer?.cancel()
+    fun updateChanges() {
+        viewModelScope.launch {
+            studieTaskRepository.update(_studieTask.value!!)
+        }
     }
 
+    class Factory(private val taskId: Int, private val application: Application) :
+        ViewModelProvider.Factory {
+        @Suppress("unchecked_cast")
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(StudieSessieViewModel::class.java)) {
+                return StudieSessieViewModel(taskId, application) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
 }
 

@@ -10,10 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.studymanager.R
-import com.example.studymanager.database.StudieDatabase
 import com.example.studymanager.databinding.FragmentHomeBinding
-import com.example.studymanager.domain.StudieTaskRepository
-import com.example.studymanager.viewmodels.factories.HomeViewModelFactory
 import com.example.studymanager.viewmodels.adapters.adapters.HomeTaskAdapter
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
 
@@ -21,23 +18,27 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: HomeTaskAdapter
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentHomeBinding.inflate(inflater)
-
-        val application = requireNotNull(this.activity).application
-        val dataSource = StudieDatabase.getInstance(application).studieDatabaseDAO
-        val repository = StudieTaskRepository(dataSource)
-        val viewModelFactory = HomeViewModelFactory(repository, application)
-
-        val homeViewModel = ViewModelProviders.of(this, viewModelFactory)
+    private val homeViewModel: HomeViewModel by lazy {
+        val activity = requireNotNull(this.activity) {
+            "..."
+        }
+        ViewModelProviders.of(this, HomeViewModel.Factory(activity.application))
             .get(HomeViewModel::class.java)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         adapter = HomeTaskAdapter(StudieTaskListener { taskId ->
             homeViewModel.onStudieTaskClicked(taskId)
         })
 
+        binding = FragmentHomeBinding.inflate(inflater)
         binding.homeViewModel = homeViewModel
         binding.recyclerviewHome.adapter = adapter
+        //binding observes live data updates
+        binding.setLifecycleOwner(this)
+
+        startListeners()
 
         homeViewModel.navigateToStudiesessie.observe(this, Observer { studieTask ->
             studieTask?.let {
@@ -46,18 +47,12 @@ class HomeFragment : Fragment() {
             }
         })
 
-        startListeners()
-
-        //binding observes live data updates
-        binding.setLifecycleOwner(this)
-
-        //deze clicklistener moet naar nieuw studie creatie fragment gaan
         binding.btnAddTask.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_studieSessieCreatieFragment)
         )
+
         return binding.root
     }
-
 
     private fun startListeners() {
         binding.homeViewModel?.tasks?.observe(this, Observer { tasks ->

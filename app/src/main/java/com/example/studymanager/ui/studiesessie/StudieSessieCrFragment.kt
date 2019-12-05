@@ -7,31 +7,28 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.studymanager.R
-import com.example.studymanager.database.StudieDatabase
 import com.example.studymanager.databinding.FragmentStudiesessieCreatieBinding
 import com.example.studymanager.domain.StudieTask
-import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieCrViewModel
-import com.example.studymanager.viewmodels.factories.StudieSessieCrViewModelFactory
 import kotlinx.android.synthetic.main.fragment_studiesessie_creatie.*
 
 class StudieSessieCrFragment : Fragment() {
 
     private lateinit var binding: FragmentStudiesessieCreatieBinding
-    private lateinit var viewModel: StudieSessieCrViewModel
+    private val viewModel: StudieSessieCrViewModel by lazy {
+        val activity: FragmentActivity = requireNotNull(this.activity) {
+            "..."
+        }
+        ViewModelProviders.of(this, StudieSessieCrViewModel.Factory(activity.application))
+            .get(StudieSessieCrViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
-        val application = requireNotNull(this.activity).application
-        val dataSource = StudieDatabase.getInstance(application).studieDatabaseDAO
-        var repository = StudieTaskRepository(dataSource)
-        val viewModelFactory = StudieSessieCrViewModelFactory(repository, application)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory)
-            .get(StudieSessieCrViewModel::class.java)
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -44,7 +41,7 @@ class StudieSessieCrFragment : Fragment() {
         val VAKKEN = arrayOf("Android", "Databanken 3", "AI", "Analyse 3")
 
         val adapter = ArrayAdapter(
-            application.applicationContext,
+            requireContext(),
             R.layout.dropdown_menu_item,
             VAKKEN
         )
@@ -64,7 +61,7 @@ class StudieSessieCrFragment : Fragment() {
         }
 
         var gekozenVak = -1
-        binding.filledExposedDropdown.setOnItemClickListener{parent, view, position, id ->
+        binding.filledExposedDropdown.setOnItemClickListener { parent, view, position, id ->
             gekozenVak = id.toInt()
         }
 
@@ -81,15 +78,9 @@ class StudieSessieCrFragment : Fragment() {
                     totaal, totaal, filled_exposed_dropdown.adapter.getItem(gekozenVak).toString()
                 )
             )
-
             findNavController().navigate(R.id.action_studieSessieCreatieFragment_to_homeFragment)
         }
-
-
         return binding.root
-
     }
-
-
 }
 

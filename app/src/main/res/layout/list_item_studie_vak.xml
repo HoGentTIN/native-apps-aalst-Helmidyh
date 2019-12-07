@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vak"
+            type="com.example.studymanager.domain.StudieVak" />
+
+        <variable
+            name="clickListener"
+            type="com.example.studymanager.viewmodels.adapters.adapters.StudieVakListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{()-> clickListener.onClick(vak)}">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

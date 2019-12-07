@@ -9,5 +9,5 @@
     <color name="Android">#A30000</color>
     <color name="AI">#546E7A</color>
     <color name="Databanken">#0288D1</color>
-
+    <color name="rvBackgroundColor">#ececec</color>
 </resources>

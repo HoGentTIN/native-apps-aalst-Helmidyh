@@ -3,6 +3,7 @@
     <string name="vak_prompt">Selecteer een vak</string>
     <string name="start">Start</string>
     <string name="pauze">Pauze</string>
+    <string name="vak_toevoegen">Vak toevoegen</string>
 
     <string-array name="vakken_array">
         <item>Android</item>

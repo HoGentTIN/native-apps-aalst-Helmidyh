@@ -1,6 +1,5 @@
 package com.example.studymanager.domain
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,7 +8,10 @@ import androidx.room.PrimaryKey
 data class StudieVak(
     @PrimaryKey(autoGenerate = true)
     var studieVakId: Int = 0,
-    @ColumnInfo(name = "studie_vak_title")
-    var name: String
-)
-//voorlopig nog enkel deze 2, eerst basis functionaliteit tot en met recyclerview af hebben
+    var name: String,
+    var aantalTasks: Int = 0
+) {
+    override fun toString(): String {
+        return name
+    }
+}

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studymanager.databinding.ListItemStudieTaskBinding
 import com.example.studymanager.domain.StudieTask
 
-class HomeTaskAdapter(val clickListener: StudieTaskListener) : ListAdapter<StudieTask, HomeTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
+class HomeTaskAdapter(var clickListener: StudieTaskListener) : ListAdapter<StudieTask, HomeTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position)!!, clickListener)
@@ -47,6 +47,6 @@ class StudieTaskDiffCallback : DiffUtil.ItemCallback<StudieTask>() {
     }
 }
 
-class StudieTaskListener(val clickListener: (taskId: Int) -> Unit) {
+class StudieTaskListener(var clickListener: (taskId: Int) -> Unit) {
     fun onClick(studieTask: StudieTask) = clickListener(studieTask.studyTaskId)
 }

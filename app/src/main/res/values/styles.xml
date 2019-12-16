@@ -9,10 +9,27 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CustomButton" parent="Widget.MaterialComponents.Button" />
+    <style name="CustomButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorPrimaryLight</item>
+
+    </style>
+
+    <style name="floatingActionBtnStyle" parent="Widget.Design.FloatingActionButton">
+
+        <item name="backgroundTint">@color/colorPrimaryLight</item>
+    </style>
 
     <style name="VakkenRecyclerStyle">
         <item name="android:background">@drawable/rounder_corners</item>
+    </style>
+
+    <style name="VakkenRecyclerItemText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+
     </style>
 
 </resources>

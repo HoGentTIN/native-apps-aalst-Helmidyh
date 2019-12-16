@@ -5,11 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.studymanager.domain.StudieTask
+import com.example.studymanager.domain.StudieVak
 
 
-@Database(entities = [StudieTask::class], version = 1, exportSchema = false)
+@Database(entities = [StudieTask::class,StudieVak::class], version = 3, exportSchema = false)
 abstract class StudieDatabase : RoomDatabase() {
     abstract val studieTaskDAO: StudieTaskDAO
+    abstract val studieVakDAO: StudieVakDAO
 }
 //volatile zorgt er voor dat instance altijd up to date is
 
@@ -19,7 +21,7 @@ private lateinit var INSTANCE: StudieDatabase
 fun getDatabase(context: Context): StudieDatabase {
     synchronized(StudieDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
-           INSTANCE = Room.databaseBuilder(
+            INSTANCE = Room.databaseBuilder(
                 context.applicationContext,
                 StudieDatabase::class.java,
                 "studie_history_database"

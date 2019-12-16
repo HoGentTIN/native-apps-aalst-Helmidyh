@@ -95,7 +95,6 @@
                     android:layout_marginEnd="8dp"
                     android:gravity="center_horizontal|center_vertical"
                     android:lines="3"
-                    android:text="Viewmodels integreren + factory's"
                     android:textSize="24sp"
                     app:autoSizeTextType="none"
                     app:layout_constraintBottom_toBottomOf="parent"

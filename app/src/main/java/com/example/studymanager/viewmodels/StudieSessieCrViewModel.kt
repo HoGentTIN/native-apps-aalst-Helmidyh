@@ -12,20 +12,39 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.home.HomeViewModel
+import com.example.studymanager.models.domain.StudieVakRepository
 
 
 class StudieSessieCrViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getDatabase(application)
+    private val studieVakRepository = StudieVakRepository(database.studieVakDAO)
     private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+
+    val vakken = studieVakRepository.getAllStudieVakken()
 
     init {
         //TODO opschonen
     }
 
-    private suspend fun insert(task: StudieTask) {
-        withContext(Dispatchers.IO) {
-         studieTaskRepository.insert(task)
+
+    //update van vak vij creatie van studietask
+
+    private fun insert(task: StudieTask) {
+        viewModelScope.launch {
+            //hier ook in vak repository studietasks van vak ophalen en aan studietask aan toevoegen
+            studieTaskRepository.insert(task)
+            updateVak(task.vakId)
+            //moet mss async lopen idk
+        }
+    }
+
+    fun updateVak(vakId: Int) {
+        viewModelScope.launch {
+            var x = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
+            var opgehaaldeVak = studieVakRepository.getStudieVak(vakId)
+            opgehaaldeVak.aantalTasks = x.size
+            studieVakRepository.update(opgehaaldeVak)
         }
     }
 
@@ -33,6 +52,9 @@ class StudieSessieCrViewModel(application: Application) : AndroidViewModel(appli
         viewModelScope.launch {
             insert(task)
         }
+        // als we achteraf bij vakken de amount of studietasks per vak willen ophalen, schrijven we in de db een query
+        // getAllstudietasks voor vak .count dan achteraf
+        // getAllTasksVoorVak <-
     }
 
     class Factory(
@@ -45,4 +67,5 @@ class StudieSessieCrViewModel(application: Application) : AndroidViewModel(appli
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
+
 }

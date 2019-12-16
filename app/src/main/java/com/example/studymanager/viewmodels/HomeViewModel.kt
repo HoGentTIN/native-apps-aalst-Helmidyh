@@ -26,10 +26,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun initializeStudieTasks() {
-        getStudieTasksFromRepo()
-    }
-
-    fun getStudieTasksFromRepo() {
         viewModelScope.launch {
             val tasks = studieTaskRepository.getAllStudieTasks()
             _studieTasks.value = tasks

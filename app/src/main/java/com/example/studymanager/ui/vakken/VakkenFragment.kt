@@ -58,8 +58,8 @@ class VakkenFragment : Fragment() {
 
         binding.recyclerviewVakken.adapter = adapter
         binding.vakkenViewModel = vakkenViewModel
-        binding.recyclerviewVakken.setLayoutManager(LinearLayoutManager(context))
-        binding.setLifecycleOwner(this)
+        binding.recyclerviewVakken.layoutManager = (LinearLayoutManager(context))
+        binding.lifecycleOwner = this
 
         binding.btnVakToevoegen.setOnClickListener {
             MaterialDialog(layoutInflater.context).show {

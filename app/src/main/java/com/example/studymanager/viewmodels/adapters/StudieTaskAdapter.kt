@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studymanager.databinding.ListItemStudieTaskBinding
 import com.example.studymanager.domain.StudieTask
 
-class HomeTaskAdapter(var clickListener: StudieTaskListener) : ListAdapter<StudieTask, HomeTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
+class StudieTaskAdapter(var clickListener: StudieTaskListener) : ListAdapter<StudieTask, StudieTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position)!!, clickListener)

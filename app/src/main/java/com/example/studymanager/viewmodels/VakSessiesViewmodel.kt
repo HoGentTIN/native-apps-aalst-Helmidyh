@@ -1,13 +1,14 @@
-package com.example.studymanager.home
+package com.example.studymanager.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class VakSessiesViewmodel(application: Application) : AndroidViewModel(application){
+
 
     private val database = getDatabase(application)
     private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
@@ -41,11 +42,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-                return HomeViewModel(application) as T
+            if (modelClass.isAssignableFrom(VakSessiesViewmodel::class.java)) {
+                return VakSessiesViewmodel(application) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }
-

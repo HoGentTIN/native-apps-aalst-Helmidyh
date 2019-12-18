@@ -11,13 +11,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.studymanager.R
 import com.example.studymanager.databinding.FragmentHomeBinding
-import com.example.studymanager.viewmodels.adapters.adapters.HomeTaskAdapter
+import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskAdapter
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: HomeTaskAdapter
+    private lateinit var adapter: StudieTaskAdapter
     private val homeViewModel: HomeViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "..."
@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        adapter = HomeTaskAdapter(StudieTaskListener { taskId ->
+        adapter = StudieTaskAdapter(StudieTaskListener { taskId ->
             homeViewModel.onStudieTaskClicked(taskId)
         })
 

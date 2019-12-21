@@ -22,17 +22,14 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
      * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
      * @property studieVakRepository = Repository voor het bijhouden van vakken, init via abstract type studieVakDao
      * @property _studieVakken = Ophehaalde vakken van repo
-     * @property _navigateToStudieVak = Value die aangeeft naar waar welk geklikt vak we moeten navigeren
+     * @property _navigateToVakSessies = Value die aangeeft naar waar welk geklikt vak we moeten navigeren
      */
     private val database = getDatabase(application)
     private val studieVakRepository = StudieVakRepository(database.studieVakDAO)
     private var _studieVakken = MutableLiveData<List<StudieVak>>()
-    private val _navigateToStudieVak = MutableLiveData<Int>()
 
     var vakken = studieVakRepository.getAllStudieVakken()
 
-    val navigateToStudiesessie
-        get() = _navigateToStudieVak
 
     init {
         initializeStudieVakken()
@@ -40,10 +37,6 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun initializeStudieVakken() {
 
-    }
-
-    fun onStudieVakClicked(id: Int) {
-        _navigateToStudieVak.value = id
     }
 
     fun onStudieVakLongClicked(vakId: Int) {

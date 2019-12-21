@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studymanager.R
 import com.example.studymanager.databinding.FragmentHomeBinding
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskAdapter
@@ -28,28 +30,26 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        adapter = StudieTaskAdapter(StudieTaskListener { taskId ->
-            homeViewModel.onStudieTaskClicked(taskId)
-        })
 
         binding = FragmentHomeBinding.inflate(inflater)
         binding.homeViewModel = homeViewModel
-        binding.recyclerviewHome.adapter = adapter
-        //binding observes live data updates
         binding.setLifecycleOwner(this)
 
-        startListeners()
-
-        homeViewModel.navigateToStudiesessie.observe(this, Observer { studieTask ->
-            studieTask?.let {
-                this.findNavController()
-                    .navigate(HomeFragmentDirections.actionHomeFragmentToStudieSessieFragment(studieTask))
-            }
+        adapter = StudieTaskAdapter(StudieTaskListener { taskId ->
+            this.findNavController()
+                .navigate(HomeFragmentDirections.actionHomeFragmentToStudieSessieFragment(taskId))
         })
+
+        binding.recyclerviewHome.layoutManager =LinearLayoutManager(context)
+        binding.recyclerviewHome.adapter = adapter
+        //binding observes live data updates
+
 
         binding.btnAddTask.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_studieSessieCreatieFragment)
         )
+
+        startListeners()
 
         return binding.root
     }

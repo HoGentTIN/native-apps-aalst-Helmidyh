@@ -13,13 +13,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
 
     private var _studieTasks = MutableLiveData<List<StudieTask>>()
-    private val _navigateToStudieSessie = MutableLiveData<Int>()
 
     val tasks: LiveData<List<StudieTask>>
         get() = _studieTasks
 
-    val navigateToStudiesessie
-        get() = _navigateToStudieSessie
 
     init {
         initializeStudieTasks()
@@ -30,10 +27,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             val tasks = studieTaskRepository.getAllStudieTasks()
             _studieTasks.value = tasks
         }
-    }
-
-    fun onStudieTaskClicked(id: Int) {
-        _navigateToStudieSessie.value = id
     }
 
     class Factory(

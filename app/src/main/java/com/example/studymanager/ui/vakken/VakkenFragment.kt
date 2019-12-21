@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
@@ -21,7 +22,6 @@ import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.viewmodels.adapters.adapters.StudieVakListener
 import com.example.studymanager.viewmodels.adapters.adapters.StudieVakLongClickListener
 import com.example.studymanager.viewmodels.adapters.adapters.VakkenAdapter
-import kotlinx.android.synthetic.main.list_item_studie_vak.view.*
 
 class VakkenFragment : Fragment() {
 
@@ -37,29 +37,29 @@ class VakkenFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        binding = FragmentVakkenBinding.inflate(inflater)
 
         adapter = VakkenAdapter(StudieVakListener { vakId ->
+            this.findNavController()
+                .navigate(VakkenFragmentDirections.actionVakkenFragmentToVakSessieFragment(vakId))
+        },
+            StudieVakLongClickListener { vakkId ->
 
-            vakkenViewModel.onStudieVakClicked(vakId)
-
-        }, StudieVakLongClickListener { vakkId ->
-
-            MaterialDialog(binding.root.context).show {
-
-                title(text = "Wenst u het gekozen vak te verwijderen ?").titleFont
-
-                positiveButton(R.string.add, "Remove") {
-                    vakkenViewModel.onStudieVakLongClicked(vakkId)
+                MaterialDialog(binding.root.context).show {
+                    title(text = "Wenst u het gekozen vak te verwijderen ?").titleFont
+                    positiveButton(R.string.add, "Remove") {
+                        vakkenViewModel.onStudieVakLongClicked(vakkId)
+                        //deze mss nog aanpassen
+                    }
+                    negativeButton (R.string.cancel, "Cancel")
                 }
-                negativeButton(R.string.cancel, "Cancel")
-            }
-        })
+            })
+        binding = FragmentVakkenBinding.inflate(inflater)
 
         binding.recyclerviewVakken.adapter = adapter
         binding.vakkenViewModel = vakkenViewModel
         binding.recyclerviewVakken.layoutManager = (LinearLayoutManager(context))
         binding.lifecycleOwner = this
+
 
         binding.btnVakToevoegen.setOnClickListener {
             MaterialDialog(layoutInflater.context).show {

@@ -14,7 +14,7 @@ class StudieTaskRepository(private val studieDAO: StudieTaskDAO) {
 
     suspend fun getAllStudieTasksVoorVak(id: Int): List<StudieTask> {
         return withContext(Dispatchers.IO) {
-          studieDAO.getAllTasksForVak(id);
+          studieDAO.getAllTasksForVak(id)
 
         }
     }

@@ -6,12 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieVak
+import com.example.studymanager.models.domain.StudieVakHistory
 
 
-@Database(entities = [StudieTask::class,StudieVak::class], version = 3, exportSchema = false)
+@Database(entities = [StudieTask::class,StudieVak::class,StudieVakHistory::class], version = 4, exportSchema = false)
 abstract class StudieDatabase : RoomDatabase() {
     abstract val studieTaskDAO: StudieTaskDAO
     abstract val studieVakDAO: StudieVakDAO
+    abstract val statsDAO: StatsDAO
 }
 //volatile zorgt er voor dat instance altijd up to date is
 

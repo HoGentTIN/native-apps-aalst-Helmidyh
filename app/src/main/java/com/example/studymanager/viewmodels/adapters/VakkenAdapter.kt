@@ -30,6 +30,10 @@ class VakkenAdapter(var clickListener: StudieVakListener,var longClickListener: 
             binding.vak = item
             binding.clickListener = clickListener
 
+            binding.materialCardView.setOnClickListener {
+                clickListener.onClick(item)
+            }
+
             binding.materialCardView.setOnLongClickListener {
                 longClickListener.onLongClick(item)
                 true

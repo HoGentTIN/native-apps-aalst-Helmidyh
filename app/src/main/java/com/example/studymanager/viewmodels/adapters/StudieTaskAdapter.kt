@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studymanager.databinding.ListItemStudieTaskBinding
 import com.example.studymanager.domain.StudieTask
 
-class HomeTaskAdapter(val clickListener:StudieTaskListener) : ListAdapter<StudieTask, HomeTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
+class StudieTaskAdapter(var clickListener: StudieTaskListener, var longClickListener: StudieTaskLongClickListener) : ListAdapter<StudieTask, StudieTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position)!!,clickListener)
+        holder.bind(getItem(position)!!, clickListener,longClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,9 +19,19 @@ class HomeTaskAdapter(val clickListener:StudieTaskListener) : ListAdapter<Studie
     }
 
     class ViewHolder private constructor(val binding: ListItemStudieTaskBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: StudieTask, clickListener: StudieTaskListener) {
+        fun bind(item: StudieTask, clickListener: StudieTaskListener, longClickListener: StudieTaskLongClickListener) {
             binding.studie = item
             binding.clickListener = clickListener
+
+            binding.taskCardView.setOnClickListener {
+                clickListener.onClick(item)
+            }
+
+            binding.taskCardView.setOnLongClickListener {
+                longClickListener.onLongClick(item)
+                true
+            }
+
             binding.executePendingBindings()
         }
 
@@ -47,7 +57,11 @@ class StudieTaskDiffCallback : DiffUtil.ItemCallback<StudieTask>() {
     }
 }
 
-class StudieTaskListener(val clickListener: (taskId: Int) -> Unit) {
-    fun onClick(studieTask:StudieTask) = clickListener(studieTask.studyTaskId)
+class StudieTaskListener(var clickListener: (taskId: Int) -> Unit) {
+    fun onClick(studieTask: StudieTask) = clickListener(studieTask.studyTaskId)
+}
+
+class StudieTaskLongClickListener(val longClickListener: (taskId: Int) -> Unit) {
+    fun onLongClick(studieTask: StudieTask) = longClickListener(studieTask.studyTaskId)
 
 }

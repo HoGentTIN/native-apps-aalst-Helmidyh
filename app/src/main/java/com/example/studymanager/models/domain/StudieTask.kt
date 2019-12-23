@@ -1,20 +1,27 @@
 package com.example.studymanager.domain
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "study_task_table")
+@Entity(
+    tableName = "studie_task_table", foreignKeys = arrayOf(
+        ForeignKey(
+            entity = StudieVak::class,
+            parentColumns = arrayOf("studieVakId"),
+            childColumns = arrayOf("vakId"),
+            onDelete = ForeignKey.CASCADE
+        )
+    )
+)
 data class StudieTask(
     @PrimaryKey(autoGenerate = true)
-    var studyTaskId: Int = 0,
-    @ColumnInfo(name = "study_task_title")
+    var studyTaskId: Int,
     val studyTaskTitle: String,
-    @ColumnInfo(name = "total_task_duration")
     val totalTaskDuration: Long,
-    @ColumnInfo(name = "remaining_task_time")
     var remainingTaskTime: Long,
-    @ColumnInfo(name = "studie_vak")
-    var vak: String
-
+    var vakId: Int,
+    var vakName: String
 )

@@ -11,10 +11,18 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_studieSessieCreatieFragment"
-            app:destination="@id/studieSessieCreatieFragment" />
+            app:destination="@id/studieSessieCreatieFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
         <action
             android:id="@+id/action_homeFragment_to_studieSessieFragment"
-            app:destination="@id/studieSessieFragment" />
+            app:destination="@id/studieSessieFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -48,7 +56,15 @@
         android:id="@+id/vakkenFragment"
         android:name="com.example.studymanager.vakken.VakkenFragment"
         android:label="vakkenFragment"
-        tools:layout="@layout/fragment_vakken" />
+        tools:layout="@layout/fragment_vakken" >
+        <action
+            android:id="@+id/action_vakkenFragment_to_vakSessieFragment"
+            app:destination="@id/vakSessieFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
+    </fragment>
     <fragment
         android:id="@+id/profielFragment"
         android:name="com.example.studymanager.account.ProfielFragment"
@@ -62,5 +78,20 @@
         <action
             android:id="@+id/action_studieSessieCreatieFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/vakSessieFragment"
+        android:name="com.example.studymanager.ui.vakken.VakSessieFragment"
+        android:label="VakSessieFragment" >
+        <argument
+            android:name="vakId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_vakSessieFragment_to_studieSessieFragment"
+            app:destination="@id/studieSessieFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
 </navigation>

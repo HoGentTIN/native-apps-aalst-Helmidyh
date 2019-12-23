@@ -1,17 +1,17 @@
-package com.example.studymanager.home
+package com.example.studymanager.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
-import com.example.studymanager.domain.StudieVak
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class VakSessiesViewmodel(application: Application, private val vakId: Int) : AndroidViewModel(application) {
+
 
     private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO, database.statsDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO,database.statsDAO)
 
     private var _studieTasks = MutableLiveData<List<StudieTask>>()
 
@@ -25,7 +25,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun initializeStudieTasks() {
         viewModelScope.launch {
-            val tasks = studieTaskRepository.getAllStudieTasks()
+            val tasks = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
             _studieTasks.value = tasks
         }
     }
@@ -44,15 +44,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     class Factory(
-        private val application: Application
+        private val application: Application,private val vakId:Int
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-                return HomeViewModel(application) as T
+            if (modelClass.isAssignableFrom(VakSessiesViewmodel::class.java)) {
+                return VakSessiesViewmodel(application,vakId) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }
-

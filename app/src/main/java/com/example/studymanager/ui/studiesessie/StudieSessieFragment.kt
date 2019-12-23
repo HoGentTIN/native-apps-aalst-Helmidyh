@@ -7,29 +7,30 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.studymanager.R
-import com.example.studymanager.database.StudieDatabase
 import com.example.studymanager.databinding.FragmentStudiesessieBinding
-import com.example.studymanager.domain.StudieTaskRepository
 // import com.example.studymanager.studiesessie.StudieSessieFragmentArgs
 import com.example.studymanager.studiesessie.StudieSessieViewModel
-import com.example.studymanager.viewmodels.factories.StudieSessieViewModelFactory
-import java.util.concurrent.TimeUnit
 
 class StudieSessieFragment : Fragment() {
+
     private lateinit var binding: FragmentStudiesessieBinding
+    private val viewModel: StudieSessieViewModel by lazy {
+        val activity = requireNotNull(this.activity) {
+            "..."
+        }
+        ViewModelProviders.of(
+            this, StudieSessieViewModel.Factory(
+                StudieSessieFragmentArgs.fromBundle(arguments!!).taskId, activity.application
+            )
+        ).get(StudieSessieViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_studiesessie, container, false)
-
-        val arguments = StudieSessieFragmentArgs.fromBundle(arguments!!)
-        val application = requireNotNull(this.activity).application
-        val dataSource = StudieDatabase.getInstance(application).studieDatabaseDAO
-        var repository = StudieTaskRepository(dataSource)
-        var viewModelFactory = StudieSessieViewModelFactory(arguments.taskId, repository, application)
-        var viewModel = ViewModelProvider(this, viewModelFactory)[StudieSessieViewModel::class.java]
+        binding = FragmentStudiesessieBinding.inflate(inflater)
 
         binding.studiesessieViewModel = viewModel
         binding.lifecycleOwner = this
@@ -60,7 +61,6 @@ class StudieSessieFragment : Fragment() {
             viewModel.addTime("15")
         }
 
-        //TODO Viewmodel binding met res file
 
         viewModel.taskTimerFinished.observe(this, Observer { finished ->
             // task deleten of tijd toevoegen ?
@@ -68,4 +68,9 @@ class StudieSessieFragment : Fragment() {
         return binding.root
     }
 
+  // override fun onStop() {
+  //     super.onStop()
+  //     binding.studiesessieViewModel?.updateChanges()
+
+  // }
 }

@@ -22,6 +22,7 @@
         android:onClick="@{()-> clickListener.onClick(studie)}">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/taskCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -52,6 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:clickable="false"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
                         android:text="And"
@@ -69,6 +71,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:checkable="false"
+                        android:clickable="false"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
                         android:text="00:23"
@@ -92,7 +96,6 @@
                     android:layout_marginEnd="8dp"
                     android:gravity="center_horizontal|center_vertical"
                     android:lines="3"
-                    android:text="Viewmodels integreren + factory's"
                     android:textSize="24sp"
                     app:autoSizeTextType="none"
                     app:layout_constraintBottom_toBottomOf="parent"

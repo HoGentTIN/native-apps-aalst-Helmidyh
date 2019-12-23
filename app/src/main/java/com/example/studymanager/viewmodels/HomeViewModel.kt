@@ -6,29 +6,17 @@ import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.domain.StudieVak
+import com.example.studymanager.models.domain.StudieVakRepository
 import kotlinx.coroutines.*
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getDatabase(application)
     private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO, database.statsDAO)
+    private val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
 
-    private var _studieTasks = MutableLiveData<List<StudieTask>>()
+    var tasks = studieTaskRepository.getAllStudieTasks()
 
-    val tasks: LiveData<List<StudieTask>>
-        get() = _studieTasks
-
-
-    init {
-        initializeStudieTasks()
-    }
-
-    private fun initializeStudieTasks() {
-        viewModelScope.launch {
-            val tasks = studieTaskRepository.getAllStudieTasks()
-            _studieTasks.value = tasks
-        }
-    }
 
     fun onStudieTaskLongClicked(taskId: Int) {
         viewModelScope.launch {
@@ -39,6 +27,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun delete(task: StudieTask) {
         viewModelScope.launch {
+            var opgehaaldeVak = studieVakRepository.getStudieVak(task.vakId)
+            opgehaaldeVak.aantalTasks -= 1
+            studieVakRepository.update(opgehaaldeVak)
+
             studieTaskRepository.delete(task)
         }
     }

@@ -11,24 +11,10 @@ class VakSessiesViewmodel(application: Application, private val vakId: Int) : An
 
 
     private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO,database.statsDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO, database.statsDAO)
 
-    private var _studieTasks = MutableLiveData<List<StudieTask>>()
+    var tasks = studieTaskRepository.getAllStudieTasks()
 
-    val tasks: LiveData<List<StudieTask>>
-        get() = _studieTasks
-
-
-    init {
-        initializeStudieTasks()
-    }
-
-    private fun initializeStudieTasks() {
-        viewModelScope.launch {
-            val tasks = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
-            _studieTasks.value = tasks
-        }
-    }
 
     fun onStudieTaskLongClicked(taskId: Int) {
         viewModelScope.launch {
@@ -44,12 +30,12 @@ class VakSessiesViewmodel(application: Application, private val vakId: Int) : An
     }
 
     class Factory(
-        private val application: Application,private val vakId:Int
+        private val application: Application, private val vakId: Int
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(VakSessiesViewmodel::class.java)) {
-                return VakSessiesViewmodel(application,vakId) as T
+                return VakSessiesViewmodel(application, vakId) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

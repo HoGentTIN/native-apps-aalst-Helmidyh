@@ -1,27 +1,26 @@
 package com.example.studymanager.domain
 
+import androidx.lifecycle.LiveData
 import com.example.studymanager.database.StatsDAO
 import com.example.studymanager.database.StudieTaskDAO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class StudieTaskRepository(private val studieDAO: StudieTaskDAO,private val statsDAO: StatsDAO) {
+class StudieTaskRepository(private val studieDAO: StudieTaskDAO, private val statsDAO: StatsDAO) {
 
-    suspend fun getAllStudieTasks(): List<StudieTask> {
-        return withContext(Dispatchers.IO) {
-            studieDAO.getAllTasks()
-        }
+    fun getAllStudieTasks(): LiveData<List<StudieTask>> {
+        return studieDAO.getAllTasks()
     }
 
-    suspend fun getAllStudieTasksVoorVak(id: Int): List<StudieTask> {
-        return withContext(Dispatchers.IO) {
-            studieDAO.getAllTasksForVak(id)
+    fun getAllStudieTasksVoorVak(id: Int): LiveData<List<StudieTask>> {
+        return studieDAO.getAllTasksForVak(id)
 
-        }
     }
 
-    fun getStudieTask(id: Int): StudieTask {
-        return studieDAO.get(id)
+    suspend fun getStudieTask(id: Int): StudieTask {
+        return withContext(Dispatchers.IO) {
+            studieDAO.get(id)
+        }
     }
 
     suspend fun insert(studieTask: StudieTask) {
@@ -34,7 +33,7 @@ class StudieTaskRepository(private val studieDAO: StudieTaskDAO,private val stat
         //vak ophalen van task
         // count toev
         withContext(Dispatchers.IO) {
-           val x = statsDAO.getVak(studieTask.vakName)
+            val x = statsDAO.getVak(studieTask.vakName)
             x.aantalTasks += 1
             x.totaleStudieTijd += x.totaleStudieTijd // niet zeker of dit al werkt
             statsDAO.update(x)

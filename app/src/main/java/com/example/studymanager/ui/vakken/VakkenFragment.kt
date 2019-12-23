@@ -50,7 +50,7 @@ class VakkenFragment : Fragment() {
                         vakkenViewModel.onStudieVakLongClicked(vakkId)
                         //deze mss nog aanpassen
                     }
-                    negativeButton (R.string.cancel, "Cancel")
+                    negativeButton(R.string.cancel, "Cancel")
                 }
             })
         binding = FragmentVakkenBinding.inflate(inflater)

@@ -16,6 +16,9 @@ interface StudieVakDAO {
     @Query("SELECT * from studie_vak_table WHERE studieVakId = :key")
     fun get(key: Int): StudieVak
 
+    @Query("SELECT * from studie_vak_table WHERE name = :vakName")
+    fun get(vakName: String): StudieVak
+
     @Delete
     fun delete(task: StudieVak)
 

@@ -13,25 +13,18 @@ class StudieSessieViewModel(private var taskId: Int, application: Application) :
     AndroidViewModel(application) {
 
     private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO,database.statsDAO)
 
     private var _studieTask = MutableLiveData<StudieTask>()
     private var _taskTimer: CountDownTimer? = null
     private var _taskTimerFinished = MutableLiveData<Boolean>()
-
     private var _taskTotalTime = MutableLiveData<Long>()
     private val _taskTitle: LiveData<String>
         get() = Transformations.map(_studieTask) { x -> x.studyTaskTitle }
 
-    val taskTimer: CountDownTimer?
-        get() = _taskTimer
 
     val taskTimerFinished: LiveData<Boolean>
         get() = _taskTimerFinished
-
-
-    val taskTotalTime: LiveData<Long>
-        get() = _taskTotalTime
 
     val taskTitle: LiveData<String>
         get() = _taskTitle

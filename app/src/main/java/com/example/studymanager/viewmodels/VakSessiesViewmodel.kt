@@ -11,7 +11,7 @@ class VakSessiesViewmodel(application: Application, private val vakId: Int) : An
 
 
     private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO,database.statsDAO)
 
     private var _studieTasks = MutableLiveData<List<StudieTask>>()
 
@@ -27,6 +27,19 @@ class VakSessiesViewmodel(application: Application, private val vakId: Int) : An
         viewModelScope.launch {
             val tasks = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
             _studieTasks.value = tasks
+        }
+    }
+
+    fun onStudieTaskLongClicked(taskId: Int) {
+        viewModelScope.launch {
+            val clickedTask: StudieTask = studieTaskRepository.getStudieTask(taskId)
+            delete(clickedTask)
+        }
+    }
+
+    private fun delete(task: StudieTask) {
+        viewModelScope.launch {
+            studieTaskRepository.delete(task)
         }
     }
 

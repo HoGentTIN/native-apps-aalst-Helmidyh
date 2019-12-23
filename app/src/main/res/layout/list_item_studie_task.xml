@@ -22,6 +22,7 @@
         android:onClick="@{()-> clickListener.onClick(studie)}">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/taskCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

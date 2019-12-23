@@ -9,7 +9,7 @@ import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.models.domain.StudieVakHistory
 
 
-@Database(entities = [StudieTask::class,StudieVak::class,StudieVakHistory::class], version = 4, exportSchema = false)
+@Database(entities = [StudieTask::class,StudieVak::class,StudieVakHistory::class], version = 5, exportSchema = false)
 abstract class StudieDatabase : RoomDatabase() {
     abstract val studieTaskDAO: StudieTaskDAO
     abstract val studieVakDAO: StudieVakDAO

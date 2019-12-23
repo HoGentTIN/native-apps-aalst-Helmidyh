@@ -11,10 +11,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.afollestad.materialdialogs.MaterialDialog
 import com.example.studymanager.R
 import com.example.studymanager.databinding.FragmentHomeBinding
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskAdapter
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
+import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskLongClickListener
 
 class HomeFragment : Fragment() {
 
@@ -38,9 +40,19 @@ class HomeFragment : Fragment() {
         adapter = StudieTaskAdapter(StudieTaskListener { taskId ->
             this.findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToStudieSessieFragment(taskId))
+        }, StudieTaskLongClickListener { taskId ->
+
+            MaterialDialog(binding.root.context).show {
+                title(text = "Wenst u de gekozen task te verwijderen ?").titleFont
+                positiveButton(R.string.add, "Remove") {
+                   homeViewModel.onStudieTaskLongClicked(taskId)
+                    //deze mss nog aanpassen
+                }
+                negativeButton(R.string.cancel, "Cancel")
+            }
         })
 
-        binding.recyclerviewHome.layoutManager =LinearLayoutManager(context)
+        binding.recyclerviewHome.layoutManager = LinearLayoutManager(context)
         binding.recyclerviewHome.adapter = adapter
         //binding observes live data updates
 

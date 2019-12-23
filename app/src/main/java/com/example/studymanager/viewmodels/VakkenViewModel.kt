@@ -11,6 +11,7 @@ import com.afollestad.materialdialogs.input.input
 import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieVak
+import com.example.studymanager.models.domain.StatsRepository
 import com.example.studymanager.models.domain.StudieVakRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,19 +26,11 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
      * @property _navigateToVakSessies = Value die aangeeft naar waar welk geklikt vak we moeten navigeren
      */
     private val database = getDatabase(application)
-    private val studieVakRepository = StudieVakRepository(database.studieVakDAO)
+    private val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
+
     private var _studieVakken = MutableLiveData<List<StudieVak>>()
 
     var vakken = studieVakRepository.getAllStudieVakken()
-
-
-    init {
-        initializeStudieVakken()
-    }
-
-    private fun initializeStudieVakken() {
-
-    }
 
     fun onStudieVakLongClicked(vakId: Int) {
         viewModelScope.launch {

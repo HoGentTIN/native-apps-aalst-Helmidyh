@@ -18,8 +18,8 @@ import com.example.studymanager.models.domain.StudieVakRepository
 class StudieSessieCrViewModel(application: Application) : AndroidViewModel(application) {
 
     private val database = getDatabase(application)
-    private val studieVakRepository = StudieVakRepository(database.studieVakDAO)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+    private val studieVakRepository = StudieVakRepository(database.studieVakDAO,database.statsDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO,database.statsDAO)
 
     val vakken = studieVakRepository.getAllStudieVakken()
 

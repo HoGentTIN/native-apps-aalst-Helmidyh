@@ -6,6 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.studymanager.stats.StatsFragment">
 
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.studymanager.stats.StatsViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Talen"
+            android:text="@{viewmodel.minstGestVak}"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_totaal_gestudeerde_uren"
@@ -69,9 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="20 u 23 min"
+            android:text="WIP"
             android:textColor="@color/colorPrimaryDark"
-
             android:textSize="36sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_totaal_gestudeerde_uren"
@@ -82,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Android"
+            android:text="@{viewmodel.meestGestVak}"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/txt_minst_gestudeerde_vak"

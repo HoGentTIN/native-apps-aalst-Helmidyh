@@ -10,6 +10,12 @@ interface StudieTaskDAO {
     @Insert
     fun insert(task: StudieTask)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg tasks: StudieTask)
+
+    @Query("DELETE FROM studie_task_table")
+    fun clear(): Int
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(task: StudieTask): Int
 

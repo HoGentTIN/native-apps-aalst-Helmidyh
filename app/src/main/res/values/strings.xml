@@ -13,4 +13,14 @@
         <item>Databanken 3</item>
         <item>IOS</item>
     </string-array>
+    <string name="loading_motd">Laden ...</string>
+
+    <string name="error_loading_nonetwork">
+        Het lukte niet om de gegevens van de server te halen.\n
+        Omdat het de eerste keer is dat je de app gebruik, kunnen we hierdoor geen functionaliteit aanbieden.\n
+        Probeer het later eens opnieuw!
+    </string>
+    <string name="title_error_loading">OEPS! Er ging iets mis</string>
+    <string name="action_error_loading">App Sluiten</string>
+
 </resources>

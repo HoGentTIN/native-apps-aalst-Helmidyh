@@ -11,6 +11,12 @@ interface StatsDAO {
     @Insert
     fun insert(task: StudieVakHistory)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg stats: StudieVakHistory)
+
+    @Query("DELETE FROM studie_vak_history")
+    fun clear(): Int
+
     // update moet wss overriden worden
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(task: StudieVakHistory): Int
@@ -19,7 +25,7 @@ interface StatsDAO {
     fun delete(task: StudieTask)
 
     @Query("Select * from studie_vak_history WHERE studyVakHistoryName = :vak")
-    fun getVak(vak:String):StudieVakHistory
+    fun getVak(vak: String): StudieVakHistory
 
     @Query("Select studyVakHistoryName from studie_vak_history WHERE totaleStudieTijd = (select MAX(totaleStudieTijd) from studie_vak_history)")
     fun getMeestGestudeerdeVak(): LiveData<String>

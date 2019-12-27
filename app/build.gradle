@@ -20,7 +20,19 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        manifestPlaceholders = [
+                pushbots_app_id               : "5dfb8b168108c91bad23ef33",
+                pushbots_loglevel             : "DEBUG",
+                google_sender_id              : "491558015202"
+        ]
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     buildTypes {
         release {
@@ -46,6 +58,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.1'
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
@@ -58,10 +71,17 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
     implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
 
+    //aditional
+    implementation 'com.auth0.android:jwtdecode:1.4.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+    implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
+    implementation 'com.airbnb.android:lottie:3.3.0'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit: $version_retrofit"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
+    implementation "com.squareup.retrofit2:converter-moshi: $version_retrofit"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
 
     // Material dialogs - custom lib -> https://github.com/afollestad/material-dialogs
 
@@ -74,4 +94,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    implementation 'com.pushbots:pushbots-lib:3.2.8@aar'
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_auth"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.studymanager.account.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login"
+        >
+        <action
+            android:id="@+id/action_loginFragment2_to_registreerFragment2"
+            app:destination="@id/registreerFragment"
+            app:enterAnim="@anim/com_pushbots_android_fade_in"
+            app:exitAnim="@anim/com_pushbots_android_fade_out"
+            app:popEnterAnim="@anim/com_pushbots_android_fade_in"
+            app:popExitAnim="@anim/com_pushbots_android_fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/registreerFragment"
+        android:name="com.example.studymanager.account.RegistreerFragment"
+        tools:layout="@layout/fragment_register"
+        android:label="RegistreerFragment" />
+</navigation>

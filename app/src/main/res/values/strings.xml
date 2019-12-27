@@ -13,4 +13,34 @@
         <item>Databanken 3</item>
         <item>IOS</item>
     </string-array>
+    <string name="loading_motd">Laden ...</string>
+
+    <string name="title_aanmelden">Aanmelden…</string>
+    <string name="title_registreren">Registreren…</string>
+    <string name="desc_verwijder_foto">Verwijder Foto</string>
+    <string name="desc_geef_toestemming">Geef toestemming</string>
+
+    <!-- NETWORK ERROR -->
+    <string name="error_loading_nonetwork">
+        Het lukte niet om de gegevens van de server te halen.\n
+        Omdat het de eerste keer is dat je de app gebruik, kunnen we hierdoor geen functionaliteit aanbieden.\n
+        Probeer het later eens opnieuw!
+    </string>
+    <string name="title_error_loading">OEPS! Er ging iets mis</string>
+    <string name="action_error_loading">App Sluiten</string>
+
+    <!-- VALIDATION ERROR -->
+    <string name="error_invalid_email">Geef een geldige email in</string>
+    <string name="error_empty">Dit veld is verplicht</string>
+    <string name="error_invalid_password">Het wachtwoord moet minstens 6 tekens lang zijn</string>
+    <string name="error_invalid_passwordConfirm">De ingegeven wachtwoorden komen niet overeen</string>
+    <string name="error_login_failed">Aanmelden mislukt, kijk email en wachtwoord na</string>
+    <string name="error_register_failed">Registreren mislukt, kijk de ingevulde gegevens na</string>
+
+    <!-- GENERIC HTTP ERROR -->
+    <string name="httperror_400">Er liep iets fout bij verzenden van gegevens</string>
+    <string name="httperror_401">Je hebt geen toegang tot dit onderdeel</string>
+    <string name="httperror_404">De opgevraagde gegevens werden niet gevonden</string>
+    <string name="httperror_504">De server reageerde niet tijdig, probeer opnieuw</string>
+
 </resources>

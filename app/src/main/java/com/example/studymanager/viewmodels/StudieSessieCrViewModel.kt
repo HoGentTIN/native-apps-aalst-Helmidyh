@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.home.HomeViewModel
+import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.models.domain.StudieVakRepository
 
 
@@ -30,10 +31,10 @@ class StudieSessieCrViewModel(application: Application) : AndroidViewModel(appli
 
     //update van vak vij creatie van studietask
 
-    private fun insert(task: StudieTask) {
+     fun insert(task: StudieTask) {
         viewModelScope.launch {
             //hier ook in vak repository studietasks van vak ophalen en aan studietask aan toevoegen
-            studieTaskRepository.insert(task)
+            studieTaskRepository.postStudieTask(StudieTaskDTO(task.studieTaskId, task.studieTaskTitle, task.totalTaskDuration, task.remainingTaskTime, task.vakId, task.vakName, 0))
             updateVak(task.vakId)
             //moet mss async lopen idk
         }
@@ -41,21 +42,13 @@ class StudieSessieCrViewModel(application: Application) : AndroidViewModel(appli
 
     fun updateVak(vakId: Int) {
         viewModelScope.launch {
-         //   var x = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
+            //   var x = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
             var opgehaaldeVak = studieVakRepository.getStudieVak(vakId)
-            opgehaaldeVak.aantalTasks +=1
+            opgehaaldeVak.aantalTasks += 1
             studieVakRepository.update(opgehaaldeVak)
         }
     }
 
-    fun createNewStudieTask(task: StudieTask) {
-        viewModelScope.launch {
-            insert(task)
-        }
-        // als we achteraf bij vakken de amount of studietasks per vak willen ophalen, schrijven we in de db een query
-        // getAllstudietasks voor vak .count dan achteraf
-        // getAllTasksVoorVak <-
-    }
 
     class Factory(
         private val application: Application) : ViewModelProvider.Factory {

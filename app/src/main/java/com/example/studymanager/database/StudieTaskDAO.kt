@@ -19,16 +19,16 @@ interface StudieTaskDAO {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(task: StudieTask): Int
 
-    @Query("SELECT * from studie_task_table WHERE studyTaskId = :key")
+    @Query("SELECT * from studie_task_table WHERE studieTaskId = :key")
     fun get(key: Int): StudieTask
 
     @Delete
     fun delete(task: StudieTask)
 
-    @Query("SELECT * from studie_task_table ORDER BY studyTaskId DESC")
+    @Query("SELECT * from studie_task_table ORDER BY studieTaskId DESC")
     fun getAllTasks():LiveData<List<StudieTask>>
 
-    @Query("SELECT * from studie_task_table ORDER BY studyTaskId DESC LIMIT 1")
+    @Query("SELECT * from studie_task_table ORDER BY studieTaskId DESC LIMIT 1")
     fun getMostRecentTask():StudieTask?
 
     @Query("SELECT * from studie_task_table WHERE vakId = :vak ")

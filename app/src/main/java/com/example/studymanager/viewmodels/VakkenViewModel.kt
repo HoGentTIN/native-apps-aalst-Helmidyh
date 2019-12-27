@@ -11,6 +11,7 @@ import com.afollestad.materialdialogs.input.input
 import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieVak
+import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.domain.StatsRepository
 import com.example.studymanager.models.domain.StudieVakRepository
 import kotlinx.coroutines.Dispatchers
@@ -39,15 +40,15 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-// fun insert(vak: StudieVak) {
-//     viewModelScope.launch {
-//         studieVakRepository.insert(vak)
-//     }
-// }
+    fun insert(vak: StudieVak) {
+        viewModelScope.launch {
+            studieVakRepository.postStudieVak(StudieVakDTO(vak.studieVakId,vak.name,vak.aantalTasks,0))
+        }
+    }
 
     private fun delete(vak: StudieVak) {
         viewModelScope.launch {
-            studieVakRepository.delete(vak)
+            studieVakRepository.deleteStudieVak(vak.studieVakId)
         }
     }
 

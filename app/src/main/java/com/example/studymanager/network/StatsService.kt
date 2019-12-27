@@ -6,10 +6,7 @@ import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.DTO.StudieVakHistoryDTO
 import com.example.studymanager.models.domain.StudieVakHistory
 import kotlinx.coroutines.Deferred
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface StatsApiService {
 
@@ -18,6 +15,9 @@ interface StatsApiService {
 
     @POST("studieVakHistory")
     fun postStudieVakHistory(@Body studieVakHistoryDTO: StudieVakHistoryDTO): Deferred<StudieVakHistoryDTO>
+
+    @PUT("studieVakHistory")
+    fun putStudieVakHistory(@Body studieVakHistoryDTO: StudieVakHistoryDTO): Deferred<StudieVakHistoryDTO>
 }
 
 object StatsService {

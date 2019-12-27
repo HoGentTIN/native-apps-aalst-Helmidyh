@@ -75,7 +75,7 @@ class StudieSessieCrFragment : Fragment() {
             val longMinuut = binding.nmbrPickerMinute.value.toLong() * 60000
             val totaal = longUur + longMinuut
             var x = (filled_exposed_dropdown.adapter.getItem(gekozenVak) as StudieVak)
-            viewModel.createNewStudieTask(
+            viewModel.insert(
                 StudieTask(
                     0, binding.txtTaskCreateName.text.toString(),
                     totaal, totaal, x.studieVakId, x.name

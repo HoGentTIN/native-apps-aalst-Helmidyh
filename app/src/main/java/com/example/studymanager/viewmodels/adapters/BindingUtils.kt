@@ -27,7 +27,7 @@ fun TextView.setTaskVakString(item:StudieVak){
 @BindingAdapter("taskTitleString")
 fun TextView.setTaskTitleString(item: StudieTask) {
     item.let {
-        text = item.studyTaskTitle
+        text = item.studieTaskTitle
     }
 }
 

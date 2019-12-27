@@ -39,16 +39,88 @@ class StudieVakRepository(private val vakDAO: StudieVakDAO, private val statsDAO
   //    }
   //}
 
-    suspend fun delete(studieVak: StudieVak) {
-        withContext(Dispatchers.IO) {
-            vakDAO.delete(studieVak)
+  // suspend fun delete(studieVak: StudieVak) {
+  //     withContext(Dispatchers.IO) {
+  //         vakDAO.delete(studieVak)
+  //     }
+  // }
+
+  // suspend fun update(studieVak: StudieVak) {
+  //     withContext(Dispatchers.IO) {
+  //         vakDAO.update(studieVak)
+  //     }
+  // }
+
+    suspend fun deleteStudieVak(vakId:Int): Int {
+        val userHelper = App.getUserHelper()
+        val user = userHelper.getSignedInUser()
+        if (user != null) {
+
+            return withContext(Dispatchers.IO) {
+                val call = StudieVakService.HTTP.deleteStudieVak(vakId)
+
+                val response = try {
+                    val result = call.await()
+                    vakDAO.delete(result.toModel())
+
+                    200
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+
+                    e.code()
+                } catch (e: InterruptedIOException) {
+                    e.printStackTrace()
+
+                    503
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                    -1
+                }
+
+                response
+
+            }
         }
+
+        return -1
     }
 
-    suspend fun update(studieVak: StudieVak) {
-        withContext(Dispatchers.IO) {
-            vakDAO.update(studieVak)
+    suspend fun putStudieVak(vak: StudieVakDTO): Int {
+        val userHelper = App.getUserHelper()
+        val user = userHelper.getSignedInUser()
+        if (user != null) {
+            val id = user.id
+            vak.gebruikerId = id
+
+            return withContext(Dispatchers.IO) {
+                val call = StudieVakService.HTTP.putStudieVak(vak)
+
+                val response = try {
+                    val result = call.await()
+                    vakDAO.update(result.toModel())
+
+                    200
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+
+                    e.code()
+                } catch (e: InterruptedIOException) {
+                    e.printStackTrace()
+
+                    503
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                    -1
+                }
+
+                response
+
+            }
         }
+
+        return -1
     }
 
     suspend fun postStudieVak(vak: StudieVakDTO): Int {

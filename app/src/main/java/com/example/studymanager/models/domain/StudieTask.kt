@@ -18,8 +18,8 @@ import androidx.room.PrimaryKey
 )
 data class StudieTask(
     @PrimaryKey(autoGenerate = true)
-    var studyTaskId: Int,
-    val studyTaskTitle: String,
+    var studieTaskId: Int,
+    val studieTaskTitle: String,
     val totalTaskDuration: Long,
     var remainingTaskTime: Long,
     var vakId: Int,

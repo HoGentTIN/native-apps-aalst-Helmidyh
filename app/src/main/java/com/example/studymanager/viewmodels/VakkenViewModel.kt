@@ -39,11 +39,11 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun insert(vak: StudieVak) {
-        viewModelScope.launch {
-            studieVakRepository.insert(vak)
-        }
-    }
+// fun insert(vak: StudieVak) {
+//     viewModelScope.launch {
+//         studieVakRepository.insert(vak)
+//     }
+// }
 
     private fun delete(vak: StudieVak) {
         viewModelScope.launch {

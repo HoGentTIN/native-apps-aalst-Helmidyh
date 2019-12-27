@@ -11,10 +11,10 @@ import retrofit2.http.Path
 
 interface StudieVakApiService {
 
-    @GET("studieTask/gebruiker/{id}")
+    @GET("studieVak/gebruiker/{id}")
     fun getStudieVakkenForUser(@Path("id") id: Int): Deferred<List<StudieVakDTO>>
 
-    @POST("studieTask")
+    @POST("studieVak")
     fun postStudieVak(@Body studieVakDTO: StudieVakDTO): Deferred<StudieVakDTO>
 }
 

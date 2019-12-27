@@ -30,9 +30,9 @@ class UserHelper(context: Context) {
         val jwt = JWT(authToken!!)
 
         val id = jwt.getClaim("id").asInt()!!
-        val username = jwt.getClaim("username").asString()!!
+        val Email = jwt.getClaim("Email").asString()!!
 
-        return User(id, afbeelding, username)
+        return User(id, afbeelding, Email)
     }
 
     fun signOut() {

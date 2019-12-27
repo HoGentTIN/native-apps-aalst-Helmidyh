@@ -28,23 +28,23 @@ class LoadingViewModel(application: Application) :
         viewModelScope.launch {
             // Check bij startup als de data gedownload is
             // Indien er geen data is, kunnen we geen functionaliteit aanbieden
-            val isFirstSetup = dataHelper.getBoolean(LocalDataHelper.Key.BOOL_ISFIRSTSETUP, defaultValue = true)
+                       // val isFirstSetup = dataHelper.getBoolean(LocalDataHelper.Key.BOOL_ISFIRSTSETUP, defaultValue = true)
             val result = taskRepository.loadStudieTasks()
 
             // Loading speed up: Als het niet de eerste startup is en niks is geladen
             // -> ga er dan vanuit dat de server niet beschikbaar is
-            if (result || isFirstSetup) {
-                val containsVakken = vakkenRepository.loadStudieVakken()
-                val containsStats = statsRepository.loadStats()
+          //if (result || isFirstSetup) {
+          //    val containsVakken = vakkenRepository.loadStudieVakken()
+          //    val containsStats = statsRepository.loadStats()
 
-                if (isFirstSetup && !(containsStats && containsVakken)) {
-                    _loadingResult.value = Activity.RESULT_CANCELED
-                    return@launch
-                }
+          //    if (isFirstSetup && !(containsStats && containsVakken)) {
+          //        _loadingResult.value = Activity.RESULT_CANCELED
+          //        return@launch
+          //    }
 
-                dataHelper.put(LocalDataHelper.Key.BOOL_ISFIRSTSETUP, false)
-                dataHelper.applyChanges()
-            }
+          //    dataHelper.put(LocalDataHelper.Key.BOOL_ISFIRSTSETUP, false)
+          //    dataHelper.applyChanges()
+          //}
 
             _loadingResult.value = Activity.RESULT_OK
         }

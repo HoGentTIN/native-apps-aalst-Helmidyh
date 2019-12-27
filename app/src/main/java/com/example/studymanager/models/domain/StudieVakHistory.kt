@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "studie_vak_history")
 data class StudieVakHistory(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    var studyVakHistoryId:Int,
     var studyVakHistoryName: String,
     var aantalTasks: Int,
     var totaleStudieTijd: Long

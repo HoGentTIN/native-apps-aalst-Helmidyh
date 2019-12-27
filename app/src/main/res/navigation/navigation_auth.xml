@@ -12,7 +12,11 @@
         >
         <action
             android:id="@+id/action_loginFragment2_to_registreerFragment2"
-            app:destination="@id/registreerFragment" />
+            app:destination="@id/registreerFragment"
+            app:enterAnim="@anim/com_pushbots_android_fade_in"
+            app:exitAnim="@anim/com_pushbots_android_fade_out"
+            app:popEnterAnim="@anim/com_pushbots_android_fade_in"
+            app:popExitAnim="@anim/com_pushbots_android_fade_out" />
     </fragment>
     <fragment
         android:id="@+id/registreerFragment"

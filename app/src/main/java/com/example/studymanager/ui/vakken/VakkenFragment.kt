@@ -68,7 +68,7 @@ class VakkenFragment : Fragment() {
                     inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
                 )
                 positiveButton(R.string.add, "Add") {
-                    vakkenViewModel.insert(StudieVak(0, getInputField().text.toString()))
+               //     vakkenViewModel.insert(StudieVak(0, getInputField().text.toString()))
                 }
                 negativeButton(R.string.cancel, "Cancel")
             }

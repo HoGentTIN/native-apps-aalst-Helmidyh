@@ -1,7 +1,8 @@
 package com.example.studymanager.models.DTO
 
 data class RegisterDTO(
-    var username: String,
+    var afbeelding: String?,
+    var Email: String,
     var wachtwoord: String,
     var wachtwoordHerhaling: String
 )

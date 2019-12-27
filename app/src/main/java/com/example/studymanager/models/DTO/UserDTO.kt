@@ -4,5 +4,6 @@ import com.squareup.moshi.Json
 
 data class UserDTO(
     @Json(name = "token")
-    val authToken: String
+    val authToken: String,
+    val afbeelding: String?
 )

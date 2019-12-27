@@ -26,18 +26,18 @@ class StudieVakRepository(private val vakDAO: StudieVakDAO, private val statsDAO
         }
     }
 
-    suspend fun insert(studieVak: StudieVak) {
-        withContext(Dispatchers.IO) {
-            val x = vakDAO.get(studieVak.name)
-            if (x == null) {
-                vakDAO.insert(studieVak)
-            }
-            val m = statsDAO.getVak(studieVak.name)
-            if (m == null) {
-                statsDAO.insert(StudieVakHistory(studieVak.name, 0, 0L))
-            }
-        }
-    }
+  //suspend fun insert(studieVak: StudieVak) {
+  //    withContext(Dispatchers.IO) {
+  //        val x = vakDAO.get(studieVak.name)
+  //        if (x == null) {
+  //            vakDAO.insert(studieVak)
+  //        }
+  //        val m = statsDAO.getVak(studieVak.name)
+  //        if (m == null) {
+  //            statsDAO.insert(StudieVakHistory(studieVak.name, 0, 0L))
+  //        }
+  //    }
+  //}
 
     suspend fun delete(studieVak: StudieVak) {
         withContext(Dispatchers.IO) {

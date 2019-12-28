@@ -25,7 +25,7 @@ class VakSessiesViewmodel(application: Application, private val vakId: Int) : An
 
     private fun delete(task: StudieTask) {
         viewModelScope.launch {
-            studieTaskRepository.delete(task)
+            studieTaskRepository.deleteStudieTask(task.studieTaskId)
         }
     }
 

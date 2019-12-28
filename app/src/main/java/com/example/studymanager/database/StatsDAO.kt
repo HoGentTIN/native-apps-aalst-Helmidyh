@@ -24,13 +24,13 @@ interface StatsDAO {
     @Delete
     fun delete(task: StudieTask)
 
-    @Query("Select * from studie_vak_history WHERE studyVakHistoryName = :vak")
+    @Query("Select * from studie_vak_history WHERE studieVakHistoryName = :vak")
     fun getVak(vak: String): StudieVakHistory
 
-    @Query("Select studyVakHistoryName from studie_vak_history WHERE totaleStudieTijd = (select MAX(totaleStudieTijd) from studie_vak_history)")
+    @Query("Select studieVakHistoryName from studie_vak_history WHERE aantalTasks = (select MAX(aantalTasks) from studie_vak_history)")
     fun getMeestGestudeerdeVak(): LiveData<String>
 
-    @Query("Select studyVakHistoryName from studie_vak_history WHERE totaleStudieTijd = (select MIN(totaleStudieTijd) from studie_vak_history)")
+    @Query("Select studieVakHistoryName from studie_vak_history WHERE aantalTasks = (select MIN(aantalTasks) from studie_vak_history)")
     fun geMinstGestudeerdeVak(): LiveData<String>
 
     @Query("Select SUM(totaleStudieTijd) from studie_vak_history")

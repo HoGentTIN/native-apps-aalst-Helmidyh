@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.home.HomeViewModel
 import com.example.studymanager.models.DTO.StudieTaskDTO
+import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.domain.StudieVakRepository
 
 
@@ -43,9 +44,9 @@ class StudieSessieCrViewModel(application: Application) : AndroidViewModel(appli
     fun updateVak(vakId: Int) {
         viewModelScope.launch {
             //   var x = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
-            var opgehaaldeVak = studieVakRepository.getStudieVak(vakId)
-            opgehaaldeVak.aantalTasks += 1
-            studieVakRepository.update(opgehaaldeVak)
+            var vak = studieVakRepository.getStudieVak(vakId)
+            vak.aantalTasks += 1
+            studieVakRepository.putStudieVak(StudieVakDTO(vak.studieVakId,vak.name,vak.aantalTasks,0))
         }
     }
 

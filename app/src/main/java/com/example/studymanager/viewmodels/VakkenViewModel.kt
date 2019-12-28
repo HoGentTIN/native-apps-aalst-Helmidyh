@@ -12,6 +12,7 @@ import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.models.DTO.StudieVakDTO
+import com.example.studymanager.models.DTO.StudieVakHistoryDTO
 import com.example.studymanager.models.domain.StatsRepository
 import com.example.studymanager.models.domain.StudieVakRepository
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +29,7 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
      */
     private val database = getDatabase(application)
     private val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
+    private val statsRepository = StatsRepository(database.statsDAO)
 
     private var _studieVakken = MutableLiveData<List<StudieVak>>()
 
@@ -43,6 +45,8 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
     fun insert(vak: StudieVak) {
         viewModelScope.launch {
             studieVakRepository.postStudieVak(StudieVakDTO(vak.studieVakId,vak.name,vak.aantalTasks,0))
+            // we schrijven een nieuwe history weg bij creatie van een nieuw vak
+            statsRepository.postStats(StudieVakHistoryDTO(0,vak.name,vak.aantalTasks,0L,0))
         }
     }
 

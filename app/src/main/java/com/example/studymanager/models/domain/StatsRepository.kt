@@ -3,6 +3,8 @@ package com.example.studymanager.models.domain
 import androidx.lifecycle.LiveData
 import com.example.studymanager.App
 import com.example.studymanager.database.StatsDAO
+import com.example.studymanager.database.StudieVakDAO
+import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.models.DTO.StudieVakDTO
@@ -12,6 +14,7 @@ import com.example.studymanager.network.StudieTaskService
 import com.example.studymanager.network.StudieVakService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.internal.wait
 import retrofit2.HttpException
 import java.io.InterruptedIOException
 
@@ -27,6 +30,12 @@ class StatsRepository(private val stats: StatsDAO) {
 
     fun getTotaalAantalGestudeerdeUren(): LiveData<Long> {
         return stats.getTotaalAantalGestudeerdeUren()
+    }
+
+    suspend fun writeToHistory(task: StudieTaskDTO) {
+        withContext(Dispatchers.IO) {
+            putStats(task)
+        }
     }
 
     suspend fun postStats(history: StudieVakHistoryDTO): Int {
@@ -81,7 +90,7 @@ class StatsRepository(private val stats: StatsDAO) {
                 x.aantalTasks += 1
                 x.totaleStudieTijd += x.totaleStudieTijd // niet zeker of dit al werkt
 
-                val call = StatsService.HTTP.putStudieVakHistory(StudieVakHistoryDTO(x.studyVakHistoryId,x.studyVakHistoryName,x.aantalTasks,x.totaleStudieTijd,id))
+                val call = StatsService.HTTP.putStudieVakHistory(StudieVakHistoryDTO(x.studieVakHistoryId, x.studieVakHistoryName, x.aantalTasks, x.totaleStudieTijd, id))
 
                 val response = try {
                     val result = call.await()
@@ -109,7 +118,6 @@ class StatsRepository(private val stats: StatsDAO) {
 
         return -1
     }
-
 
     suspend fun loadStats(): Boolean {
         val userHelper = App.getUserHelper()

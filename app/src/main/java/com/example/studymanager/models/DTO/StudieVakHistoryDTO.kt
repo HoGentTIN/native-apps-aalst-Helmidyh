@@ -5,8 +5,8 @@ import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.models.domain.StudieVakHistory
 
 data class StudieVakHistoryDTO(
-    var studyVakHistoryId: Int,
-    var studyVakHistoryName: String,
+    var studieVakHistoryId: Int,
+    var studieVakHistoryName: String,
     var aantalTasks: Int,
     var totaleStudieTijd: Long,
     var gebruikerId: Int
@@ -15,8 +15,8 @@ data class StudieVakHistoryDTO(
 
     fun toModel(): StudieVakHistory {
         return StudieVakHistory(
-            studyVakHistoryId = studyVakHistoryId,
-            studyVakHistoryName = studyVakHistoryName,
+            studieVakHistoryId = studieVakHistoryId,
+            studieVakHistoryName = studieVakHistoryName,
             aantalTasks = aantalTasks,
             totaleStudieTijd = totaleStudieTijd
         )

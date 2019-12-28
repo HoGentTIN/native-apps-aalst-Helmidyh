@@ -13,10 +13,10 @@ interface StatsApiService {
     @GET("stats/gebruiker/{id}")
     fun getStatsForUser(@Path("id") id: Int): Deferred<List<StudieVakHistoryDTO>>
 
-    @POST("studieVakHistory")
+    @POST("stats")
     fun postStudieVakHistory(@Body studieVakHistoryDTO: StudieVakHistoryDTO): Deferred<StudieVakHistoryDTO>
 
-    @PUT("studieVakHistory")
+    @PUT("stats")
     fun putStudieVakHistory(@Body studieVakHistoryDTO: StudieVakHistoryDTO): Deferred<StudieVakHistoryDTO>
 }
 

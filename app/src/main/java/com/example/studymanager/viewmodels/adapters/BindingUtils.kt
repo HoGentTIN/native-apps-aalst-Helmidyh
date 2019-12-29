@@ -11,23 +11,58 @@ import java.util.concurrent.TimeUnit
 
 //databinding logica van adapter naar xml verplaats dmv deze klasse
 
+@BindingAdapter("minstVakFormat")
+fun TextView.setMinstGestudeerdeVak(item: String?) {
+    item.let {
+        if (item == null) {
+            text = "/"
+        } else {
+            text = item
+        }
+
+    }
+}
+
+@BindingAdapter("meestVakFormat")
+fun TextView.setMeestGestudeerdeVak(item: String?) {
+    item.let {
+        if (item == null) {
+            text = "/"
+        } else {
+            text = item
+        }
+
+    }
+}
+
+@BindingAdapter("uurFormat")
+fun TextView.setFormattedUur(item: Long) {
+    item.let {
+        text = String.format(
+            "%02d",
+            TimeUnit.MILLISECONDS.toHours(item)
+        )
+    }
+}
+
 @BindingAdapter("vakTasks")
-fun TextView.setVakTasks(item:StudieVak){
+fun TextView.setVakTasks(item: StudieVak) {
     item.let {
         text = item.aantalTasks.toString()
     }
 }
 
 @BindingAdapter("vakTitleString")
-fun TextView.setTaskVakString(item:StudieVak){
+fun TextView.setTaskVakString(item: StudieVak) {
     item.let {
         text = item.name
     }
 }
+
 @BindingAdapter("taskTitleString")
 fun TextView.setTaskTitleString(item: StudieTask) {
     item.let {
-        text = item.studyTaskTitle
+        text = item.studieTaskTitle
     }
 }
 
@@ -39,7 +74,7 @@ fun MaterialButton.setTaskTitleString(item: StudieTask) {
             TimeUnit.MILLISECONDS.toHours(item.remainingTaskTime),
             TimeUnit.MILLISECONDS.toMinutes(item.remainingTaskTime) -
                     TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(item.remainingTaskTime))
-        );
+        )
     }
 }
 

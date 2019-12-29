@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
+import com.example.studymanager.models.DTO.StudieTaskDTO
 import kotlinx.coroutines.*
 
 class StudieSessieViewModel(private var taskId: Int, application: Application) :
@@ -20,7 +21,7 @@ class StudieSessieViewModel(private var taskId: Int, application: Application) :
     private var _taskTimerFinished = MutableLiveData<Boolean>()
     private var _taskTotalTime = MutableLiveData<Long>()
     private val _taskTitle: LiveData<String>
-        get() = Transformations.map(_studieTask) { x -> x.studyTaskTitle }
+        get() = Transformations.map(_studieTask) { x -> x.studieTaskTitle }
 
 
     val taskTimerFinished: LiveData<Boolean>
@@ -106,6 +107,13 @@ class StudieSessieViewModel(private var taskId: Int, application: Application) :
     fun updateChanges() {
         viewModelScope.launch {
             studieTaskRepository.update(_studieTask.value!!)
+        }
+    }
+
+    fun persistTime(){
+        viewModelScope.launch {
+            var x = _studieTask.value!!
+            studieTaskRepository.putStudieTask(StudieTaskDTO(x.studieTaskId,x.studieTaskTitle,x.totalTaskDuration,x.remainingTaskTime,x.vakId,x.vakName,0))
         }
     }
 

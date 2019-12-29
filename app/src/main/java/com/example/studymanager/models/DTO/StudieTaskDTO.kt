@@ -3,8 +3,8 @@ package com.example.studymanager.models.DTO
 import com.example.studymanager.domain.StudieTask
 
 data class StudieTaskDTO(
-    var studyTaskId: Int,
-    val studyTaskTitle: String,
+    var studieTaskId: Int,
+    val studieTaskTitle: String,
     val totalTaskDuration: Long,
     var remainingTaskTime: Long,
     var vakId: Int,
@@ -15,8 +15,8 @@ data class StudieTaskDTO(
 
     fun toModel(): StudieTask {
         return StudieTask(
-            studyTaskId = studyTaskId,
-            studyTaskTitle = studyTaskTitle,
+            studieTaskId = studieTaskId,
+            studieTaskTitle = studieTaskTitle,
             totalTaskDuration = totalTaskDuration,
             remainingTaskTime = remainingTaskTime,
             vakId = vakId,

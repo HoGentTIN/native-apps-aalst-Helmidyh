@@ -68,9 +68,9 @@ class StudieSessieFragment : Fragment() {
         return binding.root
     }
 
-  // override fun onStop() {
-  //     super.onStop()
-  //     binding.studiesessieViewModel?.updateChanges()
+  override fun onStop() {
+      super.onStop()
+      binding.studiesessieViewModel?.persistTime()
 
-  // }
+  }
 }

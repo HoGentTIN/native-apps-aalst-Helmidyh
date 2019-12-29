@@ -9,14 +9,13 @@ import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.models.domain.StudieVakHistory
 
 
-@Database(entities = [StudieTask::class,StudieVak::class,StudieVakHistory::class], version = 5, exportSchema = false)
+@Database(entities = [StudieTask::class, StudieVak::class, StudieVakHistory::class], version = 7, exportSchema = false)
 abstract class StudieDatabase : RoomDatabase() {
     abstract val studieTaskDAO: StudieTaskDAO
     abstract val studieVakDAO: StudieVakDAO
     abstract val statsDAO: StatsDAO
 }
-//volatile zorgt er voor dat instance altijd up to date is
-
+/* Volatile zorgt ervoor dat de instantie van de database altijd up-to-date is */
 @Volatile
 private lateinit var INSTANCE: StudieDatabase
 

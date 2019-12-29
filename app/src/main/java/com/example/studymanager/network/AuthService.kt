@@ -15,7 +15,6 @@ interface AuthApiService {
     @POST("auth/register")
     fun registerUser(@Body dto: RegisterDTO): Deferred<UserDTO>
 
-    //TODO Implementeer andere Auth methoden
 }
 
 object AuthService {

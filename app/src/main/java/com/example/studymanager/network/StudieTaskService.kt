@@ -2,18 +2,21 @@ package com.example.studymanager.network
 
 import com.example.studymanager.models.DTO.StudieTaskDTO
 import kotlinx.coroutines.Deferred
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface StudieTaskApiService {
 
     @GET("studieTask/gebruiker/{id}")
     fun getStudieTasksForUser(@Path("id") id: Int): Deferred<List<StudieTaskDTO>>
 
-    @POST("studieTask")
+    @DELETE("StudieTask/{id}")
+    fun deleteStudieTask(@Path("id") id: Int): Deferred<StudieTaskDTO>
+
+    @POST("StudieTask")
     fun postStudieTask(@Body studieTask: StudieTaskDTO): Deferred<StudieTaskDTO>
+
+    @PUT("StudieTask")
+    fun putStudieTask(@Body studieTask: StudieTaskDTO): Deferred<StudieTaskDTO>
 }
 
 object StudieTaskService {

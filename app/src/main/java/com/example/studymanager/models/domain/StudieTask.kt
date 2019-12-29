@@ -12,14 +12,14 @@ import androidx.room.PrimaryKey
             entity = StudieVak::class,
             parentColumns = arrayOf("studieVakId"),
             childColumns = arrayOf("vakId"),
-            onDelete = ForeignKey.CASCADE
+            onDelete = CASCADE
         )
     )
 )
 data class StudieTask(
     @PrimaryKey(autoGenerate = true)
-    var studyTaskId: Int,
-    val studyTaskTitle: String,
+    var studieTaskId: Int,
+    val studieTaskTitle: String,
     val totalTaskDuration: Long,
     var remainingTaskTime: Long,
     var vakId: Int,

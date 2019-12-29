@@ -27,12 +27,9 @@ class StatsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         binding = FragmentStatsBinding.inflate(inflater)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-
-
 
         return binding.root
     }

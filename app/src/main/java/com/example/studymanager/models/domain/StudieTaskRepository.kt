@@ -28,28 +28,83 @@ class StudieTaskRepository(private val studieDAO: StudieTaskDAO, private val sta
         }
     }
 
-    suspend fun insert(studieTask: StudieTask) {
-        withContext(Dispatchers.IO) {
-            studieDAO.insert(studieTask)
-        }
-    }
-
-    suspend fun delete(studieTask: StudieTask) {
-        //vak ophalen van task
-        // count toev
-        withContext(Dispatchers.IO) {
-            val x = statsDAO.getVak(studieTask.vakName)
-            x.aantalTasks += 1
-            x.totaleStudieTijd += x.totaleStudieTijd // niet zeker of dit al werkt
-            statsDAO.update(x)
-            studieDAO.delete(studieTask)
-        }
-    }
-
+    // deze wordt gebruik om lokaal de tijd te laten aflopen ipv elke tick een post naar de api te sturen
     suspend fun update(studieTask: StudieTask) {
         withContext(Dispatchers.IO) {
             studieDAO.update(studieTask)
         }
+    }
+
+    suspend fun deleteStudieTask(taskId:Int): Int {
+        val userHelper = App.getUserHelper()
+        val user = userHelper.getSignedInUser()
+        if (user != null) {
+
+            return withContext(Dispatchers.IO) {
+                val call = StudieTaskService.HTTP.deleteStudieTask(taskId)
+
+                val response = try {
+                    val result = call.await()
+                    studieDAO.delete(result.toModel())
+
+                    200
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+
+                    e.code()
+                } catch (e: InterruptedIOException) {
+                    e.printStackTrace()
+
+                    503
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                    -1
+                }
+
+                response
+
+            }
+        }
+
+        return -1
+    }
+
+    suspend fun putStudieTask(task: StudieTaskDTO): Int {
+        val userHelper = App.getUserHelper()
+        val user = userHelper.getSignedInUser()
+        if (user != null) {
+            val id = user.id
+            task.gebruikerId = id
+
+            return withContext(Dispatchers.IO) {
+                val call = StudieTaskService.HTTP.putStudieTask(task)
+
+                val response = try {
+                    val result = call.await()
+                    studieDAO.update(result.toModel())
+
+                    200
+                } catch (e: HttpException) {
+                    e.printStackTrace()
+
+                    e.code()
+                } catch (e: InterruptedIOException) {
+                    e.printStackTrace()
+
+                    503
+                } catch (e: Exception) {
+                    e.printStackTrace()
+
+                    -1
+                }
+
+                response
+
+            }
+        }
+
+        return -1
     }
 
     suspend fun postStudieTask(task: StudieTaskDTO): Int {

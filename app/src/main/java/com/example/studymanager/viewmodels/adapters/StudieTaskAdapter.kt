@@ -49,7 +49,7 @@ class StudieTaskAdapter(var clickListener: StudieTaskListener, var longClickList
 
 class StudieTaskDiffCallback : DiffUtil.ItemCallback<StudieTask>() {
     override fun areItemsTheSame(oldItem: StudieTask, newItem: StudieTask): Boolean {
-        return oldItem.studyTaskId == newItem.studyTaskId
+        return oldItem.studieTaskId == newItem.studieTaskId
     }
 
     override fun areContentsTheSame(oldItem: StudieTask, newItem: StudieTask): Boolean {
@@ -58,10 +58,10 @@ class StudieTaskDiffCallback : DiffUtil.ItemCallback<StudieTask>() {
 }
 
 class StudieTaskListener(var clickListener: (taskId: Int) -> Unit) {
-    fun onClick(studieTask: StudieTask) = clickListener(studieTask.studyTaskId)
+    fun onClick(studieTask: StudieTask) = clickListener(studieTask.studieTaskId)
 }
 
 class StudieTaskLongClickListener(val longClickListener: (taskId: Int) -> Unit) {
-    fun onLongClick(studieTask: StudieTask) = longClickListener(studieTask.studyTaskId)
+    fun onLongClick(studieTask: StudieTask) = longClickListener(studieTask.studieTaskId)
 
 }

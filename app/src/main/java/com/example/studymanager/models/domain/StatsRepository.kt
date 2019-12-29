@@ -19,25 +19,39 @@ import retrofit2.HttpException
 import java.io.InterruptedIOException
 
 class StatsRepository(private val stats: StatsDAO) {
-
+    /**
+     * We halen Het meest gestudeerde vak op van de lokale Database
+     */
     fun getMeestGestudeerdeVak(): LiveData<String> {
         return stats.getMeestGestudeerdeVak()
     }
 
+    /**
+     * We halen Het meest gestudeerde vak op van de lokale Database
+     */
     fun getMinstGestudeerdeVak(): LiveData<String> {
         return stats.geMinstGestudeerdeVak()
     }
 
+    /**
+     * We halen de som op van de totaal gestudeerde tijd per history
+     */
     fun getTotaalAantalGestudeerdeUren(): LiveData<Long> {
         return stats.getTotaalAantalGestudeerdeUren()
     }
 
+    /**
+     * We halen de history op van het vak en updaten ze
+     */
     suspend fun writeToHistory(task: StudieTaskDTO) {
         withContext(Dispatchers.IO) {
             putStats(task)
         }
     }
 
+    /**
+     * Post functie naar api
+     */
     suspend fun postStats(history: StudieVakHistoryDTO): Int {
         val userHelper = App.getUserHelper()
         val user = userHelper.getSignedInUser()
@@ -75,7 +89,9 @@ class StatsRepository(private val stats: StatsDAO) {
         return -1
     }
 
-    // we halen de historiek van deze task op en passen ze aan
+    /**
+     * Put functie naar api
+     */
     suspend fun putStats(task: StudieTaskDTO): Int {
         val userHelper = App.getUserHelper()
         val user = userHelper.getSignedInUser()
@@ -88,7 +104,7 @@ class StatsRepository(private val stats: StatsDAO) {
                 // er wordt altijd een history aangemaakt per toegevoegd vak dus deze bestaat sws
                 val x = stats.getVak(task.vakName) // deze mss naar ene call
                 x.aantalTasks += 1
-                x.totaleStudieTijd += x.totaleStudieTijd // niet zeker of dit al werkt
+                x.totaleStudieTijd += task.totalTaskDuration // niet zeker of dit al werkt
 
                 val call = StatsService.HTTP.putStudieVakHistory(StudieVakHistoryDTO(x.studieVakHistoryId, x.studieVakHistoryName, x.aantalTasks, x.totaleStudieTijd, id))
 
@@ -119,6 +135,9 @@ class StatsRepository(private val stats: StatsDAO) {
         return -1
     }
 
+    /**
+     * Init functie die al de stats van een gebruiker ophaalt via de api
+     */
     suspend fun loadStats(): Boolean {
         val userHelper = App.getUserHelper()
         val user = userHelper.getSignedInUser()

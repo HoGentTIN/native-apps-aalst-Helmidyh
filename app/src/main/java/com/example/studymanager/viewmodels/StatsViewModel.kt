@@ -22,15 +22,9 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
 
     var meestGestVak = statsRepository.getMeestGestudeerdeVak()
 
-
     var minstGestVak = statsRepository.getMinstGestudeerdeVak()
 
-
     var totGestUur = statsRepository.getTotaalAantalGestudeerdeUren()
-
-
-
-
 
     /**
      * @property Factory = Maakt instantie's van StatsViewmodel aan via de meegegeven Application

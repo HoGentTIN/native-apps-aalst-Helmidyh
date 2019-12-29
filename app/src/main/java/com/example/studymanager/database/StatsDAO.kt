@@ -17,7 +17,6 @@ interface StatsDAO {
     @Query("DELETE FROM studie_vak_history")
     fun clear(): Int
 
-    // update moet wss overriden worden
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(task: StudieVakHistory): Int
 
@@ -33,6 +32,6 @@ interface StatsDAO {
     @Query("Select studieVakHistoryName from studie_vak_history WHERE aantalTasks = (select MIN(aantalTasks) from studie_vak_history)")
     fun geMinstGestudeerdeVak(): LiveData<String>
 
-    @Query("Select SUM(totaleStudieTijd) from studie_vak_history")
+    @Query("Select sum(totaleStudieTijd) from studie_vak_history")
     fun getTotaalAantalGestudeerdeUren(): LiveData<Long>
 }

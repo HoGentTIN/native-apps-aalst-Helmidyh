@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
             entity = StudieVak::class,
             parentColumns = arrayOf("studieVakId"),
             childColumns = arrayOf("vakId"),
-            onDelete = ForeignKey.CASCADE
+            onDelete = CASCADE
         )
     )
 )

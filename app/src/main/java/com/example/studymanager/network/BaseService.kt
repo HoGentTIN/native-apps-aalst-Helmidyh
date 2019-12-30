@@ -1,7 +1,5 @@
 package com.example.studymanager.network
 
-import android.os.Build
-
 import be.hogent.teamoverkill.fietsapp.util.converters.DateAdapter
 import be.hogent.teamoverkill.fietsapp.util.converters.TimeAdapter
 import com.example.studymanager.App

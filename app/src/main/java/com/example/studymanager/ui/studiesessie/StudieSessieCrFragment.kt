@@ -12,9 +12,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.studymanager.R
+import com.example.studymanager.database.getDatabase
 import com.example.studymanager.databinding.FragmentStudiesessieCreatieBinding
 import com.example.studymanager.domain.StudieTask
+import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.domain.StudieVak
+import com.example.studymanager.models.domain.StudieVakRepository
 import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieCrViewModel
 import kotlinx.android.synthetic.main.fragment_studiesessie_creatie.*
 
@@ -24,7 +27,10 @@ class StudieSessieCrFragment : Fragment() {
         val activity: FragmentActivity = requireNotNull(this.activity) {
             "..."
         }
-        ViewModelProviders.of(this, StudieSessieCrViewModel.Factory(activity.application))
+        val database = getDatabase(activity.application)
+        val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
+        val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+        ViewModelProviders.of(this, StudieSessieCrViewModel.Factory(studieVakRepository, studieTaskRepository))
             .get(StudieSessieCrViewModel::class.java)
     }
 

@@ -3,18 +3,11 @@ package com.example.studymanager.models.domain
 import androidx.lifecycle.LiveData
 import com.example.studymanager.App
 import com.example.studymanager.database.StatsDAO
-import com.example.studymanager.database.StudieVakDAO
-import com.example.studymanager.domain.StudieTask
-import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.models.DTO.StudieTaskDTO
-import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.DTO.StudieVakHistoryDTO
 import com.example.studymanager.network.StatsService
-import com.example.studymanager.network.StudieTaskService
-import com.example.studymanager.network.StudieVakService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.internal.wait
 import retrofit2.HttpException
 import java.io.InterruptedIOException
 

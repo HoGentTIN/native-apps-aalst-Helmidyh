@@ -1,19 +1,14 @@
 package com.example.studymanager.account
 
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.studymanager.App
-import com.example.studymanager.R
 import com.example.studymanager.databinding.FragmentProfileBinding
-import com.example.studymanager.databinding.FragmentStatsBinding
-import com.example.studymanager.stats.StatsViewModel
 import com.example.studymanager.ui.activity.StartupActivity
 
 class ProfielFragment : Fragment() {

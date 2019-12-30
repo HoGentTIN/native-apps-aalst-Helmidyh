@@ -1,20 +1,20 @@
 package com.example.studymanager.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.*
-import com.example.studymanager.database.getDatabase
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
 import kotlinx.coroutines.launch
 
-class VakSessiesViewmodel(application: Application, private val vakId: Int) : AndroidViewModel(application) {
-
-
-    private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+/**
+ * @property studieTaskRepository = Repository voor het bijhouden van tasks, init via abstract type studieVakDao
+ */
+class VakSessiesViewmodel(
+    private val vakId: Int,
+    private val studieTaskRepository: StudieTaskRepository) : ViewModel() {
 
     var tasks = studieTaskRepository.getAllStudieTasks()
-
 
     fun onStudieTaskLongClicked(taskId: Int) {
         viewModelScope.launch {
@@ -29,13 +29,12 @@ class VakSessiesViewmodel(application: Application, private val vakId: Int) : An
         }
     }
 
-    class Factory(
-        private val application: Application, private val vakId: Int
+    class Factory(private val vakId: Int, private val studieTaskRepository: StudieTaskRepository
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(VakSessiesViewmodel::class.java)) {
-                return VakSessiesViewmodel(application, vakId) as T
+                return VakSessiesViewmodel(vakId, studieTaskRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

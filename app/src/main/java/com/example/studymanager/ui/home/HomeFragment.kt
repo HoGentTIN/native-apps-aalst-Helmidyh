@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,7 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.studymanager.R
+import com.example.studymanager.database.getDatabase
 import com.example.studymanager.databinding.FragmentHomeBinding
+import com.example.studymanager.domain.StudieTaskRepository
+import com.example.studymanager.models.domain.StatsRepository
+import com.example.studymanager.models.domain.StudieVakRepository
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskAdapter
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskLongClickListener
@@ -25,7 +28,11 @@ class HomeFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "..."
         }
-        ViewModelProviders.of(this, HomeViewModel.Factory(activity.application))
+        val database = getDatabase(activity.application)
+        val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+        val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
+        val statsRepository = StatsRepository(database.statsDAO)
+        ViewModelProviders.of(this, HomeViewModel.Factory(studieTaskRepository,studieVakRepository,statsRepository))
             .get(HomeViewModel::class.java)
     }
 

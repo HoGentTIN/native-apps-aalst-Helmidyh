@@ -26,11 +26,11 @@ interface StudieTaskDAO {
     fun delete(task: StudieTask)
 
     @Query("SELECT * from studie_task_table ORDER BY studieTaskId DESC")
-    fun getAllTasks():LiveData<List<StudieTask>>
+    fun getAllTasks(): LiveData<List<StudieTask>>
 
     @Query("SELECT * from studie_task_table ORDER BY studieTaskId DESC LIMIT 1")
-    fun getMostRecentTask():StudieTask?
+    fun getMostRecentTask(): StudieTask?
 
     @Query("SELECT * from studie_task_table WHERE vakId = :vak ")
-    fun getAllTasksForVak(vak: Int):LiveData<List<StudieTask>>
+    fun getAllTasksForVak(vak: Int): LiveData<List<StudieTask>>
 }

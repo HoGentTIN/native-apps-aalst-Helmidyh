@@ -1,25 +1,22 @@
 package com.example.studymanager.studiesessie
 
-import android.app.Application
 import android.os.CountDownTimer
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.format.DateUtils
 import androidx.lifecycle.*
-import com.example.studymanager.database.getDatabase
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.models.DTO.StudieTaskDTO
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-class StudieSessieViewModel(private var taskId: Int, application: Application) :
-    AndroidViewModel(application) {
-    /**
-     * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
-     * @property studieTaskRepository = Repository voor het bijhouden van tasks, init via abstract type studieVakDao
-     */
-    private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+/**
+ * @property studieTaskRepository = Repository voor het bijhouden van tasks, init via abstract type studieVakDao
+ */
+class StudieSessieViewModel(
+    private var taskId: Int,
+    private val studieTaskRepository: StudieTaskRepository) : ViewModel() {
 
     private var _studieTask = MutableLiveData<StudieTask>()
     private var _taskTimer: CountDownTimer? = null
@@ -115,20 +112,20 @@ class StudieSessieViewModel(private var taskId: Int, application: Application) :
         }
     }
 
-    fun persistTime(){
+    fun persistTime() {
         viewModelScope.launch {
             var x = _studieTask.value!!
-            studieTaskRepository.putStudieTask(StudieTaskDTO(x.studieTaskId,x.studieTaskTitle,x.totalTaskDuration,x.remainingTaskTime,x.vakId,x.vakName,0))
+            studieTaskRepository.putStudieTask(StudieTaskDTO(x.studieTaskId, x.studieTaskTitle, x.totalTaskDuration, x.remainingTaskTime, x.vakId, x.vakName, 0))
         }
     }
 
 
-    class Factory(private val taskId: Int, private val application: Application) :
+    class Factory(private val taskId: Int, private val studieTaskRepository: StudieTaskRepository) :
         ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(StudieSessieViewModel::class.java)) {
-                return StudieSessieViewModel(taskId, application) as T
+                return StudieSessieViewModel(taskId, studieTaskRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

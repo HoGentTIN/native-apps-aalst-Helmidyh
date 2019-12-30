@@ -12,13 +12,16 @@ import kotlinx.coroutines.launch
 
 class LoadingViewModel(application: Application) :
     AndroidViewModel(application) {
-
+    /**
+     * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
+     * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
+     * @property vakkenRepository = Repository voor het bijhouden van studievakken via abstract type studievakDao
+     * @property taskRepository = Repository voor het bijhouden van studietasks via abstract type studievakDao
+     */
     private val database = getDatabase(application)
-    private val taskRepository = StudieTaskRepository(database.studieTaskDAO, database.statsDAO)
+    private val taskRepository = StudieTaskRepository(database.studieTaskDAO)
     private val vakkenRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
     private val statsRepository = StatsRepository(database.statsDAO)
-
-    private val dataHelper = LocalDataHelper("setup", application)
 
     private val _loadingResult = MutableLiveData<Int>()
     val isLoading: LiveData<Int>

@@ -15,28 +15,38 @@ import retrofit2.HttpException
 import java.io.InterruptedIOException
 
 class StudieVakRepository(private val vakDAO: StudieVakDAO, private val statsDAO: StatsDAO) {
-
+    /**
+     * We halen alle studievakken op van de lokale Database
+     */
     fun getAllStudieVakken(): LiveData<List<StudieVak>> {
         return vakDAO.getAllVakken()
     }
 
+    /**
+     * We halen een enkel studievak op van de lokale Database a.d.h.v. een meegegeven id
+     */
     suspend fun getStudieVak(id: Int): StudieVak {
         return withContext(Dispatchers.IO) {
             vakDAO.get(id)
         }
     }
 
-    suspend fun deleteStudieVak(vakId:Int): Int {
+    /**
+     * Post functie naar api
+     */
+    suspend fun postStudieVak(vak: StudieVakDTO): Int {
         val userHelper = App.getUserHelper()
         val user = userHelper.getSignedInUser()
         if (user != null) {
+            val id = user.id
+            vak.gebruikerId = id
 
             return withContext(Dispatchers.IO) {
-                val call = StudieVakService.HTTP.deleteStudieVak(vakId)
+                val call = StudieVakService.HTTP.postStudieVak(vak)
 
                 val response = try {
                     val result = call.await()
-                    vakDAO.delete(result.toModel())
+                    vakDAO.insert(result.toModel())
 
                     200
                 } catch (e: HttpException) {
@@ -61,6 +71,9 @@ class StudieVakRepository(private val vakDAO: StudieVakDAO, private val statsDAO
         return -1
     }
 
+    /**
+     * Put functie naar api
+     */
     suspend fun putStudieVak(vak: StudieVakDTO): Int {
         val userHelper = App.getUserHelper()
         val user = userHelper.getSignedInUser()
@@ -98,19 +111,20 @@ class StudieVakRepository(private val vakDAO: StudieVakDAO, private val statsDAO
         return -1
     }
 
-    suspend fun postStudieVak(vak: StudieVakDTO): Int {
+    /**
+     * Delete functie naar api
+     */
+    suspend fun deleteStudieVak(vakId: Int): Int {
         val userHelper = App.getUserHelper()
         val user = userHelper.getSignedInUser()
         if (user != null) {
-            val id = user.id
-            vak.gebruikerId = id
 
             return withContext(Dispatchers.IO) {
-                val call = StudieVakService.HTTP.postStudieVak(vak)
+                val call = StudieVakService.HTTP.deleteStudieVak(vakId)
 
                 val response = try {
                     val result = call.await()
-                     vakDAO.insert(result.toModel())
+                    vakDAO.delete(result.toModel())
 
                     200
                 } catch (e: HttpException) {
@@ -135,6 +149,9 @@ class StudieVakRepository(private val vakDAO: StudieVakDAO, private val statsDAO
         return -1
     }
 
+    /**
+     * Init functie die alle vakken van een gebruiker ophaalt via de api
+     */
     suspend fun loadStudieVakken(): Boolean {
         val userHelper = App.getUserHelper()
         val user = userHelper.getSignedInUser()

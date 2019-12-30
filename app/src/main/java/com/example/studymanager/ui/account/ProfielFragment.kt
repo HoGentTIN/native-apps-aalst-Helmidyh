@@ -28,15 +28,13 @@ class ProfielFragment : Fragment() {
             )
         ).get(ProfielViewmodel::class.java)
     }
-    override fun onCreateView( inflater: LayoutInflater,  container: ViewGroup?,   savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentProfileBinding.inflate(inflater)
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentProfileBinding.inflate(inflater)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-
-      // binding.imgUserProfile.setImageDrawable(BitmapDrawable(context!!.resources,viewModel.imgBitmap))
+        // binding.imgUserProfile.setImageDrawable(BitmapDrawable(context!!.resources,viewModel.imgBitmap))
 
         binding.btnLogoutSend.setOnClickListener {
             App.getUserHelper().signOut()

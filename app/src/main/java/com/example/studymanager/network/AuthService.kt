@@ -7,6 +7,11 @@ import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.POST
 
+/**
+ * @property loginUser : Api request -> inloggen
+ * @property registerUser : Api request -> registreren
+ *
+ */
 interface AuthApiService {
 
     @POST("auth/login")
@@ -18,5 +23,5 @@ interface AuthApiService {
 }
 
 object AuthService {
-    val HTTP : AuthApiService by lazy { BaseService.RETROFIT.create(AuthApiService::class.java) }
+    val HTTP: AuthApiService by lazy { BaseService.RETROFIT.create(AuthApiService::class.java) }
 }

@@ -11,10 +11,10 @@ import com.example.studymanager.domain.StudieVak
 /**
  * @property VakkenAdapter = De adapter die we binden aan de vakken recyclerview
  */
-class VakkenAdapter(var clickListener: StudieVakListener,var longClickListener: StudieVakLongClickListener) : ListAdapter<StudieVak, VakkenAdapter.ViewHolder>(StudieVakDiffCallback()) {
+class VakkenAdapter(var clickListener: StudieVakListener, var longClickListener: StudieVakLongClickListener) : ListAdapter<StudieVak, VakkenAdapter.ViewHolder>(StudieVakDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position)!!, clickListener,longClickListener)
+        holder.bind(getItem(position)!!, clickListener, longClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,7 +26,7 @@ class VakkenAdapter(var clickListener: StudieVakListener,var longClickListener: 
      * @param binding = de binding met de ListItemStudieVak res file
      */
     class ViewHolder private constructor(val binding: ListItemStudieVakBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: StudieVak, clickListener: StudieVakListener,longClickListener: StudieVakLongClickListener) {
+        fun bind(item: StudieVak, clickListener: StudieVakListener, longClickListener: StudieVakLongClickListener) {
             binding.vak = item
             binding.clickListener = clickListener
 
@@ -67,7 +67,8 @@ class StudieVakListener(val clickListener: (vakkId: Int) -> Unit) {
     fun onClick(studieVak: StudieVak) = clickListener(studieVak.studieVakId)
 
 }
-class StudieVakLongClickListener(val longClickListener: (vakkId: Int) -> Unit){
+
+class StudieVakLongClickListener(val longClickListener: (vakkId: Int) -> Unit) {
     fun onLongClick(studieVak: StudieVak) = longClickListener(studieVak.studieVakId)
 
 }

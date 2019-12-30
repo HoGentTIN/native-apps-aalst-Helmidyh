@@ -16,10 +16,8 @@ class ProfielViewmodel(application: Application) : AndroidViewModel(application)
     var imgBitmap: Bitmap?
 
     init {
-        //mss default image nog doen ipv force cast
         this.imgBitmap = UserPictureHelper.decodeImage(UserHelper(context).getSignedInUser()!!.afbeelding)
     }
-
 
     class Factory(
         private val application: Application

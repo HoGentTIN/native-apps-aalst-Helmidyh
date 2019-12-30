@@ -7,12 +7,10 @@ import com.example.studymanager.R
 import com.example.studymanager.databinding.ActivityAuthBinding
 
 class AuthActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityAuthBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_auth)
     }
 }

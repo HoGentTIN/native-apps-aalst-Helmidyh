@@ -11,7 +11,7 @@ class VakSessiesViewmodel(application: Application, private val vakId: Int) : An
 
 
     private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO, database.statsDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
 
     var tasks = studieTaskRepository.getAllStudieTasks()
 

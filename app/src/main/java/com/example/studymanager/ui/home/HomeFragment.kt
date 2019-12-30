@@ -19,7 +19,6 @@ import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskLongClickListener
 
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: StudieTaskAdapter
     private val homeViewModel: HomeViewModel by lazy {
@@ -31,31 +30,32 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-
         binding = FragmentHomeBinding.inflate(inflater)
         binding.homeViewModel = homeViewModel
         binding.setLifecycleOwner(this)
-
+        /**
+         * ClickListener en LongClickListener voor de StudieTask adapter
+         * Click -> navigate
+         * LongClick -> Delete + popup
+         */
         adapter = StudieTaskAdapter(StudieTaskListener { taskId ->
             this.findNavController()
                 .navigate(HomeFragmentDirections.actionHomeFragmentToStudieSessieFragment(taskId))
-        }, StudieTaskLongClickListener { taskId ->
 
+        }, StudieTaskLongClickListener { taskId ->
             MaterialDialog(binding.root.context).show {
                 title(text = "Wenst u de gekozen task te verwijderen ?").titleFont
                 positiveButton(R.string.add, "Remove") {
-                   homeViewModel.onStudieTaskLongClicked(taskId)
-                    //deze mss nog aanpassen
+                    homeViewModel.onStudieTaskLongClicked(taskId)
                 }
                 negativeButton(R.string.cancel, "Cancel")
             }
+
         })
 
         binding.recyclerviewHome.layoutManager = LinearLayoutManager(context)
+        //binding observeert livedata updates
         binding.recyclerviewHome.adapter = adapter
-        //binding observes live data updates
-
 
         binding.btnAddTask.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_studieSessieCreatieFragment)
@@ -68,8 +68,8 @@ class HomeFragment : Fragment() {
 
     private fun startListeners() {
         binding.homeViewModel?.tasks?.observe(this, Observer { tasks ->
-            // a new version of the list is available !
-            // detects changes and updates the list
+            // wanneer een nieuwe versie van de list available is,
+            // detecteer deze changes dan en update de list
             adapter.submitList(tasks)
         })
     }

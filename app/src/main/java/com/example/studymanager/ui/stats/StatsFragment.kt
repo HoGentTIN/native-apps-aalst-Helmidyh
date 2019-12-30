@@ -13,7 +13,6 @@ import com.example.studymanager.studiesessie.StudieSessieViewModel
 import com.example.studymanager.ui.studiesessie.fragments.StudieSessieFragmentArgs
 
 class StatsFragment : Fragment() {
-
     private lateinit var binding: FragmentStatsBinding
     private val viewModel: StatsViewModel by lazy {
         val activity = requireNotNull(this.activity) {

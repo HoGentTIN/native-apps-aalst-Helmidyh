@@ -19,7 +19,6 @@ import com.example.studymanager.ui.studiesessie.viewmodels.StudieSessieCrViewMod
 import kotlinx.android.synthetic.main.fragment_studiesessie_creatie.*
 
 class StudieSessieCrFragment : Fragment() {
-
     private lateinit var binding: FragmentStudiesessieCreatieBinding
     private val viewModel: StudieSessieCrViewModel by lazy {
         val activity: FragmentActivity = requireNotNull(this.activity) {
@@ -29,8 +28,7 @@ class StudieSessieCrFragment : Fragment() {
             .get(StudieSessieCrViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -67,7 +65,9 @@ class StudieSessieCrFragment : Fragment() {
         binding.filledExposedDropdown.setOnItemClickListener { parent, view, position, id ->
             gekozenVak = id.toInt()
         }
-
+        /**
+         * Maak een nieuwe studieTask aan bij submit en navigeer terug naar het homefragment
+         */
         binding.btnTaskCreateSucces.setOnClickListener(
         ) {
             //1000 ms = 1 sec

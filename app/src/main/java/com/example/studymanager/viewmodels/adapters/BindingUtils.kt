@@ -78,6 +78,9 @@ fun MaterialButton.setTaskTitleString(item: StudieTask) {
     }
 }
 
+/**
+ * Zet een vak om naar een string van de eerste 3 letters + kleur
+ */
 @BindingAdapter("taskVakFormatted")
 fun MaterialButton.setVakAfkorting(item: StudieTask) {
     item.let {
@@ -91,12 +94,7 @@ fun MaterialButton.setVakAfkorting(item: StudieTask) {
             )
         }
 
-        when (text) {
-            "Android" -> setButtonColor(R.color.Android)
-            "AI" -> setButtonColor(R.color.AI)
-            "Dat" -> setButtonColor(R.color.Databanken)
-            else -> setButtonColor(R.color.colorTaskVak)
-        }
+        setButtonColor(R.color.colorTaskVak)
 
         if (item.vakName.length > 2) {
             text = item.vakName.substring(0, 3)

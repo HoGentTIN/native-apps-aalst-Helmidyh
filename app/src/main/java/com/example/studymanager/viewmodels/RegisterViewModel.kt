@@ -70,7 +70,6 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
     }
 
     class Factory(private val application: Application) : ViewModelProvider.Factory {
-
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RegisterViewModel::class.java))

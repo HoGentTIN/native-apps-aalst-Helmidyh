@@ -2,6 +2,8 @@ package com.example.studymanager.studiesessie
 
 import android.app.Application
 import android.os.CountDownTimer
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.format.DateUtils
 import androidx.lifecycle.*
 import com.example.studymanager.database.getDatabase
@@ -12,9 +14,12 @@ import kotlinx.coroutines.*
 
 class StudieSessieViewModel(private var taskId: Int, application: Application) :
     AndroidViewModel(application) {
-
+    /**
+     * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
+     * @property studieTaskRepository = Repository voor het bijhouden van tasks, init via abstract type studieVakDao
+     */
     private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO,database.statsDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
 
     private var _studieTask = MutableLiveData<StudieTask>()
     private var _taskTimer: CountDownTimer? = null
@@ -116,6 +121,7 @@ class StudieSessieViewModel(private var taskId: Int, application: Application) :
             studieTaskRepository.putStudieTask(StudieTaskDTO(x.studieTaskId,x.studieTaskTitle,x.totalTaskDuration,x.remainingTaskTime,x.vakId,x.vakName,0))
         }
     }
+
 
     class Factory(private val taskId: Int, private val application: Application) :
         ViewModelProvider.Factory {

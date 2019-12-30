@@ -13,8 +13,8 @@ class LocalDataHelper(dataName: String, context: Context) {
     enum class Key {
         STR_USERPICTURE,
         STR_USERTOKEN,
-		BOOL_ISFIRSTSETUP,
-		BOOL_HASCAMERAPERMISSION
+        BOOL_ISFIRSTSETUP,
+        BOOL_HASCAMERAPERMISSION
     }
 
     fun put(key: Key, value: String?) {

@@ -24,7 +24,6 @@ private const val PICK_PHOTO_FOR_AVATAR: Int = 1
 
 
 class RegistreerFragment : Fragment(), Validator.ValidationListener {
-
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var isLoadingProgress: ProgressDialog
 
@@ -71,9 +70,7 @@ class RegistreerFragment : Fragment(), Validator.ValidationListener {
         this.validator = Validator(this)
         this.validator.setValidationListener(this)
 
-
         this.txtEmail = binding.txtRegisterEmail.editText!!
-
         this.txtWachtwoord = binding.txtRegisterPassword.editText!!
         this.txtWachtwoordHerhalen = binding.txtRegisterPasswordRepeat.editText!!
     }
@@ -136,9 +133,7 @@ class RegistreerFragment : Fragment(), Validator.ValidationListener {
     }
 
     private fun registerUser() {
-
         val Email = binding.txtRegisterEmail.editText?.text.toString()
-
         val wachtwoord = binding.txtRegisterPassword.editText?.text.toString()
         val wachtwoordHerhaling = binding.txtRegisterPasswordRepeat.editText?.text.toString()
 

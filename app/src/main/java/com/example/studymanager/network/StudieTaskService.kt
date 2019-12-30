@@ -4,6 +4,13 @@ import com.example.studymanager.models.DTO.StudieTaskDTO
 import kotlinx.coroutines.Deferred
 import retrofit2.http.*
 
+/**
+ * @property getStudieTasksForUser : Api request -> GET studieTask
+ * @property deleteStudieTask : Api request -> DELETE studieTask
+ * @property postStudieTask : Api request -> POST studieTask
+ * @property putStudieTask : Api request -> PUT studieTask
+ *
+ */
 interface StudieTaskApiService {
 
     @GET("studieTask/gebruiker/{id}")

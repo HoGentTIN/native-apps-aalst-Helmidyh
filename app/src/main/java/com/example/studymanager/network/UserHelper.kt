@@ -10,6 +10,9 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
 
+/**
+ * Helper klasse om user operaties te vereenvoudigen
+ */
 class UserHelper(context: Context) {
 
     private val dataHelper: LocalDataHelper = LocalDataHelper("Auth", context)
@@ -21,6 +24,9 @@ class UserHelper(context: Context) {
         return authToken != null
     }
 
+    /**
+     * Retourneert de huidig ingelogde gebruiker
+     */
     fun getSignedInUser(): User? {
         if (!isSignedIn())
             return null
@@ -35,6 +41,9 @@ class UserHelper(context: Context) {
         return User(id, afbeelding, Email)
     }
 
+    /**
+     * Logt de gebruiker uit
+     */
     fun signOut() {
         dataHelper.remove(LocalDataHelper.Key.BOOL_ISFIRSTSETUP)
         dataHelper.remove(LocalDataHelper.Key.STR_USERPICTURE)
@@ -42,6 +51,9 @@ class UserHelper(context: Context) {
         dataHelper.applyChanges()
     }
 
+    /**
+     * Slaagt de ingelogde gebruiker op zodat we niet weer moeten onloggen als we de app heropstarten
+     */
     fun saveUser(authToken: String, afbeelding: String?) {
         dataHelper.put(LocalDataHelper.Key.STR_USERTOKEN, authToken)
 
@@ -54,6 +66,10 @@ class UserHelper(context: Context) {
     }
 }
 
+/**
+ * Moet een base64 string omzetten naar een bitmap en dan een BitmapDrawable assignen aan de profile img src,
+ * maar werkt nog niet
+ */
 object UserPictureHelper {
 
     fun decodeImage(base64String: String?): Bitmap? {

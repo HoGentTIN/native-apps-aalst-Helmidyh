@@ -7,6 +7,9 @@ import androidx.fragment.app.DialogFragment
 import com.example.studymanager.R
 import kotlin.system.exitProcess
 
+/**
+ * Popup weergave wanneer de emulator geen connectie met het internet kan maken
+ */
 class SetupNoInternetPopupFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {

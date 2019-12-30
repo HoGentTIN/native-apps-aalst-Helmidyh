@@ -25,7 +25,6 @@ class VakkenViewModel(application: Application) : AndroidViewModel(application) 
      * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
      * @property studieVakRepository = Repository voor het bijhouden van vakken, init via abstract type studieVakDao
      * @property _studieVakken = Ophehaalde vakken van repo
-     * @property _navigateToVakSessies = Value die aangeeft naar waar welk geklikt vak we moeten navigeren
      */
     private val database = getDatabase(application)
     private val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)

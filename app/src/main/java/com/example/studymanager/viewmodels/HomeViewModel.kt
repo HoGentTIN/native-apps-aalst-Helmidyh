@@ -14,9 +14,14 @@ import com.example.studymanager.models.domain.StudieVakRepository
 import kotlinx.coroutines.*
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
-
+    /**
+     * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
+     * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
+     * @property studieVakRepository = Repository voor het bijhouden van studievakken via abstract type studievakDao
+     * @property studieTaskRepository = Repository voor het bijhouden van studietasks via abstract type studievakDao
+     */
     private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO, database.statsDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
     private val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
     private val statsRepository = StatsRepository(database.statsDAO)
 
@@ -41,6 +46,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * Bij het verwijderen van een task moeten we het vak aanpassen (taskAmount)
+     */
     fun updateVak(vakId: Int) {
         viewModelScope.launch {
             var vak = studieVakRepository.getStudieVak(vakId)

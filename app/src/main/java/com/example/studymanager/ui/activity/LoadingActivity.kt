@@ -9,7 +9,7 @@ import com.example.studymanager.R
 import com.example.studymanager.databinding.ActivityLoadingBinding
 import com.example.studymanager.viewmodels.LoadingViewModel
 
-class LoadingActivity: AppCompatActivity() {
+class LoadingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoadingBinding
 
@@ -21,7 +21,6 @@ class LoadingActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_loading)
 
         viewModel.isLoading.observe(this, Observer { loadingResult ->

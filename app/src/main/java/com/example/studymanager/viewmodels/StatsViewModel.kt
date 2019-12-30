@@ -9,21 +9,15 @@ import com.example.studymanager.vakken.VakkenViewModel
 import kotlinx.coroutines.launch
 
 class StatsViewModel(application: Application) : AndroidViewModel(application) {
-
     /**
      * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
      * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
-     * @property _studieVakken = Ophehaalde vakken van repo
-     * @property _navigateToVakSessies = Value die aangeeft naar waar welk geklikt vak we moeten navigeren
      */
     private val database = getDatabase(application)
     private val statsRepository = StatsRepository(database.statsDAO)
 
-
     var meestGestVak = statsRepository.getMeestGestudeerdeVak()
-
     var minstGestVak = statsRepository.getMinstGestudeerdeVak()
-
     var totGestUur = statsRepository.getTotaalAantalGestudeerdeUren()
 
     /**

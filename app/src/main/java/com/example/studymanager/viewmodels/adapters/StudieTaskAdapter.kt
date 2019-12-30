@@ -8,16 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studymanager.databinding.ListItemStudieTaskBinding
 import com.example.studymanager.domain.StudieTask
 
+/**
+ * @property StudieTaskAdapter = De adapter die we binden aan de StudieTask recyclerview
+ */
 class StudieTaskAdapter(var clickListener: StudieTaskListener, var longClickListener: StudieTaskLongClickListener) : ListAdapter<StudieTask, StudieTaskAdapter.ViewHolder>(StudieTaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position)!!, clickListener,longClickListener)
+        holder.bind(getItem(position)!!, clickListener, longClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
+    /**
+     * Viewholder is de effectieve in memory presentatie van je item
+     * @param binding = de binding met de ListItemStudieVak res file
+     */
     class ViewHolder private constructor(val binding: ListItemStudieTaskBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: StudieTask, clickListener: StudieTaskListener, longClickListener: StudieTaskLongClickListener) {
             binding.studie = item

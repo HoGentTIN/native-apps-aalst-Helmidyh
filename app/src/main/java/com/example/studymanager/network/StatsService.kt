@@ -1,13 +1,15 @@
 package com.example.studymanager.network
 
-import com.example.studymanager.domain.StudieVak
-import com.example.studymanager.models.DTO.StudieTaskDTO
-import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.DTO.StudieVakHistoryDTO
-import com.example.studymanager.models.domain.StudieVakHistory
 import kotlinx.coroutines.Deferred
 import retrofit2.http.*
 
+/**
+ * @property getStatsForUser : Api request -> GET stats
+ * @property postStudieVakHistory : Api request -> POST history
+ * @property putStudieVakHistory : Api request -> PUT history
+ *
+ */
 interface StatsApiService {
 
     @GET("stats/gebruiker/{id}")

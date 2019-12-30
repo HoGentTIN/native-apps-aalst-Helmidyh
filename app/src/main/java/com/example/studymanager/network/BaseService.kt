@@ -25,24 +25,10 @@ object BaseService {
 
     private val userHelper = App.getUserHelper()
 
-    private fun isProbablyAnEmulator() = Build.FINGERPRINT.startsWith("generic")
-            || Build.FINGERPRINT.startsWith("unknown")
-            || Build.MODEL.contains("google_sdk")
-            || Build.MODEL.contains("Emulator")
-            || Build.MODEL.contains("Android SDK built for x86")
-            || Build.BOARD == "QC_Reference_Phone" //bluestacks
-            || Build.MANUFACTURER.contains("Genymotion")
-            || Build.HOST.startsWith("Build") //MSI App Player
-            || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
-            || "google_sdk" == Build.PRODUCT
-
     private val BASE_URL: String
         get() {
             // De 10.0.2.2 of "localhost" url werkt enkel op emulator
-            if (BuildConfig.DEBUG && isProbablyAnEmulator())
-                return "https://10.0.2.2:5001/api/"
-
-            return "https://fietsapp.azurewebsites.net/api/"
+            return "https://10.0.2.2:5001/api/"
         }
 
     private val logInterceptor: HttpLoggingInterceptor
@@ -68,7 +54,7 @@ object BaseService {
         .build()
 
     /** Maak een OkHttpClient op basis van debugging status */
-    private fun createHttpClient() : OkHttpClient {
+    private fun createHttpClient(): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
 
         // Source: https://www.vogella.com/tutorials/Retrofit/article.html
@@ -92,37 +78,36 @@ object BaseService {
             okHttpClient.addInterceptor(logInterceptor)
 
             // Accept all certs for hostnames while debugging
-            if (isProbablyAnEmulator()) {
-                try {
-                    // Create a trust manager that does not validate certificate chains
-                    val trustAllCerts: Array<TrustManager> = arrayOf(object : X509TrustManager {
-                        override fun checkClientTrusted(
-                            chain: Array<out X509Certificate>?,
-                            authType: String?
-                        ) = Unit
+            try {
+                // Create a trust manager that does not validate certificate chains
+                val trustAllCerts: Array<TrustManager> = arrayOf(object : X509TrustManager {
+                    override fun checkClientTrusted(
+                        chain: Array<out X509Certificate>?,
+                        authType: String?
+                    ) = Unit
 
-                        override fun checkServerTrusted(
-                            chain: Array<out X509Certificate>?,
-                            authType: String?
-                        ) = Unit
+                    override fun checkServerTrusted(
+                        chain: Array<out X509Certificate>?,
+                        authType: String?
+                    ) = Unit
 
-                        override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-                    })
+                    override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+                })
 
-                    // Install the all-trusting trust manager
-                    val sslContext = SSLContext.getInstance("SSL")
-                    sslContext.init(null, trustAllCerts, SecureRandom())
+                // Install the all-trusting trust manager
+                val sslContext = SSLContext.getInstance("SSL")
+                sslContext.init(null, trustAllCerts, SecureRandom())
 
-                    // Create an ssl socket factory with our all-trusting manager
-                    val sslSocketFactory = sslContext.socketFactory
-                    if (trustAllCerts.isNotEmpty() && trustAllCerts.first() is X509TrustManager) {
-                        okHttpClient.sslSocketFactory(
-                            sslSocketFactory,
-                            trustAllCerts.first() as X509TrustManager
-                        )
-                        okHttpClient.hostnameVerifier(HostnameVerifier { _, _ -> true })
-                    }
-                } catch (e: Exception) {}
+                // Create an ssl socket factory with our all-trusting manager
+                val sslSocketFactory = sslContext.socketFactory
+                if (trustAllCerts.isNotEmpty() && trustAllCerts.first() is X509TrustManager) {
+                    okHttpClient.sslSocketFactory(
+                        sslSocketFactory,
+                        trustAllCerts.first() as X509TrustManager
+                    )
+                    okHttpClient.hostnameVerifier(HostnameVerifier { _, _ -> true })
+                }
+            } catch (e: Exception) {
             }
         }
 

@@ -20,8 +20,6 @@ import com.mobsandgeeks.saripaar.Validator
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 
 class LoginFragment : Fragment(), Validator.ValidationListener {
-
-
     private lateinit var binding: FragmentLoginBinding
     private lateinit var isLoadingProgress: ProgressDialog
 

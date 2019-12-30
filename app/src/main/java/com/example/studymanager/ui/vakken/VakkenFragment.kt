@@ -24,7 +24,6 @@ import com.example.studymanager.viewmodels.adapters.adapters.StudieVakLongClickL
 import com.example.studymanager.viewmodels.adapters.adapters.VakkenAdapter
 
 class VakkenFragment : Fragment() {
-
     private lateinit var binding: FragmentVakkenBinding
     private lateinit var adapter: VakkenAdapter
     private val vakkenViewModel: VakkenViewModel by lazy {
@@ -37,10 +36,16 @@ class VakkenFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
+        /**
+         * ClickListener en LongClickListener voor de StudieVak adapter
+         * Click -> navigate
+         * LongClick -> Delete + popup
+         */
         adapter = VakkenAdapter(StudieVakListener { vakId ->
+
             this.findNavController()
                 .navigate(VakkenFragmentDirections.actionVakkenFragmentToVakSessieFragment(vakId))
+
         },
             StudieVakLongClickListener { vakkId ->
 
@@ -48,10 +53,10 @@ class VakkenFragment : Fragment() {
                     title(text = "Wenst u het gekozen vak te verwijderen ?").titleFont
                     positiveButton(R.string.add, "Remove") {
                         vakkenViewModel.onStudieVakLongClicked(vakkId)
-                        //deze mss nog aanpassen
                     }
                     negativeButton(R.string.cancel, "Cancel")
                 }
+
             })
         binding = FragmentVakkenBinding.inflate(inflater)
 
@@ -60,7 +65,9 @@ class VakkenFragment : Fragment() {
         binding.recyclerviewVakken.layoutManager = (LinearLayoutManager(context))
         binding.lifecycleOwner = this
 
-
+        /**
+         * Vak toevoegen -> Popup + add
+         */
         binding.btnVakToevoegen.setOnClickListener {
             MaterialDialog(layoutInflater.context).show {
                 input(

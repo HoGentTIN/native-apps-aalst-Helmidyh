@@ -17,8 +17,10 @@ import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskAdapter
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskLongClickListener
 
+/**
+ * Analoog aan Homefragment maar adapter heeft andere data
+ */
 class VakSessieFragment : Fragment() {
-
     private lateinit var binding: FragmentVakSessiesBinding
     private lateinit var adapter: StudieTaskAdapter
     private val vakSessieViewModel: VakSessiesViewmodel by lazy {
@@ -40,7 +42,6 @@ class VakSessieFragment : Fragment() {
                 title(text = "Wenst u de gekozen task te verwijderen ?").titleFont
                 positiveButton(R.string.add, "Remove") {
                     vakSessieViewModel.onStudieTaskLongClicked(taskId)
-                    //deze mss nog aanpassen
                 }
                 negativeButton(R.string.cancel, "Cancel")
             }
@@ -53,8 +54,6 @@ class VakSessieFragment : Fragment() {
         binding.lifecycleOwner = this
 
         startListeners()
-
-
 
         return binding.root
     }

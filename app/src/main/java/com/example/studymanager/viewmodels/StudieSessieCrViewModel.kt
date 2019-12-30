@@ -18,35 +18,32 @@ import com.example.studymanager.models.domain.StudieVakRepository
 
 
 class StudieSessieCrViewModel(application: Application) : AndroidViewModel(application) {
-
+    /**
+     * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
+     * @property studieVakRepository = Repository voor het bijhouden van vakken, init via abstract type studieVakDao
+     * @property studieTaskRepository = Repository voor het bijhouden van tasks, init via abstract type studieVakDao
+     */
     private val database = getDatabase(application)
     private val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO, database.statsDAO)
+    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
 
     val vakken = studieVakRepository.getAllStudieVakken()
 
-    init {
-        //TODO opschonen
-    }
-
-
-    //update van vak vij creatie van studietask
-
-     fun insert(task: StudieTask) {
+    /**
+     * Bij create van een nieuwe studiesessie moeten we het vak van die sessie updaten (taskAmount)
+     */
+    fun insert(task: StudieTask) {
         viewModelScope.launch {
-            //hier ook in vak repository studietasks van vak ophalen en aan studietask aan toevoegen
             studieTaskRepository.postStudieTask(StudieTaskDTO(task.studieTaskId, task.studieTaskTitle, task.totalTaskDuration, task.remainingTaskTime, task.vakId, task.vakName, 0))
             updateVak(task.vakId)
-            //moet mss async lopen idk
         }
     }
 
     fun updateVak(vakId: Int) {
         viewModelScope.launch {
-            //   var x = studieTaskRepository.getAllStudieTasksVoorVak(vakId)
-            var vak = studieVakRepository.getStudieVak(vakId)
+            val vak = studieVakRepository.getStudieVak(vakId)
             vak.aantalTasks += 1
-            studieVakRepository.putStudieVak(StudieVakDTO(vak.studieVakId,vak.name,vak.aantalTasks,0))
+            studieVakRepository.putStudieVak(StudieVakDTO(vak.studieVakId, vak.name, vak.aantalTasks, 0))
         }
     }
 

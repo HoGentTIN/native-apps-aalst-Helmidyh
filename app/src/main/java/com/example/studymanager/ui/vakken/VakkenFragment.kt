@@ -17,8 +17,11 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.example.studymanager.R
+import com.example.studymanager.database.getDatabase
 import com.example.studymanager.databinding.FragmentVakkenBinding
 import com.example.studymanager.domain.StudieVak
+import com.example.studymanager.models.domain.StatsRepository
+import com.example.studymanager.models.domain.StudieVakRepository
 import com.example.studymanager.viewmodels.adapters.adapters.StudieVakListener
 import com.example.studymanager.viewmodels.adapters.adapters.StudieVakLongClickListener
 import com.example.studymanager.viewmodels.adapters.adapters.VakkenAdapter
@@ -30,7 +33,10 @@ class VakkenFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "..."
         }
-        ViewModelProviders.of(this, VakkenViewModel.Factory(activity.application))
+        val database = getDatabase(activity.application)
+        val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
+        val statsRepository = StatsRepository(database.statsDAO)
+        ViewModelProviders.of(this, VakkenViewModel.Factory(studieVakRepository,statsRepository))
             .get(VakkenViewModel::class.java)
     }
 

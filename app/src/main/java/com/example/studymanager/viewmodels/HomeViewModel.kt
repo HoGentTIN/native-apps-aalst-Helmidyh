@@ -1,32 +1,28 @@
 package com.example.studymanager.home
 
-import android.app.Application
-import androidx.lifecycle.*
-import com.example.studymanager.database.getDatabase
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
-import com.example.studymanager.domain.StudieVak
 import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.models.DTO.StudieVakDTO
-import com.example.studymanager.models.DTO.StudieVakHistoryDTO
 import com.example.studymanager.models.domain.StatsRepository
 import com.example.studymanager.models.domain.StudieVakRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
-    /**
-     * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
-     * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
-     * @property studieVakRepository = Repository voor het bijhouden van studievakken via abstract type studievakDao
-     * @property studieTaskRepository = Repository voor het bijhouden van studietasks via abstract type studievakDao
-     */
-    private val database = getDatabase(application)
-    private val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
-    private val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
-    private val statsRepository = StatsRepository(database.statsDAO)
+/**
+ * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
+ * @property studieVakRepository = Repository voor het bijhouden van studievakken via abstract type studievakDao
+ * @property studieTaskRepository = Repository voor het bijhouden van studietasks via abstract type studievakDao
+ */
+class HomeViewModel(
+    private val studieTaskRepository: StudieTaskRepository,
+    private val studieVakRepository: StudieVakRepository,
+    private val statsRepository: StatsRepository
+) : ViewModel() {
 
     var tasks = studieTaskRepository.getAllStudieTasks()
-
 
     fun onStudieTaskLongClicked(taskId: Int) {
         viewModelScope.launch {
@@ -59,12 +55,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
 
     class Factory(
-        private val application: Application
+        private val studieTaskRepository: StudieTaskRepository,
+        private val studieVakRepository: StudieVakRepository,
+        private val statsRepository: StatsRepository
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-                return HomeViewModel(application) as T
+                return HomeViewModel(studieTaskRepository, studieVakRepository, statsRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

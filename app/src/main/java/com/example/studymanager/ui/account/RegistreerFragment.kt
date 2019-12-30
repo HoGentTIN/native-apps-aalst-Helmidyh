@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,7 +17,10 @@ import com.example.studymanager.viewmodels.RegisterViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
-import com.mobsandgeeks.saripaar.annotation.*
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword
+import com.mobsandgeeks.saripaar.annotation.Email
+import com.mobsandgeeks.saripaar.annotation.NotEmpty
+import com.mobsandgeeks.saripaar.annotation.Password
 
 private const val PICK_PHOTO_FOR_AVATAR: Int = 1
 

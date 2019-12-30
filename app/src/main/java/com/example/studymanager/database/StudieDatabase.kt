@@ -15,7 +15,10 @@ abstract class StudieDatabase : RoomDatabase() {
     abstract val studieVakDAO: StudieVakDAO
     abstract val statsDAO: StatsDAO
 }
-/* Volatile zorgt ervoor dat de instantie van de database altijd up-to-date is */
+
+/**
+ * Volatile zorgt ervoor dat de instantie van de database altijd up-to-date is
+ */
 @Volatile
 private lateinit var INSTANCE: StudieDatabase
 

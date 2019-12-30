@@ -2,7 +2,6 @@ package com.example.studymanager.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieVak
 
 @Dao

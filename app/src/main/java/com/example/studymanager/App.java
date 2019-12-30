@@ -2,8 +2,6 @@ package com.example.studymanager;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
-
 import com.example.studymanager.network.UserHelper;
 import com.pushbots.push.Pushbots;
 
@@ -49,19 +47,6 @@ public class App extends Application {
         _application = this;
         Pushbots.sharedInstance().init(this);
         _userHelper = new UserHelper(getContext());
-        //  createNotificationChannel();
     }
 
-//  private void createNotificationChannel() {
-//      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//          CharSequence name = getString(R.string.channel_reservatie_name);
-//          String description = getString(R.string.channel_reservatie_desc);
-//          int importance = NotificationManager.IMPORTANCE_DEFAULT;
-//          NotificationChannel channel = new NotificationChannel(CHANNEL_RESERVATIES_ID, name, importance);
-//          channel.setDescription(description);
-
-//          NotificationManager notificationManager = getSystemService(NotificationManager.class);
-//          notificationManager.createNotificationChannel(channel);
-//      }
-//  }
 }

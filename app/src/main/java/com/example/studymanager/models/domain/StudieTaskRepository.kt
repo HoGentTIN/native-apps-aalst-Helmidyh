@@ -2,7 +2,6 @@ package com.example.studymanager.domain
 
 import androidx.lifecycle.LiveData
 import com.example.studymanager.App
-import com.example.studymanager.database.StatsDAO
 import com.example.studymanager.database.StudieTaskDAO
 import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.network.StudieTaskService

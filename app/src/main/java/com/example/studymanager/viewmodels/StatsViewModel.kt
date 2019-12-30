@@ -1,20 +1,12 @@
 package com.example.studymanager.stats
 
-import android.app.Application
-import androidx.lifecycle.*
-import com.example.studymanager.database.getDatabase
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.studymanager.models.domain.StatsRepository
-import com.example.studymanager.models.domain.StudieVakRepository
-import com.example.studymanager.vakken.VakkenViewModel
-import kotlinx.coroutines.launch
-
-class StatsViewModel(application: Application) : AndroidViewModel(application) {
-    /**
-     * @property database = Database instantie die we altijd dezelfde instantie van application meegeven
-     * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
-     */
-    private val database = getDatabase(application)
-    private val statsRepository = StatsRepository(database.statsDAO)
+/**
+ * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
+ */
+class StatsViewModel(private val statsRepository:StatsRepository) : ViewModel() {
 
     var meestGestVak = statsRepository.getMeestGestudeerdeVak()
     var minstGestVak = statsRepository.getMinstGestudeerdeVak()
@@ -24,12 +16,12 @@ class StatsViewModel(application: Application) : AndroidViewModel(application) {
      * @property Factory = Maakt instantie's van StatsViewmodel aan via de meegegeven Application
      */
     class Factory(
-        private val application: Application
+        private val statsRepository:StatsRepository
     ) : ViewModelProvider.Factory {
         @Suppress("unchecked_cast")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(StatsViewModel::class.java)) {
-                return StatsViewModel(application) as T
+                return StatsViewModel(statsRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.studymanager.R
+import com.example.studymanager.database.getDatabase
 import com.example.studymanager.databinding.FragmentVakSessiesBinding
+import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.viewmodels.VakSessiesViewmodel
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskAdapter
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
@@ -27,14 +29,21 @@ class VakSessieFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "..."
         }
-        ViewModelProviders.of(this, VakSessiesViewmodel.Factory(activity.application,VakSessieFragmentArgs.fromBundle(arguments!!).vakId))
+        val database = getDatabase(activity.application)
+        val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+        ViewModelProviders.of(
+            this, VakSessiesViewmodel.Factory(
+                VakSessieFragmentArgs.fromBundle(arguments!!).vakId, studieTaskRepository
+            )
+        )
             .get(VakSessiesViewmodel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         adapter = StudieTaskAdapter(StudieTaskListener { taskId ->
-            this.findNavController().navigate(VakSessieFragmentDirections.actionVakSessieFragmentToStudieSessieFragment(taskId))
+            this.findNavController()
+                .navigate(VakSessieFragmentDirections.actionVakSessieFragmentToStudieSessieFragment(taskId))
 
         }, StudieTaskLongClickListener { taskId ->
 
@@ -60,7 +69,7 @@ class VakSessieFragment : Fragment() {
 
     private fun startListeners() {
         binding.viewModel?.tasks?.observe(this, Observer { tasks ->
-             adapter.submitList(tasks)
+            adapter.submitList(tasks)
         })
     }
 }

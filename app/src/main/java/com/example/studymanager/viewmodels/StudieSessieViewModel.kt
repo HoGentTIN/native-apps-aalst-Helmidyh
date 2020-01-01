@@ -15,8 +15,18 @@ import kotlinx.coroutines.launch
  * @property studieTaskRepository = Repository voor het bijhouden van tasks, init via abstract type studieVakDao
  */
 class StudieSessieViewModel(
+
     private var taskId: Int,
     private val studieTaskRepository: StudieTaskRepository) : ViewModel() {
+
+    /**
+     * Test Constructor
+     */
+    constructor(taskId: Int, studieTaskRepository: StudieTaskRepository, studieTask: StudieTask) : this(taskId, studieTaskRepository) {
+        this.taskId = taskId
+        this._studieTask = MutableLiveData(studieTask)
+
+    }
 
     private var _studieTask = MutableLiveData<StudieTask>()
     private var _taskTimer: CountDownTimer? = null
@@ -40,6 +50,8 @@ class StudieSessieViewModel(
         private const val END = 0L
         private const val ONE_SECOND = 1000L
     }
+
+
 
     init {
         viewModelScope.launch {

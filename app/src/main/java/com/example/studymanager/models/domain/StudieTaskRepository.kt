@@ -5,6 +5,7 @@ import com.example.studymanager.App
 import com.example.studymanager.database.StudieTaskDAO
 import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.network.StudieTaskService
+import com.example.studymanager.network.UserHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -22,10 +23,8 @@ class StudieTaskRepository(private val studieDAO: StudieTaskDAO) {
     /**
      * We halen een enkele studietask op van de lokale Database a.d.h.v. een meegegeven id
      */
-    suspend fun getStudieTask(id: Int): StudieTask {
-        return withContext(Dispatchers.IO) {
-            studieDAO.get(id)
-        }
+    fun getStudieTask(id: Int): StudieTask {
+        return studieDAO.get(id)
     }
 
     /**
@@ -40,12 +39,18 @@ class StudieTaskRepository(private val studieDAO: StudieTaskDAO) {
     /**
      * Post functie naar api
      */
-    suspend fun postStudieTask(task: StudieTaskDTO): Int {
-        val userHelper = App.getUserHelper()
+    suspend fun postStudieTask(task: StudieTaskDTO, helper: UserHelper? = null): Int {
+        var userHelper = App.getUserHelper()
+        if (helper != null) {
+            userHelper = helper
+        }
         val user = userHelper.getSignedInUser()
         if (user != null) {
-            val id = user.id
-            task.gebruikerId = id
+
+            if (helper == null) {
+                val id = user.id
+                task.gebruikerId = id
+            }
 
             return withContext(Dispatchers.IO) {
                 val call = StudieTaskService.HTTP.postStudieTask(task)

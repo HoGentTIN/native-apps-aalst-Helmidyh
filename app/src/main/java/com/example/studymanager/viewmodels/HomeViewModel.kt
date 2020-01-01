@@ -9,7 +9,9 @@ import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.domain.StatsRepository
 import com.example.studymanager.models.domain.StudieVakRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @property statsRepository = Repository voor het bijhouden van algemene statistieken van de app, init via abstract type statsDao
@@ -26,8 +28,10 @@ class HomeViewModel(
 
     fun onStudieTaskLongClicked(taskId: Int) {
         viewModelScope.launch {
-            val clickedTask: StudieTask = studieTaskRepository.getStudieTask(taskId)
-            delete(clickedTask)
+            withContext(Dispatchers.IO) {
+                val clickedTask: StudieTask = studieTaskRepository.getStudieTask(taskId)
+                delete(clickedTask)
+            }
         }
     }
 
@@ -47,9 +51,12 @@ class HomeViewModel(
      */
     fun updateVak(vakId: Int) {
         viewModelScope.launch {
-            var vak = studieVakRepository.getStudieVak(vakId)
-            vak.aantalTasks -= 1
-            studieVakRepository.putStudieVak(StudieVakDTO(vak.studieVakId, vak.name, vak.aantalTasks, 0))
+            withContext(Dispatchers.IO) {
+                var vak = studieVakRepository.getStudieVak(vakId)
+                vak.aantalTasks -= 1
+                studieVakRepository.putStudieVak(StudieVakDTO(vak.studieVakId, vak.name, vak.aantalTasks, 0))
+            }
+
         }
     }
 

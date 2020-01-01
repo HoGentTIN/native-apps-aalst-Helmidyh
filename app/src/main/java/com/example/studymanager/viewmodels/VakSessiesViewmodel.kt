@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.studymanager.domain.StudieTask
 import com.example.studymanager.domain.StudieTaskRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @property studieTaskRepository = Repository voor het bijhouden van tasks, init via abstract type studieVakDao
@@ -18,8 +20,10 @@ class VakSessiesViewmodel(
 
     fun onStudieTaskLongClicked(taskId: Int) {
         viewModelScope.launch {
-            val clickedTask: StudieTask = studieTaskRepository.getStudieTask(taskId)
-            delete(clickedTask)
+            withContext(Dispatchers.IO) {
+                val clickedTask: StudieTask = studieTaskRepository.getStudieTask(taskId)
+                delete(clickedTask)
+            }
         }
     }
 

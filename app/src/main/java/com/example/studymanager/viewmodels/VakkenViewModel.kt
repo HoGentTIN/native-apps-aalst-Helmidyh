@@ -9,7 +9,9 @@ import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.DTO.StudieVakHistoryDTO
 import com.example.studymanager.models.domain.StatsRepository
 import com.example.studymanager.models.domain.StudieVakRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @property studieVakRepository = Repository voor het bijhouden van vakken, init via abstract type studieVakDao
@@ -25,8 +27,10 @@ class VakkenViewModel(
 
     fun onStudieVakLongClicked(vakId: Int) {
         viewModelScope.launch {
-            val clickedVak = studieVakRepository.getStudieVak(vakId)
-            delete(clickedVak)
+            withContext(Dispatchers.IO) {
+                val clickedVak = studieVakRepository.getStudieVak(vakId)
+                delete(clickedVak)
+            }
         }
     }
 

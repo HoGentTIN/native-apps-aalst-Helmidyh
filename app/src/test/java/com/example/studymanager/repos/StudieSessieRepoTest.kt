@@ -1,4 +1,4 @@
-package com.example.studymanager.viewmodels
+package com.example.studymanager.repos
 
 import androidx.lifecycle.MutableLiveData
 import com.example.studymanager.database.StudieTaskDAO
@@ -13,10 +13,8 @@ import org.junit.Before
 import org.junit.Test
 
 class StudieSessieRepoTest {
-    // private lateinit var viewModel: StudieSessieViewModel
     private var studieTaskDAO: StudieTaskDAO = mockk()
     private lateinit var studieTaskRepository: StudieTaskRepository
-
     private var tasks = MutableLiveData<List<StudieTask>>()
 
     private var task: StudieTask = mockk()

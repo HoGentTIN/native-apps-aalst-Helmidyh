@@ -8,7 +8,9 @@ import com.example.studymanager.domain.StudieTaskRepository
 import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.models.DTO.StudieVakDTO
 import com.example.studymanager.models.domain.StudieVakRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * @property studieVakRepository = Repository voor het bijhouden van vakken, init via abstract type studieVakDao
@@ -30,9 +32,11 @@ class StudieSessieCrViewModel(private val studieVakRepository: StudieVakReposito
 
     fun updateVak(vakId: Int) {
         viewModelScope.launch {
-            val vak = studieVakRepository.getStudieVak(vakId)
-            vak.aantalTasks += 1
-            studieVakRepository.putStudieVak(StudieVakDTO(vak.studieVakId, vak.name, vak.aantalTasks, 0))
+            withContext(Dispatchers.IO){
+                val vak = studieVakRepository.getStudieVak(vakId)
+                vak.aantalTasks += 1
+                studieVakRepository.putStudieVak(StudieVakDTO(vak.studieVakId, vak.name, vak.aantalTasks, 0))
+            }
         }
     }
 

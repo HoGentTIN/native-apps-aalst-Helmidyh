@@ -5,9 +5,7 @@ import com.example.studymanager.App
 import com.example.studymanager.database.StatsDAO
 import com.example.studymanager.database.StudieVakDAO
 import com.example.studymanager.domain.StudieVak
-import com.example.studymanager.models.DTO.StudieTaskDTO
 import com.example.studymanager.models.DTO.StudieVakDTO
-import com.example.studymanager.network.StudieTaskService
 import com.example.studymanager.network.StudieVakService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,10 +23,9 @@ class StudieVakRepository(private val vakDAO: StudieVakDAO, private val statsDAO
     /**
      * We halen een enkel studievak op van de lokale Database a.d.h.v. een meegegeven id
      */
-    suspend fun getStudieVak(id: Int): StudieVak {
-        return withContext(Dispatchers.IO) {
-            vakDAO.get(id)
-        }
+    //berzig
+    fun getStudieVak(id: Int): StudieVak {
+        return vakDAO.get(id)
     }
 
     /**

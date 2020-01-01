@@ -25,6 +25,7 @@ class StudieTaskRepository(private val studieDAO: StudieTaskDAO) {
      */
     fun getStudieTask(id: Int): StudieTask {
         return studieDAO.get(id)
+
     }
 
     /**

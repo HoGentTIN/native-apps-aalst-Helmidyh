@@ -17,10 +17,11 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class StudieSessieViewModelTest {
+class StudieTaskApiTest {
+
+    // OKHTTP CLIENT certificate fout
 
     private var studieTaskService: StudieTaskService = mockk()
-
 
     private var studieTaskDAO: StudieTaskDAO = mockk()
     private var studieTaskRepository: StudieTaskRepository = mockk()
@@ -39,7 +40,6 @@ class StudieSessieViewModelTest {
     fun setUp() {
         //Arrange
 
-
         studieTaskRepository = StudieTaskRepository(studieTaskDAO)
         coEvery { userHelper.getSignedInUser() } returns user
         coEvery { user.id } returns 1
@@ -47,6 +47,7 @@ class StudieSessieViewModelTest {
         /**
          * API CALLS
          */
+
         coEvery { studieTaskService.HTTP.postStudieTask(taskDTO) } returns CompletableDeferred(taskDTO)
         coEvery { studieTaskService.HTTP.putStudieTask(taskDTO) } returns CompletableDeferred(taskDTO)
 
@@ -66,19 +67,20 @@ class StudieSessieViewModelTest {
     }
 
     @Test
-    @kotlinx.coroutines.ExperimentalCoroutinesApi
-    fun vakkenVM_onPut_PutsToApi() {
+    fun studieTaskApi_onPost_PostsToApi() {
         // Arrange
         runBlocking {
+            coEvery { studieTaskRepository.postStudieTask(taskDTO, userHelper) } returns 200
 
-            //studieTaskRepository.postStudieTask(taskDTO,userHelper)
-            var x = studieTaskService.HTTP.postStudieTask(taskDTO)
+            var x = studieTaskRepository.postStudieTask(taskDTO, userHelper)
+            // var x = studieTaskService.HTTP.postStudieTask(taskDTO)
 
-            coVerify { studieTaskService.HTTP.postStudieTask(taskDTO) }
+            coVerify {  studieTaskService.HTTP.postStudieTask(taskDTO) }
 
             // coVerify { studieTaskDAO.insert(task) }
-            Assert.assertTrue(x.await() == taskDTO)
+            Assert.assertTrue(x == 200)
         }
+
 
     }
 }

@@ -15,12 +15,20 @@
     </style>
 
     <style name="floatingActionBtnStyle" parent="Widget.Design.FloatingActionButton">
-
+        <item name="android:tint">@android:color/white</item>
         <item name="backgroundTint">@color/colorPrimaryLight</item>
     </style>
 
     <style name="VakkenRecyclerStyle">
-        <item name="android:background">@drawable/rounder_corners</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+
+
     </style>
 
     <style name="VakkenRecyclerItemText">
@@ -36,9 +44,7 @@
         <item name="boxBackgroundColor">@android:color/transparent</item>
     </style>
 
-    <style name="Widget.MaterialComponents.TextInputEditText.FilledBox"
-        parent="Base.Widget.MaterialComponents.TextInputEditText"
-        tools:override="true">
+    <style name="Widget.MaterialComponents.TextInputEditText.FilledBox" parent="Base.Widget.MaterialComponents.TextInputEditText" tools:override="true">
 
         <item name="android:paddingStart">0dp</item>
         <item name="android:paddingEnd">0dp</item>
@@ -50,6 +56,35 @@
 
     <style name="CalenderViewStyle">
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="taskCardViewStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+    <style name="taskListButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">false</item>
+        <item name="android:checkable">false</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+
+    </style>
+    <style name="taskListTextViewStyle">
+        <item name="android:layout_width">307dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:lines">3</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
 </resources>

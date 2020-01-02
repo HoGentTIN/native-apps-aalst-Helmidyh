@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 namespace StudyAPI.Data {
 	public class AppDataInitializer {
 
-		private readonly Random RND = new Random();
-
 		private readonly ApplicationDbContext _context;
 		private readonly UserManager<User> _userManager;
 
@@ -25,10 +23,7 @@ namespace StudyAPI.Data {
                 User admin = new User("user@testing.be");
                 await _userManager.CreateAsync(admin, "TestWachtwoord");
                 await _userManager.AddClaimAsync(admin, new Claim(ClaimTypes.Role, "User"));
-
-
                 _context.SaveChanges();
-
             }
         }
 	}

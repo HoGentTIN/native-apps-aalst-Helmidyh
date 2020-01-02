@@ -14,6 +14,8 @@ import com.example.studymanager.R
 import com.example.studymanager.database.getDatabase
 import com.example.studymanager.databinding.FragmentVakSessiesBinding
 import com.example.studymanager.domain.StudieTaskRepository
+import com.example.studymanager.models.domain.StatsRepository
+import com.example.studymanager.models.domain.StudieVakRepository
 import com.example.studymanager.viewmodels.VakSessiesViewmodel
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskAdapter
 import com.example.studymanager.viewmodels.adapters.adapters.StudieTaskListener
@@ -31,9 +33,13 @@ class VakSessieFragment : Fragment() {
         }
         val database = getDatabase(activity.application)
         val studieTaskRepository = StudieTaskRepository(database.studieTaskDAO)
+        val studieVakRepository = StudieVakRepository(database.studieVakDAO,database.statsDAO)
+        val statsRepository = StatsRepository(database.statsDAO)
+
+
         ViewModelProviders.of(
             this, VakSessiesViewmodel.Factory(
-                VakSessieFragmentArgs.fromBundle(arguments!!).vakId, studieTaskRepository
+                VakSessieFragmentArgs.fromBundle(arguments!!).vakId, studieTaskRepository,studieVakRepository,statsRepository
             )
         )
             .get(VakSessiesViewmodel::class.java)

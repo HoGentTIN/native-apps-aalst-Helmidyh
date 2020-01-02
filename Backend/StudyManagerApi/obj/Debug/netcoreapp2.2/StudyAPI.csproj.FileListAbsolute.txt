@@ -1,0 +1,26 @@
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.csprojAssemblyReference.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.RazorAssemblyInfo.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.RazorAssemblyInfo.cs
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.AssemblyInfoInputs.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.AssemblyInfo.cs
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\bin\Debug\netcoreapp2.2\StudyAPI.deps.json
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\bin\Debug\netcoreapp2.2\StudyAPI.runtimeconfig.json
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\bin\Debug\netcoreapp2.2\StudyAPI.runtimeconfig.dev.json
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\bin\Debug\netcoreapp2.2\StudyAPI.dll
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\bin\Debug\netcoreapp2.2\StudyAPI.pdb
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.RazorTargetAssemblyInfo.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.dll
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Backend\ProjectDashboard\obj\Debug\netcoreapp2.2\StudyAPI.pdb
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\bin\Debug\netcoreapp2.2\StudyAPI.deps.json
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\bin\Debug\netcoreapp2.2\StudyAPI.runtimeconfig.json
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\bin\Debug\netcoreapp2.2\StudyAPI.runtimeconfig.dev.json
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\bin\Debug\netcoreapp2.2\StudyAPI.dll
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\bin\Debug\netcoreapp2.2\StudyAPI.pdb
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.csprojAssemblyReference.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.RazorAssemblyInfo.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.RazorAssemblyInfo.cs
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.AssemblyInfoInputs.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.AssemblyInfo.cs
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.RazorTargetAssemblyInfo.cache
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.dll
+C:\Users\helmi\OneDrive - Hogeschool Gent\Docume\Android Project 2019\Study Manager V2.0\Backend\StudyManagerApi\obj\Debug\netcoreapp2.2\StudyAPI.pdb

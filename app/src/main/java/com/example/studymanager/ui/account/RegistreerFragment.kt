@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.example.studymanager.R
 import com.example.studymanager.databinding.FragmentRegisterBinding
 import com.example.studymanager.viewmodels.RegisterViewModel
@@ -115,6 +116,9 @@ class RegistreerFragment : Fragment(), Validator.ValidationListener {
             binding.viewModel?.changePicture(null)
         }
 
+        binding.btnRedirectLogin.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_registreerFragment_to_loginFragment2)
+        }
     }
 
     private fun pickUserPicture() {

@@ -105,7 +105,7 @@ class LoginFragment : Fragment(), Validator.ValidationListener {
         isLoadingProgress.setCanceledOnTouchOutside(false)
         isLoadingProgress.setCancelable(false)
         isLoadingProgress.show()
-
+        isLoadingProgress.dismiss()
         binding.viewModel?.loginUser(Email, password)
     }
 

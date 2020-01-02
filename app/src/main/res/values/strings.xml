@@ -43,4 +43,29 @@
     <string name="httperror_404">De opgevraagde gegevens werden niet gevonden</string>
     <string name="httperror_504">De server reageerde niet tijdig, probeer opnieuw</string>
 
+    <!-- ACCOUNT -->
+    <string name="noAccount">Nog geen account ?</string>
+    <string name="aAccount">Al een account ?</string>
+
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+
+    <!-- STUDIESESSIE -->
+    <string name="add5">+5</string>
+    <string name="add10">+10</string>
+    <string name="add15">+15</string>
+
+    <!-- STUDIESESSIE CREATIE-->
+    <string name="aanmaken">Aanmaken</string>
+    <string name="naam_taak">Naam taak</string>
+    <string name="selecteer_vak">Selecteer een vak</string>
+
+    <!-- STUDIESESSIE LIST ITEM DEFAULT-->
+    <string name="AND">And</string>
+    <string name="defTime">00:23</string>
+
+
 </resources>

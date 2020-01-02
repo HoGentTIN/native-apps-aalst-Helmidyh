@@ -1,13 +1,9 @@
 package com.example.studymanager.vakken
 
 import android.os.Bundle
-import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -36,11 +32,15 @@ class VakkenFragment : Fragment() {
         val database = getDatabase(activity.application)
         val studieVakRepository = StudieVakRepository(database.studieVakDAO, database.statsDAO)
         val statsRepository = StatsRepository(database.statsDAO)
-        ViewModelProviders.of(this, VakkenViewModel.Factory(studieVakRepository,statsRepository))
+        ViewModelProviders.of(this, VakkenViewModel.Factory(studieVakRepository, statsRepository))
             .get(VakkenViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         /**
          * ClickListener en LongClickListener voor de StudieVak adapter
@@ -76,12 +76,9 @@ class VakkenFragment : Fragment() {
          */
         binding.btnVakToevoegen.setOnClickListener {
             MaterialDialog(layoutInflater.context).show {
-                input(
-                    hint = "Naam van vak",
-                    inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
-                )
+                input(hint = "Naam van vak")
                 positiveButton(R.string.add, "Add") {
-              vakkenViewModel.insert(StudieVak(0, getInputField().text.toString()))
+                    vakkenViewModel.insert(StudieVak(0, getInputField().text.toString()))
                 }
                 negativeButton(R.string.cancel, "Cancel")
             }
